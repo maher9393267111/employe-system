@@ -33,7 +33,7 @@ const useMuiTable = props => {
     defaultOrder = "asc"
   } = props;
   const [page, setPage] = useState(0);
-  const [rowsPerPage] = useState(20);
+  const [rowsPerPage] = useState(4);
   const [orderBy, setOrderBy] = useState(defaultSort);
   const [selected, setSelected] = useState([]);
   const [order, setOrder] = useState(defaultOrder);

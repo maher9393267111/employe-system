@@ -31,6 +31,11 @@ export default function EditCategory() {
     ...INITIAL_VALUES
   });
 
+
+
+  console.log("query??" ,  query.slug)
+
+
   // useEffect(() => {
   //   api.getProduct(query.slug as string).then((data) => {
   //     setProduct((state) => ({

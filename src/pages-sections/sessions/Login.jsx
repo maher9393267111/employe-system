@@ -9,6 +9,11 @@ import BazaarTextField from "components/BazaarTextField";
 import SocialButtons from "./SocialButtons";
 import EyeToggleButton from "./EyeToggleButton";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
+import axios from 'axios'
+import { loginUser } from '../../../redux/apiRequest';
+import { useEffect } from 'react';
+import { useRouter } from "next/router";
+import { useDispatch } from 'react-redux'
 const fbStyle = {
   background: "#3B5998",
   color: "white"
@@ -52,32 +57,64 @@ const Login = () => {
   const togglePasswordVisibility = useCallback(() => {
     setPasswordVisibility(visible => !visible);
   }, []);
-  const handleFormSubmit = async values => {
-    console.log(values);
-  };
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit
-  } = useFormik({
-    initialValues,
-    onSubmit: handleFormSubmit,
-    validationSchema: formSchema
+
+
+  const router =useRouter()
+  const dispatch = useDispatch();
+
+
+  const { handleSubmit, handleChange, values, touched, errors, handleBlur ,setErrors } =
+  useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema:formSchema ,
+    onSubmit: async (values) => {
+console.log("start")
+      loginUser(values, dispatch, router, setErrors);
+    },
   });
+
+
+
+
+  useEffect(() => {
+    const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+    if (user !== null) {
+        router.push('/admin/agent');
+    }
+}, [router]);
+
+
+
+
   return <Wrapper elevation={3} passwordVisibility={passwordVisibility}>
-      <form onSubmit={handleSubmit}>
+      <form
+       onSubmit=
+     
+       {handleSubmit}
+     
+       >
         <BazaarImage src="/assets/images/bazaar-black-sm.svg" sx={{
         m: "auto"
       }} />
 
         <H1 textAlign="center" mt={1} mb={4} fontSize={16}>
-          Welcome To Bazaar
+          Welcome To Bazaars
         </H1>
 
-        <BazaarTextField mb={1.5} fullWidth name="email" size="small" type="email" variant="outlined" onBlur={handleBlur} value={values.email} onChange={handleChange} label="Email or Phone Number" placeholder="exmple@mail.com" error={!!touched.email && !!errors.email} helperText={touched.email && errors.email} />
+{values.username}
+
+        <BazaarTextField mb={1.5} fullWidth name="username" size="small" label="Full Name" variant="outlined" onBlur={handleBlur} value={values.username} onChange={handleChange} placeholder="Ralph Adwards" error={!!touched.name && !!errors.username} helperText={touched.username && errors.username} />
+
+{/* 
+
+        <BazaarTextField mb={1.5} fullWidth name="email" size="small" type="email" variant="outlined" onBlur={handleBlur} value={values.email} onChange={handleChange} label="Email or Phone Number" placeholder="exmple@mail.com" error={!!touched.email && !!errors.email} helperText={touched.email && errors.email} /> */}
+
+
+
+
 
         <BazaarTextField mb={2} fullWidth size="small" name="password" label="Password" autoComplete="on" variant="outlined" onBlur={handleBlur} onChange={handleChange} value={values.password} placeholder="*********" type={passwordVisibility ? "text" : "password"} error={!!touched.password && !!errors.password} helperText={touched.password && errors.password} InputProps={{
         endAdornment: <EyeToggleButton show={passwordVisibility} click={togglePasswordVisibility} />
@@ -121,6 +158,9 @@ const initialValues = {
 };
 const formSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
-  email: yup.string().email("invalid email").required("Email is required")
+  // email: yup.string().email("invalid email").required("Email is required"),
+  username :yup.string().required("userName is requeired")
 });
+
+
 export default Login;

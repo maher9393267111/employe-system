@@ -13,6 +13,13 @@ import nextI18NextConfig from "../next-i18next.config";
 import "nprogress/nprogress.css";
 import "simplebar/dist/simplebar.min.css";
 import "../src/__server__";
+
+
+import { store, persistor } from '../redux/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+
 //Binding events.
 Router.events.on("routeChangeStart", () => nProgress.start());
 Router.events.on("routeChangeComplete", () => nProgress.done());
@@ -36,7 +43,8 @@ const App = ({
         <OpenGraphTags />
         <title>Bazaar - Next.js Ecommerce Template</title>
       </Head>
-
+      <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
       <SettingsProvider>
         <AppProvider>
           <MuiTheme>
@@ -46,6 +54,9 @@ const App = ({
           </MuiTheme>
         </AppProvider>
       </SettingsProvider>
+
+      </PersistGate>
+        </Provider>
     </Fragment>;
 };
 

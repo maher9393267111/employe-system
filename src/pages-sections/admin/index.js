@@ -1,3 +1,6 @@
+
+import AgentRow from "./agent/agentRow";
+import AgentForm from "./agent/agentForm";
 import ReviewRow from "./ReviewRow";
 import CustomerRow from "./CustomerRow";
 import RefundRequestRow from "./RefundRequestRow";
@@ -12,6 +15,6 @@ import OrderDetails from "./orders/OrderDetails";
 import SellerRow from "./sellers/SellerRow";
 import SellerPackageCard from "./sellers/SellerPackageCard";
 import { StatusWrapper, StyledTableRow, CategoryWrapper, StyledTableCell, StyledIconButton } from "./StyledComponents";
-export { OrderRow, BrandRow, BrandForm, ReviewRow, SellerRow, ProductRow, CustomerRow, CategoryRow, ProductForm, CategoryForm, OrderDetails, RefundRequestRow, SellerPackageCard,
+export {AgentRow,AgentForm ,OrderRow, BrandRow, BrandForm, ReviewRow, SellerRow, ProductRow, CustomerRow, CategoryRow, ProductForm, CategoryForm, OrderDetails, RefundRequestRow, SellerPackageCard,
 // styled components
-StatusWrapper, StyledTableRow, StyledTableCell, CategoryWrapper, StyledIconButton };
+StatusWrapper, StyledTableRow, StyledTableCell, CategoryWrapper, StyledIconButton  };

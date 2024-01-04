@@ -73,7 +73,7 @@ const CategoryForm = props => {
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
               </Grid>
 
-              {/* <Grid item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   color="info"
@@ -86,9 +86,9 @@ const CategoryForm = props => {
                   placeholder="Sale Price"
                   value={values.sale_price}
                   error={!!touched.sale_price && !!errors.sale_price}
-                  helperText={(touched.sale_price && errors.sale_price) as string}
+                  helperText={(touched.sale_price && errors.sale_price) }
                 />
-               </Grid> */}
+               </Grid>
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
