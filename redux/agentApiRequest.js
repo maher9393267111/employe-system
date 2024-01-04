@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { loginStart, loginSuccess, loginFailed ,addnewAgent, logoutSuccess } from './agentSlice';
 import axiosJWT from './axiosJWT'
+import { changeLanguage } from 'i18next';
 const REACT_APP_BASE_URL = "https://clownfish-app-tzjmm.ondigitalocean.app"
 
 
@@ -11,7 +12,7 @@ export const FetchAgents = async (dispatch) => {
        
         const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
 console.log("REEEEEEEEEEEEEEEEEEE" ,res)
-dispatch(logoutSuccess(res.data))
+dispatch(loginSuccess(res.data))
 
 
       //  dispatch(loginSuccess(res.data));
@@ -50,3 +51,68 @@ console.log("DATA" ,data)
         dispatch(loginFailed());
     }
 };
+
+
+
+export const getSingleAgent = async (id) => {
+   // dispatch(loginStart());
+    try {
+       
+
+        const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+        console.log("single" ,res?.data)
+    return res?.data
+        
+        //dispatch(addnewAgent())
+       // console.log("added" ,res?.data)
+       // navigate.push('/');
+    } catch (error) {
+      
+       // dispatch(loginFailed());
+    }
+};
+
+
+
+
+
+export const UpdateAgent = async (values,id) => {
+    // dispatch(loginStart());
+     try {
+        
+ 
+         const res = await axiosJWT.patch(`${REACT_APP_BASE_URL}/employees/${id}` ,values);
+         console.log("UPDATE" ,res?.data)
+     return res?.data
+         
+         //dispatch(addnewAgent())
+         console.log("added" ,res?.data)
+        // navigate.push('/');
+     } catch (error) {
+       
+        console.log(error?.message)
+        // dispatch(loginFailed());
+     }
+ };
+ 
+
+
+ export const DeleteAgent = async (id) => {
+    // dispatch(loginStart());
+     try {
+        
+ 
+         const res = await axiosJWT.delete(`${REACT_APP_BASE_URL}/employees/${id}` );
+         console.log("Delete" ,res?.data)
+     return res?.data
+         
+         dispatch(FetchAgents())
+         console.log("added" ,res?.data)
+        // navigate.push('/');
+     } catch (error) {
+       
+        console.log(error?.message)
+        // dispatch(loginFailed());
+     }
+ };
+ 

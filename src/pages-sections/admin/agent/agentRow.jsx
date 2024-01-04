@@ -15,7 +15,7 @@ const AgentRow = ({
 }) => {
   const {
     username,
-    adress,
+    address,
     phoneNumber,
     email,
    
@@ -46,14 +46,14 @@ const AgentRow = ({
   const router = useRouter();
 //   const [featuredCategory, setFeaturedCategory] = useState(featured);
   const isItemSelected = selected.indexOf(username) !== -1;
-  const handleNavigate = () => router.push(`/admin/categories/${id}`);
+  const handleNavigate = () => router.push(`/admin/agent/${id}`);
   return <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
       <StyledTableCell align="center">#{id.split("-")[0]}</StyledTableCell>
 
       <StyledTableCell align="center">{username}</StyledTableCell>
 
       <StyledTableCell align="center">{email}</StyledTableCell>
-      <StyledTableCell align="center">{adress}</StyledTableCell>
+      {/* <StyledTableCell align="center">{address}</StyledTableCell> */}
       <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
 
       {/* <StyledTableCell align="center">

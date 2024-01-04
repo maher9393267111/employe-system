@@ -26,7 +26,7 @@ const TableHeader = props => {
     hideSelectBtn = false
   } = props;
   return <TableHead sx={{
-    backgroundColor: "grey.200"
+    backgroundColor: "grey.200" ,width:'100%'
   }}>
       <TableRow>
         {!hideSelectBtn && <StyledTableCell align="left">

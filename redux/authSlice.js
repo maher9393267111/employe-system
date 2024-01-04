@@ -7,6 +7,7 @@ export const authSlice = createSlice({
             currentUser: null,
             isFetching: false,
             error: false,
+            name:'maher'
         },
     },
     reducers: {

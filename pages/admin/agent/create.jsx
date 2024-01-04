@@ -32,7 +32,7 @@ const validationSchema = yup.object().shape({
   address: yup.string().required("required"),
   phoneNumber: yup.number().required("required"),
   password: yup.string().required("Password is required"),
-  //   name: yup.string().required("required")
+  
 });
 
 
@@ -41,7 +41,7 @@ const validationSchema = yup.object().shape({
 
 export default function CreateAgent() {
      const dispatch = useDispatch();
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async(values) => {
     console.log("agent created" ,values);
      AddNewAgents(dispatch ,values)
   };
