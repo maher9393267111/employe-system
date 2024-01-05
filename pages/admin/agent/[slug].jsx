@@ -3,10 +3,11 @@ import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 import * as yup from "yup";
 import { H3 } from "components/Typography";
-import { AgentForm } from "pages-sections/admin";
+import { AgentForm ,AgentUpdateForm  } from "pages-sections/admin";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import {useDispatch} from 'react-redux'
 import{getSingleAgent ,UpdateAgent} from "../../../redux/agentApiRequest"
+
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -18,9 +19,10 @@ EditAgent.getLayout = function getLayout(page) {
 
 
 
-export default function EditAgent({slug}) {
+export default function EditAgent({slug }) {
 
 
+  //  console.log("inSERVER" ,data)
     const dispatch =useDispatch()
   const {
     query
@@ -39,12 +41,12 @@ export default function EditAgent({slug}) {
   
   // form field validation schema
   const validationSchema = yup.object().shape({
-    fullName: yup.string().required("required"),
-    username: yup.string().required("required"),
+    // fullName: yup.string().required("required"),
+    // username: yup.string().required("required"),
   
-    email: yup.string().email("invalid email").required("Email is required"),
-    address: yup.string().required("required"),
-    phoneNumber: yup.number().required("required"),
+    // email: yup.string().email("invalid email").required("Email is required"),
+    // address: yup.string().required("required"),
+    // phoneNumber: yup.number().required("required"),
     // password: yup.string().required("Password is required"),
     
   });
@@ -73,11 +75,12 @@ export default function EditAgent({slug}) {
         console.log("DATA" ,data)
       setBrand((state) => ({
         ...state,
-         username: data?.username,
-         fullName: data?.fullName,
-         address: data?.address,
-         phoneNumber:data?.phoneNumber,
-         email:data?.email
+        
+          username: data?.username,
+          fullName: data?.fullName,
+          address: data?.address,
+          phoneNumber:data?.phoneNumber,
+          email:data?.email
          
       }));
     });
@@ -97,21 +100,31 @@ UpdateAgent(values ,slug)
 
 
   };
+
+
+  
+  console.log("inAGENT " ,brand)
+
+
   return <Box py={4}>
       <H3 mb={2}>Edit Agent</H3>
 {brand?.email}
-      <AgentForm initialValues={brand} validationSchema={validationSchema} handleFormSubmit={handleFormSubmit} />
+      
+      
+      <AgentForm initialValues={brand} validationSchema={validationSchema} handleFormSubmit={handleFormSubmit} slug={slug} />
     </Box>;
 }
 
 export async function getServerSideProps({ params }) {
     const slug = params.slug;
-    const data = getSingleAgent(slug)
-    console.log("SERRR" , data)
+    console.log("Slug")
+ //   const data = await getSingleAgent(slug)
+  //  console.log("SERRR" , data)
   
     return {
       props: {
         slug: params.slug,
+       // data
       
       },
     };

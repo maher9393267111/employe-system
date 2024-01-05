@@ -5,6 +5,7 @@ import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 import BazaarImage from "components/BazaarImage";
 import { UploadImageBox, StyledClear } from "../StyledComponents";
+import { init } from "i18next";
 
 // ================================================================
 
@@ -14,7 +15,8 @@ const AgentForm = props => {
   const {
     initialValues,
     validationSchema,
-    handleFormSubmit
+    handleFormSubmit ,
+    slug =null
   } = props;
   const [files, setFiles] = useState([]);
 
@@ -26,6 +28,17 @@ const AgentForm = props => {
     setFiles(files);
   };
 
+  console.log("inFORMIK" ,initialValues)
+
+
+
+
+
+
+
+
+
+
   // HANDLE DELETE UPLOAD IMAGE
   const handleFileDelete = file => () => {
     setFiles(files => files.filter(item => item.name !== file.name));
@@ -33,7 +46,13 @@ const AgentForm = props => {
   return <Card sx={{
     p: 6
   }}>
-      <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={validationSchema}>
+
+
+
+
+
+
+      <Formik onSubmit={handleFormSubmit} initialValues={initialValues ?? {} } validationSchema={validationSchema}>
         {({
         values,
         errors,
@@ -44,23 +63,43 @@ const AgentForm = props => {
       }) => <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth name="username" label="Name" color="info" size="medium" placeholder="username" value={values.username} onBlur={handleBlur} onChange={handleChange} error={!!touched.username && !!errors.username} helperText={touched.name && errors.username} />
+                <TextField fullWidth name="username" label="Name" color="info" size="medium" placeholder="username" 
+                value={
+                   values.username
+                  // values.username
+                }
+                
+                
+                onBlur={handleBlur} onChange={handleChange} error={!!touched.username && !!errors.username} helperText={touched.name && errors.username} />
               </Grid>
 
 
               <Grid item xs={12} md={6}>
-                <TextField fullWidth name="email" label="Email" color="info" size="medium" placeholder="Email" value={values.email} onBlur={handleBlur} onChange={handleChange} error={!!touched.email && !!errors.email} helperText={touched.email && errors.email} />
+                <TextField fullWidth name="email" label="Email" color="info" size="medium" placeholder="Email"
+                 value={  values.email} 
+                 
+                 
+                 
+                 onBlur={handleBlur} onChange={handleChange} error={!!touched.email && !!errors.email} helperText={touched.email && errors.email} />
               </Grid>
 
 
 
               <Grid item xs={12} md={6}>
-                <TextField fullWidth name="fullName" label="fullName" color="info" size="medium" placeholder="fullName" value={values.fullName} onBlur={handleBlur} onChange={handleChange} error={!!touched.fullName && !!errors.fullName} helperText={touched.fullName && errors.fullName} />
+                <TextField fullWidth name="fullName" label="fullName" color="info" size="medium" placeholder="fullName" 
+                value={   values.fullName} 
+                
+                
+                
+                onBlur={handleBlur} onChange={handleChange} error={!!touched.fullName && !!errors.fullName} helperText={touched.fullName && errors.fullName} />
               </Grid>
 
 
               <Grid item xs={12} md={6}>
-                <TextField fullWidth name="address" label="Adress" color="info" size="medium" placeholder="Name" value={values.address} onBlur={handleBlur} onChange={handleChange} error={!!touched.address && !!errors.address} helperText={touched.address && errors.address} />
+                <TextField fullWidth name="address" label="Adress" color="info" size="medium" placeholder="Name" 
+                // value={values.address}
+                value={  initialValues?.address ?? values.address} 
+                onBlur={handleBlur} onChange={handleChange} error={!!touched.address && !!errors.address} helperText={touched.address && errors.address} />
               </Grid>
 
 

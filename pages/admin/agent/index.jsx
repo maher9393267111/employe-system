@@ -109,7 +109,7 @@ export default function AgentList({ brands }) {
 
     // fetchData();
 
-    if (!employeesData) {
+    if (employeesData?.length === 0) {
       FetchAgents(dispatch);
       console.log("fetch AGAIN");
     }
@@ -187,8 +187,7 @@ export default function AgentList({ brands }) {
             </Table>
           </TableContainer>
         </Scrollbar>
-        {filteredList?.length}
-        {filteredAgents?.length}
+       
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
