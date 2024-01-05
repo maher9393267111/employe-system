@@ -32,7 +32,7 @@ const useMuiTable = props => {
     defaultSort = "name",
     defaultOrder = "asc"
     ,
-    refresh, setRefesh
+   
   } = props;
   const [page, setPage] = useState(1);
   const [rowsPerPage] = useState(2);
@@ -77,7 +77,7 @@ const useMuiTable = props => {
     
     setPage(newPage  -1)
   
-  setRefesh(!refresh)
+
   
   }
  

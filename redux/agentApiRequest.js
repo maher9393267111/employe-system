@@ -1,33 +1,60 @@
 import axios from "axios";
 import {
-  loginStart,
-  loginSuccess,
-  loginFailed,
-  addnewAgent,
-  logoutSuccess,
+  fetchStart, fetchSuccess, fetchFailed ,addnewAgent
 } from "./agentSlice";
 import axiosJWT from "./axiosJWT";
-import { changeLanguage } from "i18next";
-const REACT_APP_BASE_URL = "https://clownfish-app-tzjmm.ondigitalocean.app";
 
-export const FetchAgents = async (dispatch) => {
-  dispatch(loginStart());
-  try {
-    const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
-    console.log("REEEEEEEEEEEEEEEEEEE", res);
-    dispatch(loginSuccess(res.data));
+const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
+const REACT_APP_BASE_URL = "http://localhost:8000";
 
-    //  dispatch(loginSuccess(res.data));
-    // navigate.push('/');
-  } catch (error) {
-    // setError('password', {
-    //     type: 'server',
-    //     message: 'Something went wrong with your password',
-    // });
 
-    dispatch(loginFailed());
-  }
-};
+const baseUrl = process.env.NODE_ENV === 'development' ? REACT_APP_BASE_URL : REACT_APP_BASE_URL1;
+
+// export const FetchAgentss = async (dispatch) => {
+//   dispatch(loginStart());
+//   try {
+//     const res = await axiosJWT.get(`${baseUrl}/employees`);
+//     console.log("REEEEEEEEEEEEEEEEEEE", res);
+//     dispatch(loginSuccess(res.data));
+
+//     //  dispatch(loginSuccess(res.data));
+//     // navigate.push('/');
+//   } catch (error) {
+//     // setError('password', {
+//     //     type: 'server',
+//     //     message: 'Something went wrong with your password',
+//     // });
+
+//     dispatch(loginFailed());
+//   }
+// };
+
+
+export const FetchAgents =
+  () =>
+  async (dispatch) => {
+    await dispatch(fetchStart());
+    try {
+      
+
+      const response = await axiosJWT.get(
+        `${REACT_APP_BASE_URL}/employees`
+      );
+      console.log("all Agents api fetch REFETCH", response.data);
+      return dispatch(fetchSuccess(response.data));
+    } catch (err) {
+
+      return dispatch(fetchFailed(err));
+    }
+  };
+
+
+
+
+
+
+
+
 
 export const AddNewAgents = async (data) => {
   //  dispatch(loginStart());
@@ -36,7 +63,7 @@ export const AddNewAgents = async (data) => {
     //https://clownfish-app-tzjmm.ondigitalocean.app/auth/register
     //${REACT_APP_BASE_URL}/auth/register
     const res = await axiosJWT.post(
-      `https://clownfish-app-tzjmm.ondigitalocean.app/auth/register`,
+      `${baseUrl}/auth/register`,
       data
     );
 
@@ -55,7 +82,7 @@ export const AddNewAgents = async (data) => {
 export const getSingleAgent = async (id, dispatch) => {
   // dispatch(loginStart());
   try {
-    const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+    const res = await axiosJWT.get(`${baseUrl}/employees/${id}`);
     console.log("single", res?.data);
      return res?.data
 
@@ -72,7 +99,7 @@ export const UpdateAgent = async (values, id, dispatch) => {
   // dispatch(loginStart());
   try {
     const res = await axiosJWT.patch(
-      `${REACT_APP_BASE_URL}/employees/${id}`,
+      `${baseUrl}/employees/${id}`,
       values
     );
     console.log("UPDATE", res?.data);
@@ -91,7 +118,7 @@ export const UpdateAgent = async (values, id, dispatch) => {
 export const DeleteAgent = async (id) => {
   // dispatch(loginStart());
   try {
-    const res = await axiosJWT.delete(`${REACT_APP_BASE_URL}/employees/${id}`);
+    const res = await axiosJWT.delete(`${baseUrl}/employees/${id}`);
     console.log("Delete", res?.data);
     // res?.data
 

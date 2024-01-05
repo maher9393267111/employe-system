@@ -12,17 +12,17 @@ export const agentSlice = createSlice({
         },
     },
     reducers: {
-        loginStart: (state) => {
+        fetchStart: (state) => {
             state.agent.isFetching = true;
         },
-        loginSuccess: (state, action) => {
+        fetchSuccess: (state, action) => {
             console.log("ACTION " ,action.payload)
             state.agent.allagents = action.payload;
             state.agent.isFetching = false;
             state.agent.error = false;
             state.agent.refetch = !state.refetch
         },
-        loginFailed: (state) => {
+        fetchFailed: (state) => {
             state.agent.isFetching = false;
             state.agent.error = true;
         },
@@ -43,5 +43,5 @@ export const agentSlice = createSlice({
     },
 });
 
-export const { loginStart, loginSuccess, loginFailed, logoutSuccess ,addnewAgent } = agentSlice.actions;
+export const { fetchStart, fetchSuccess, fetchFailed ,addnewAgent } = agentSlice.actions;
 export default agentSlice.reducer;

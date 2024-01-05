@@ -10,6 +10,7 @@ import useMuiTable from "hooks/useMuiTable";
 import { CustomerRow } from "pages-sections/admin";
 import api from "utils/__api__/dashboard";
 
+
 // table column list
 const tableHeading = [{
   id: "name",
@@ -59,6 +60,10 @@ export default function CustomerList({
   } = useMuiTable({
     listData: customers
   });
+
+
+
+
   return <Box py={4}>
       <H3 mb={2}>Customers</H3>
 

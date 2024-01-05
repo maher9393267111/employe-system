@@ -97,24 +97,22 @@ export default function AgentList({ brands }) {
   const [employees, setEmployees] = useState(employeesData ?? []);
   const [refresh, setRefesh] = useState(false);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
-        setEmployees(res.data);
-        console.log(res?.data ,"RESSSSPNSE FETCH")
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
+    //     setEmployees(res.data);
+    //     console.log(res?.data ,"RESSSSPNSE FETCH")
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
-    fetchData();
+    // fetchData();
 
-    // if (employeesData?.length === 0) {
-    //   FetchAgents(dispatch);
-    //   console.log("fetch AGAIN");
-    // }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(FetchAgents())
+
+
   }, [refetch]);
 
   const filteredBrands = brands.map((item) => ({

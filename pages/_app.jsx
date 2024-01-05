@@ -9,7 +9,17 @@ import OpenGraphTags from "utils/OpenGraphTags";
 import { AppProvider } from "contexts/AppContext";
 import SettingsProvider from "contexts/SettingContext";
 import SnackbarProvider from "components/SnackbarProvider";
+
+
 import nextI18NextConfig from "../next-i18next.config";
+
+import { ToastContainer,toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
+import { StateContextProvider } from '../redux/socket/context'
+
+
+
 import "nprogress/nprogress.css";
 import "simplebar/dist/simplebar.min.css";
 import "../src/__server__";
@@ -45,6 +55,9 @@ const App = ({
       </Head>
       <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
+
+            <StateContextProvider>
+         
       <SettingsProvider>
         <AppProvider>
           <MuiTheme>
@@ -54,6 +67,14 @@ const App = ({
           </MuiTheme>
         </AppProvider>
       </SettingsProvider>
+
+      <ToastContainer />
+
+
+
+     
+      </StateContextProvider>
+
 
       </PersistGate>
         </Provider>

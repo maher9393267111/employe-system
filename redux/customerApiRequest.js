@@ -2,9 +2,14 @@ import axios from "axios";
 
 import axiosJWT from "./axiosJWT";
 import { fetchStart, fetchFailed, fetchSuccess } from "./customerSlice";
+import {toast} from 'react-toastify'
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
+
+
+const baseUrl = process.env.NODE_ENV === 'development' ? REACT_APP_BASE_URL : REACT_APP_BASE_URL1;
+
 
 export const FetchCustomers =
   (page = 1, size = 2) =>
@@ -25,6 +30,8 @@ export const FetchCustomers =
     }
   };
 
+
+
 export const AddCustomer = (data, agentId) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
@@ -32,10 +39,13 @@ export const AddCustomer = (data, agentId) => async (dispatch) => {
     console.log("request DATA", data);
 
     const response = await axiosJWT.post(
-      `${REACT_APP_BASE_URL}/customers`,
+      `${baseUrl}/customers`,
       data
     );
+
+    toast.success("new customer created")
     console.log("RESPONSE DATA", response.data);
+    
     return dispatch(FetchCustomers());
   } catch (err) {
     return dispatch(fetchFailed(err));
@@ -48,7 +58,7 @@ export const AddNewCustomer = async (data) => {
     console.log("DATA", data);
 
     const res = await axiosJWT.post(
-      `https://clownfish-app-tzjmm.ondigitalocean.app/auth/register`,
+      `${baseUrl}/auth/register`,
       data
     );
 
@@ -66,7 +76,7 @@ export const getSingleCustomer = async (id, dispatch) => {
 export const UpdateCustomer = async (values, id, dispatch) => {
   try {
     const res = await axiosJWT.patch(
-      `${REACT_APP_BASE_URL}/customers/${id}`,
+      `${baseUrl}/customers/${id}`,
       values
     );
     console.log("UPDATE", res?.data);
@@ -77,9 +87,12 @@ export const UpdateCustomer = async (values, id, dispatch) => {
   }
 };
 
+
+
+
 export const DeleteCustomer = async (id) => {
   try {
-    const res = await axiosJWT.delete(`${REACT_APP_BASE_URL}/customers/${id}`);
+    const res = await axiosJWT.delete(`${baseUrl}}/customers/${id}`);
     console.log("Delete", res?.data);
 
     console.log("added", res?.data);

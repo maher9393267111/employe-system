@@ -12,35 +12,15 @@ import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
 import api from "utils/__api__/dashboard";
 import { useState, useEffect } from "react";
-import CustomerPagination from './pagination'
+import CustomerPagination from "./pagination";
 
 import axiosJWT from "../../../redux/axiosJWT";
 import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
 import { FetchCustomers } from "../../../redux/customerApiRequest";
 import { useDispatch, useSelector } from "react-redux";
-
-// TABLE HEADING DATA LIST
-// const tableHeading = [{
-//   id: "id",
-//   label: "ID",
-//   align: "center"
-// }, {
-//   id: "name",
-//   label: "Name",
-//   align: "center"
-// }, {
-//   id: "logo",
-//   label: "Logo",
-//   align: "center"
-// }, {
-//   id: "featured",
-//   label: "Featured",
-//   align: "center"
-// }, {
-//   id: "action",
-//   label: "Action",
-//   align: "center"
-// }];
+import { useContextApp } from "../../../redux/socket/context";
+import { toast } from "react-toastify";
+//import { connectSocket } from '../../../redux/socket/socketConnect';
 
 const tableHeading = [
   {
@@ -89,34 +69,46 @@ CustomerList.getLayout = function getLayout(page) {
 export default function CustomerList({ brands }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
-  const {allcustomers ,count} = useSelector((state) => state.customer);
-console.log("customer redux toolkit" ,allcustomers)
- 
+  const { allcustomers, count } = useSelector((state) => state.customer);
+  const currentUserId = useSelector(
+    (state) => state.auth.login.currentUser.payload.id
+  );
+  const userRole = useSelector(
+    (state) => state.auth.login.currentUser.payload.roles
+  );
+  console.log("Role", userRole[0]);
+  console.log("customer redux toolkit", allcustomers);
 
+  const [soctext, setSocText] = useState("");
+  const { socket } = useContextApp();
 
-const [custpage ,setcustPage] = useState(0)
+  useEffect(() => {
+    socket.on("fetch", (data) => {
+      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+      setSocText(data);
+    });
 
+    if (userRole[0] === "admin") {
+      socket.on("createcustomer", (data) => {
+        toast.info("new POST CREATED");
+      });
+    }
+  }, []);
 
-const handleChange = (evt, value) => {
-  evt.preventDefault();
-  setcustPage(value)
+  const [custpage, setcustPage] = useState(0);
 
-};
-
-
-
+  const handleChange = (evt, value) => {
+    evt.preventDefault();
+    setcustPage(value);
+  };
 
   const dispatch = useDispatch();
-  const [customers, setCustomers] = useState(allcustomers?? []);
+  const [customers, setCustomers] = useState(allcustomers ?? []);
   const [refresh, setRefesh] = useState(false);
   useEffect(() => {
-console.log("refetch execute" ,custpage)
-    dispatch(FetchCustomers(custpage ,2))
-
-
-  }, [custpage ,refresh]);
-
-
+    console.log("refetch execute", custpage);
+    dispatch(FetchCustomers(custpage, 2));
+  }, [custpage, refresh]);
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -125,10 +117,10 @@ console.log("refetch execute" ,custpage)
     email: item?.email,
     address: item?.address,
     phoneNumber: item?.phoneNumber,
-    status: item?.status
+    status: item?.status,
   }));
 
-  console.log("filterdcystomers" , filteredCustomers)
+  console.log("filterdcystomers", filteredCustomers);
 
   const {
     order,
@@ -138,34 +130,28 @@ console.log("refetch execute" ,custpage)
     filteredList,
     handleChangePage,
     handleRequestSort,
-    page
+    page,
   } = useMuiTable({
     listData: filteredCustomers,
     //filteredBrands,
     defaultSort: "name",
-    refresh, setRefesh
+    refresh,
+    setRefesh,
   });
 
-  console.log("??",  page);
-
-
-
+  console.log("??", page);
 
   const handleChange1 = (evt, value) => {
     evt.preventDefault();
 
-    setcustPage(value)
+    setcustPage(value);
   };
-
-
-
-
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Cusomes  {custpage}</H3>
+      <H3 mb={2}>All Cusomes {custpage}</H3>
 
-{filteredList?.length}
+      {filteredList?.length}
       <SearchArea
         handleSearch={() => {}}
         buttonText="Add Agent"
@@ -193,25 +179,24 @@ console.log("refetch execute" ,custpage)
 
               <TableBody>
                 {filteredCustomers?.map((customer) => (
-                  <CustomersRow customer={customer} key={customer.id} selected={selected} />
+                  <CustomersRow
+                    customer={customer}
+                    key={customer.id}
+                    selected={selected}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Scrollbar>
-       
+
         <Stack alignItems="center" my={4}>
- 
+          <CustomerPagination
+            count={Math.ceil(count / rowsPerPage)}
+            // {count / rowsPerPage}
 
-
-<CustomerPagination
-count={Math.ceil(count / rowsPerPage)}
-// {count / rowsPerPage}
-
-handleChange={handleChange1}
-
-/>
-
+            handleChange={handleChange1}
+          />
         </Stack>
       </Card>
     </Box>
