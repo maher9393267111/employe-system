@@ -101,7 +101,7 @@ export default function AgentList({ brands }) {
       try {
         const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
         setEmployees(res.data);
-        console.log(res?.data)
+        console.log(res?.data ,"RESSSSPNSE FETCH")
       } catch (error) {
         console.log(error);
       }
