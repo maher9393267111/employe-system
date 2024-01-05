@@ -22,7 +22,8 @@ EditAgent.getLayout = function getLayout(page) {
 export default function EditAgent({slug }) {
 
 
-  //  console.log("inSERVER" ,data)
+
+   // console.log("inSERVER" ,data)
     const dispatch =useDispatch()
   const {
     query
@@ -109,22 +110,27 @@ UpdateAgent(values ,slug ,dispatch)
   return <Box py={4}>
       <H3 mb={2}>Edit Agent</H3>
 {brand?.email}
-      
+      {brand?.email &&
       
       <AgentForm initialValues={brand} validationSchema={validationSchema} handleFormSubmit={handleFormSubmit} slug={slug} />
+
+      }
+
+
     </Box>;
 }
 
 export async function getServerSideProps({ params }) {
     const slug = params.slug;
-    console.log("Slug")
- //   const data = await getSingleAgent(slug)
-  //  console.log("SERRR" , data)
+    console.log("Slug" ,slug)
+    //const data = await getSingleAgent(slug)
+    //console.log("SERRR" , data)
   
     return {
       props: {
         slug: params.slug,
-       // data
+      //  data: data
+        //JSON.parse(JSON.stringify(data)),
       
       },
     };

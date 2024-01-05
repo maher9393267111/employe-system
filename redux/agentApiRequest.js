@@ -57,12 +57,13 @@ export const getSingleAgent = async (id, dispatch) => {
   try {
     const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
     console.log("single", res?.data);
-    // return res?.data
+     return res?.data
 
     //dispatch(addnewAgent())
     // console.log("added" ,res?.data)
     // navigate.push('/');
   } catch (error) {
+    console.log(error)
     // dispatch(loginFailed());
   }
 };
