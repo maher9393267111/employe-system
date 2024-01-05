@@ -31,9 +31,11 @@ const useMuiTable = props => {
     listData = [],
     defaultSort = "name",
     defaultOrder = "asc"
+    ,
+    refresh, setRefesh
   } = props;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage] = useState(4);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage] = useState(2);
   const [orderBy, setOrderBy] = useState(defaultSort);
   const [selected, setSelected] = useState([]);
   const [order, setOrder] = useState(defaultOrder);
@@ -70,7 +72,18 @@ const useMuiTable = props => {
     }
     setSelected(newSelected);
   };
-  const handleChangePage = (_, newPage) => setPage(newPage - 1);
+  const handleChangePage1 = (_, newPage) => setPage(newPage - 1);
+  const handleChangePage = (_, newPage) => {
+    
+    setPage(newPage  -1)
+  
+  setRefesh(!refresh)
+  
+  }
+ 
+ 
+  
+  ;
   const filteredList = stableSort(listData, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   return {
     page,

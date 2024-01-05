@@ -1,57 +1,6 @@
-import { useState } from "react";
-import {
-  Button,
-  Card,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-} from "@mui/material";
-import { Formik } from "formik";
-import DropZone from "components/DropZone";
-import { FlexBox } from "components/flex-box";
-import BazaarImage from "components/BazaarImage";
-import { UploadImageBox, StyledClear } from "../StyledComponents";
-import { init } from "i18next";
-
-// ================================================================
-
-// ================================================================
-
-const AgentForm = (props) => {
-  const {
-    initialValues,
-    validationSchema,
-    handleFormSubmit,
-    slug = null,
-  } = props;
-  const [files, setFiles] = useState([]);
-
-  // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files) => {
-    files.forEach((file) =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      })
-    );
-    setFiles(files);
-  };
-
-  console.log("inFORMIK", initialValues);
-
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
-  };
-  return (
-    <Card
-      sx={{
-        p: 6,
-      }}
-    >
-      <Formik
+    <Formik
         onSubmit={handleFormSubmit}
-        initialValues={initialValues ?? {}}
+        initialValues={initialValues}
         validationSchema={validationSchema}
       >
         {({
@@ -64,24 +13,7 @@ const AgentForm = (props) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  name="username"
-                  label="Name"
-                  color="info"
-                  size="medium"
-                  placeholder="username"
-                  value={
-                    values.username
-                    // values.username
-                  }
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.username && !!errors.username}
-                  helperText={touched.name && errors.username}
-                />
-              </Grid>
+          
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -97,29 +29,50 @@ const AgentForm = (props) => {
                   error={!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
                 />
+               
               </Grid>
 
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  name="fullName"
-                  label="fullName"
+                  name="firstName"
+                  label="firstName"
                   color="info"
                   size="medium"
-                  placeholder="fullName"
-                  value={values.fullName}
+                  placeholder="firstName"
+                  value={values.firstName}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  error={!!touched.fullName && !!errors.fullName}
-                  helperText={touched.fullName && errors.fullName}
+                  error={!!touched.firstName && !!errors.firstName}
+                  helperText={touched.firstName && errors.firstName}
                 />
               </Grid>
 
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
+                  name="lastName"
+                  label="lastName"
+                  color="info"
+                  size="medium"
+                  placeholder="lastName"
+                  value={values.lastName}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.lastName && !!errors.lastName}
+                  helperText={touched.lastName && errors.lastName}
+                />
+              </Grid>
+
+
+
+
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
                   name="address"
-                  label="Adress"
+                  label="Address"
                   color="info"
                   size="medium"
                   placeholder="Name"
@@ -148,21 +101,7 @@ const AgentForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  name="password"
-                  label="password"
-                  color="info"
-                  size="medium"
-                  placeholder="Password"
-                  value={values.password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.password && !!errors.password}
-                  helperText={touched.password && errors.password}
-                />
-              </Grid>
+           
 
               <Grid item xs={12}>
                 <DropZone
@@ -186,16 +125,17 @@ const AgentForm = (props) => {
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
               </Grid> */}
 
+               {values.firstName}
+  ,   {values.lastName} ,    {values.address}   ,  {values.email}
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
-                  Save Agent
+                  Save Customer
                 </Button>
               </Grid>
             </Grid>
           </form>
         )}
       </Formik>
-    </Card>
-  );
-};
-export default AgentForm;
+
+----------------------
+

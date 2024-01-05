@@ -33,11 +33,14 @@ export const StyledPagination = styled(Pagination)(({
     }
   }
 }));
-const TablePagination = props => <StyledPagination 
-
+const TablePagination = ({count ,onChange ,setPage , handleChange})=> <StyledPagination 
 onChange={(evt, value) => handleChange(evt, value)}
-{...props}
+count = {count}
 
 
-/>;
+/>
+
+
+
+;
 export default TablePagination;

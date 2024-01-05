@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { loginStart, loginSuccess, loginFailed, logoutSuccess } from './authSlice';
 import axiosJWT from './axiosJWT'
-const REACT_APP_BASE_URL = "https://clownfish-app-tzjmm.ondigitalocean.app"
+const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app"
+const REACT_APP_BASE_URL = "http://localhost:8000"
 
 export const loginUser = async (user, dispatch, navigate, setError) => {
     dispatch(loginStart());

@@ -18,7 +18,7 @@ import { init } from "i18next";
 
 // ================================================================
 
-const AgentForm = (props) => {
+const CustomerForm = (props) => {
   const {
     initialValues,
     validationSchema,
@@ -49,6 +49,10 @@ const AgentForm = (props) => {
         p: 6,
       }}
     >
+  
+
+
+
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues ?? {}}
@@ -64,24 +68,38 @@ const AgentForm = (props) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  name="firstName"
+                  label="firstName"
+                  color="info"
+                  size="medium"
+                  placeholder="firstName"
+                  value={values.firstName}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.firstName && !!errors.firstName}
+                  helperText={touched.firstName && errors.firstName}
+                />
+              </Grid>
+
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  name="username"
-                  label="Name"
+                  name="lastName"
+                  label="lastName"
                   color="info"
                   size="medium"
-                  placeholder="username"
-                  value={
-                    values.username
-                    // values.username
-                  }
+                  placeholder="lastName"
+                  value={values.lastName}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  error={!!touched.username && !!errors.username}
-                  helperText={touched.name && errors.username}
+                  error={!!touched.lastName && !!errors.lastName}
+                  helperText={touched.lastName && errors.lastName}
                 />
               </Grid>
+
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -119,7 +137,7 @@ const AgentForm = (props) => {
                 <TextField
                   fullWidth
                   name="address"
-                  label="Adress"
+                  label="Address"
                   color="info"
                   size="medium"
                   placeholder="Name"
@@ -148,21 +166,7 @@ const AgentForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  name="password"
-                  label="password"
-                  color="info"
-                  size="medium"
-                  placeholder="Password"
-                  value={values.password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.password && !!errors.password}
-                  helperText={touched.password && errors.password}
-                />
-              </Grid>
+             
 
               <Grid item xs={12}>
                 <DropZone
@@ -195,7 +199,12 @@ const AgentForm = (props) => {
           </form>
         )}
       </Formik>
+
+
+
+
+
     </Card>
   );
 };
-export default AgentForm;
+export default CustomerForm;
