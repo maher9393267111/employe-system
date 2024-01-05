@@ -30,8 +30,8 @@ dispatch(loginSuccess(res.data))
 
 
 
-export const AddNewAgents = async (dispatch,data) => {
-    dispatch(loginStart());
+export const AddNewAgents = async (data) => {
+  //  dispatch(loginStart());
     try {
        
 console.log("DATA" ,data)
@@ -39,7 +39,7 @@ console.log("DATA" ,data)
 //${REACT_APP_BASE_URL}/auth/register
         const res = await axiosJWT.post(`https://clownfish-app-tzjmm.ondigitalocean.app/auth/register` ,data);
     
-        dispatch(addnewAgent())
+       // dispatch(addnewAgent())
         console.log("added" ,res?.data)
        // navigate.push('/');
     } catch (error) {
@@ -48,21 +48,23 @@ console.log("DATA" ,data)
         //     message: 'Something went wrong with your password',
         // });
 
-        dispatch(loginFailed());
+      //  dispatch(loginFailed());
     }
 };
 
 
 
-export const getSingleAgent = async (id) => {
+export const getSingleAgent = async (id, dispatch) => {
    // dispatch(loginStart());
     try {
        
 
         const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
         console.log("single" ,res?.data)
-    return res?.data
+   // return res?.data
         
+  
+
         //dispatch(addnewAgent())
        // console.log("added" ,res?.data)
        // navigate.push('/');
@@ -76,17 +78,18 @@ export const getSingleAgent = async (id) => {
 
 
 
-export const UpdateAgent = async (values,id) => {
+export const UpdateAgent = async (values,id ,dispatch) => {
     // dispatch(loginStart());
      try {
         
  
          const res = await axiosJWT.patch(`${REACT_APP_BASE_URL}/employees/${id}` ,values);
          console.log("UPDATE" ,res?.data)
+      //   dispatch(AddNewAgents())
      return res?.data
          
          //dispatch(addnewAgent())
-         console.log("added" ,res?.data)
+       //  console.log("added" ,res?.data)
         // navigate.push('/');
      } catch (error) {
        

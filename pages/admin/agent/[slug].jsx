@@ -96,7 +96,7 @@ export default function EditAgent({slug }) {
 
   const handleFormSubmit = (values) => {
 console.log(values)
-UpdateAgent(values ,slug)
+UpdateAgent(values ,slug ,dispatch)
 
 
   };

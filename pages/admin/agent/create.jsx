@@ -43,7 +43,7 @@ export default function CreateAgent() {
      const dispatch = useDispatch();
   const handleFormSubmit = async(values) => {
     console.log("agent created" ,values);
-     AddNewAgents(dispatch ,values)
+     AddNewAgents(values)
   };
   return (
     <Box py={4}>
