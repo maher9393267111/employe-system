@@ -20,6 +20,7 @@ export const agentSlice = createSlice({
             state.agent.allagents = action.payload;
             state.agent.isFetching = false;
             state.agent.error = false;
+            state.agent.refetch = !state.refetch
         },
         loginFailed: (state) => {
             state.agent.isFetching = false;

@@ -104,9 +104,9 @@ export const UpdateAgent = async (values,id) => {
  
          const res = await axiosJWT.delete(`${REACT_APP_BASE_URL}/employees/${id}` );
          console.log("Delete" ,res?.data)
-     return res?.data
-         
-         dispatch(FetchAgents())
+    // res?.data
+   
+        // dispatch(FetchAgents())
          console.log("added" ,res?.data)
         // navigate.push('/');
      } catch (error) {

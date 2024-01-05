@@ -98,7 +98,7 @@ const AgentForm = props => {
               <Grid item xs={12} md={6}>
                 <TextField fullWidth name="address" label="Adress" color="info" size="medium" placeholder="Name" 
                 // value={values.address}
-                value={  initialValues?.address ?? values.address} 
+                value={ values.address} 
                 onBlur={handleBlur} onChange={handleChange} error={!!touched.address && !!errors.address} helperText={touched.address && errors.address} />
               </Grid>
 
