@@ -122,13 +122,12 @@ UpdateAgent(values ,slug ,dispatch)
 
 export async function getServerSideProps({ params }) {
     const slug = params.slug;
-    console.log("Slug" ,slug)
-    //const data = await getSingleAgent(slug)
-    //console.log("SERRR" , data)
+   // console.log("Slug" ,slug)
+ 
   
     return {
       props: {
-        slug: params.slug,
+       // slug: params.slug,
       //  data: data
         //JSON.parse(JSON.stringify(data)),
       
