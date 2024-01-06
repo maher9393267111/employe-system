@@ -80,6 +80,32 @@ export const AddCustomer = (data, agentId) => async (dispatch) => {
   }
 };
 
+
+export const  getSingleCustomerRedux = (customerId) => async (dispatch) => {
+
+  await dispatch(fetchStart());
+  try {
+    console.log("page in request api", page);
+
+   const response = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+    console.log("all customers api fetch REFETCH", response.data);
+    return dispatch(fetchSingleSuccess(response.data));
+  } catch (err) {
+    return dispatch(fetchFailed(err));
+  }
+
+
+
+
+
+
+}
+
+
+
+
+
+
 export const AddNewCustomer = async (data) => {
   //  dispatch(loginStart());
   try {
@@ -94,10 +120,14 @@ export const AddNewCustomer = async (data) => {
   } catch (error) {}
 };
 
+
+
 export const getSingleCustomer = async (id, dispatch) => {
   try {
     const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+
     console.log("single", res?.data);
+    return res?.data
   } catch (error) {}
 };
 
