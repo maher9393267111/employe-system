@@ -7,7 +7,7 @@ import { AgentForm, AgentUpdateForm } from "pages-sections/admin";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import { useDispatch } from "react-redux";
 import { getSingleAgent, UpdateAgent } from "../../../redux/agentApiRequest";
-
+import Skeleton from "@mui/material/Skeleton";
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -70,7 +70,7 @@ export default function EditAgent({}) {
 
   const handleFormSubmit = (values) => {
     console.log(values);
-    UpdateAgent(values, slug, dispatch);
+    UpdateAgent(values, query.slug, dispatch);
   };
 
   console.log("inAGENT ", brand);
@@ -78,6 +78,52 @@ export default function EditAgent({}) {
   return (
     <Box py={4}>
       <H3 mb={2}>Edit Agent</H3>
+
+      {!brand?.email  && (
+          <div style={{ width: "100%" }} className="p-5">
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+
+            <Skeleton
+              variant="rounded"
+              width={222}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+          </div>
+        )}
+
+
+
+
 
       {brand && brand?.email && (
         <AgentForm
@@ -90,6 +136,9 @@ export default function EditAgent({}) {
     </Box>
   );
 }
+
+
+
 
 // export async function getServerSideProps({ params }) {
 //   const slug = params.slug;

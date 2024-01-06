@@ -5,6 +5,8 @@ import { CustomerForm } from "pages-sections/admin";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import { useDispatch ,useSelector } from "react-redux";
 import { AddCustomer} from "../../../redux/customerApiRequest";
+import { useState } from "react";
+import { UploadImage } from "../../../redux/customerApiRequest";
 
 // import api from "utils/__api__/products";
 
@@ -21,7 +23,8 @@ const INITIAL_VALUES = {
   lastName:"",
   email: "",
   address: "",
-  phoneNumber: "",
+  phoneNumber: ""
+  
 };
 
 // form field validation schema
@@ -32,14 +35,22 @@ const validationSchema = yup.object().shape({
   email: yup.string().email("invalid email").required("Email is required"),
   address: yup.string().required("required"),
   phoneNumber: yup.number().required("required"),
+
 });
 
 export default function CreateCustomer() {
   const dispatch = useDispatch();
   const agentId = useSelector((state) => state.auth?.login?.currentUser?.payload?.id);
 
+const [image ,setImage] = useState(null)
+
+
 console.log('id' ,agentId)
   const handleFormSubmit = async (values) => {
+
+     console.log("IMAGEEEEE" ,image)
+
+values.file = image
     console.log("Customer Create", values);
     dispatch(AddCustomer(values ,agentId))
   };
@@ -51,6 +62,9 @@ console.log('id' ,agentId)
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
+        buttontext='Add customer'
+        image={image}
+        setImage={setImage}
       />
     </Box>
   );

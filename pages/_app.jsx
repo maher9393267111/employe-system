@@ -9,6 +9,7 @@ import OpenGraphTags from "utils/OpenGraphTags";
 import { AppProvider } from "contexts/AppContext";
 import SettingsProvider from "contexts/SettingContext";
 import SnackbarProvider from "components/SnackbarProvider";
+import { ChakraProvider } from '@chakra-ui/react'
 
 
 import nextI18NextConfig from "../next-i18next.config";
@@ -56,7 +57,11 @@ const App = ({
       <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
 
+            <ChakraProvider>
+
             <StateContextProvider>
+
+
          
       <SettingsProvider>
         <AppProvider>
@@ -75,7 +80,7 @@ const App = ({
      
       </StateContextProvider>
 
-
+</ChakraProvider>
       </PersistGate>
         </Provider>
     </Fragment>;

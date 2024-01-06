@@ -123,7 +123,7 @@ export default function AgentList({ brands }) {
     featured: item.featured,
   }));
 
-  const filteredAgents = employees.map((item) => ({
+  const filteredAgents = employeesData?.map((item) => ({
     id: item._id,
     slug: item._id,
     username: item.username,

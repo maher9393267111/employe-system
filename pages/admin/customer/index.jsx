@@ -164,15 +164,15 @@ toast.success("staff fetch customers")
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers notifiy </H3>
+      <H3 mb={2}>All Customers </H3>
 
       {/* {userRole} */}
 
       {/* {count} */}
       <SearchArea
         handleSearch={() => {}}
-        buttonText="Add Agent"
-        searchPlaceholder="Search Agent..."
+        buttonText="Add Customer"
+        searchPlaceholder="Search Customer..."
         handleBtnClick={() => Router.push("/admin/customer/create")}
       />
 

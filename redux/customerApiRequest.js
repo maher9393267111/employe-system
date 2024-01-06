@@ -2,14 +2,15 @@ import axios from "axios";
 
 import axiosJWT from "./axiosJWT";
 import { fetchStart, fetchFailed, fetchSuccess } from "./customerSlice";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
-
-const baseUrl = process.env.NODE_ENV === 'development' ? REACT_APP_BASE_URL : REACT_APP_BASE_URL1;
-
+const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? REACT_APP_BASE_URL
+    : REACT_APP_BASE_URL1;
 
 export const FetchCustomers =
   (page = 1, size = 2) =>
@@ -19,9 +20,7 @@ export const FetchCustomers =
       console.log("page in request api", page);
 
       const response = await axiosJWT.get(
-        `${REACT_APP_BASE_URL}/customers?page=${
-          page === 0 ? 1 : page
-        }&&size=${size}`
+        `${baseUrl}/customers?page=${page === 0 ? 1 : page}&&size=${size}`
       );
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
@@ -30,12 +29,9 @@ export const FetchCustomers =
     }
   };
 
-
-  export const FetchAgentCustomers =
-  (page = 1 ,size =2) =>
+export const FetchAgentCustomers =
+  (page = 1, size = 2) =>
   async (dispatch) => {
-
-
     await dispatch(fetchStart());
     try {
       console.log("page in request api", page);
@@ -50,15 +46,7 @@ export const FetchCustomers =
     } catch (err) {
       return dispatch(fetchFailed(err));
     }
-
-
-  }
-
-
-
-
-
-
+  };
 
 export const AddCustomer = (data, agentId) => async (dispatch) => {
   await dispatch(fetchStart());
@@ -66,78 +54,48 @@ export const AddCustomer = (data, agentId) => async (dispatch) => {
     data = { ...data, employe_id: agentId };
     console.log("request DATA", data);
 
-    const response = await axiosJWT.post(
-      `${baseUrl}/customers`,
-      data
-    );
+    const response = await axiosJWT.post(`${baseUrl}/customers`, data);
 
-    toast.success("new customer created")
+    toast.success("new customer created");
     console.log("RESPONSE DATA", response.data);
-    
+
     return dispatch(FetchCustomers());
   } catch (err) {
     return dispatch(fetchFailed(err));
   }
 };
 
-
-export const  getSingleCustomerRedux = (customerId) => async (dispatch) => {
-
+export const getSingleCustomerRedux = (customerId) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
     console.log("page in request api", page);
 
-   const response = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+    const response = await axiosJWT.get(
+      `${REACT_APP_BASE_URL}/customers/${id}`
+    );
     console.log("all customers api fetch REFETCH", response.data);
-    return dispatch(fetchSingleSuccess(response.data));
+    return response.data;
+    //
+    // return dispatch(fetchSingleSuccess(response.data));
   } catch (err) {
     return dispatch(fetchFailed(err));
   }
-
-
-
-
-
-
-}
-
-
-
-
-
-
-export const AddNewCustomer = async (data) => {
-  //  dispatch(loginStart());
-  try {
-    console.log("DATA", data);
-
-    const res = await axiosJWT.post(
-      `${baseUrl}/auth/register`,
-      data
-    );
-
-    console.log("added", res?.data);
-  } catch (error) {}
 };
-
-
 
 export const getSingleCustomer = async (id, dispatch) => {
   try {
-    const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees/${id}`);
+    const res = await axiosJWT.get(`${baseUrl}/customers/${id}`);
 
     console.log("single", res?.data);
-    return res?.data
+    return res?.data;
   } catch (error) {}
 };
 
-export const UpdateCustomer = async (values, id, dispatch) => {
+export const UpdateCustomer = async (values, id) => {
   try {
-    const res = await axiosJWT.patch(
-      `${baseUrl}/customers/${id}`,
-      values
-    );
+    const res = await axiosJWT.put(`${baseUrl}/customers/${id}`, values);
     console.log("UPDATE", res?.data);
+    toast.success("Customer Updated successfully");
 
     return res?.data;
   } catch (error) {
@@ -148,13 +106,36 @@ export const UpdateCustomer = async (values, id, dispatch) => {
 
 
 
-export const DeleteCustomer = async (id) => {
+export const DeleteCustomer = (customerId) => async (dispatch) => {
   try {
-    const res = await axiosJWT.delete(`${baseUrl}}/customers/${id}`);
-    console.log("Delete", res?.data);
+    const response = await axiosJWT.delete(
+      `${baseUrl}/customers/${customerId}`
+    );
 
-    console.log("added", res?.data);
-  } catch (error) {
-    console.log(error?.message);
+    toast.success("Customer deleted successfully");
+    console.log("RESPONSE DATA", response.data);
+
+    return dispatch(FetchCustomers());
+  } catch (err) {
+    return dispatch(fetchFailed(err));
   }
+};
+
+
+
+// Upload Single file   
+
+// http://localhost:8000/upload/avatar
+
+
+export const UploadImage = async (file ,oldfile=null) => {
+  try {
+    const res = await axiosJWT.post(`${baseUrl}/upload/avatar?oldfile=${oldfile}` ,file);
+
+    console.log("single", res?.data);
+
+
+
+    return res?.data;
+  } catch (error) {}
 };

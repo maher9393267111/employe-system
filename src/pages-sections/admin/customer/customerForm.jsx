@@ -7,13 +7,17 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { Formik } from "formik";
+import { Formik ,Field ,ErrorMessage, useFormik  } from "formik";
 import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 import BazaarImage from "components/BazaarImage";
 import { UploadImageBox, StyledClear } from "../StyledComponents";
+
 import { init } from "i18next";
 
+import { Box, Divider, FormControl, FormLabel, Heading, Input, Spinner, Text, useToast } from "@chakra-ui/react";
+import { UploadImage } from "../../../../redux/customerApiRequest";
+import {toast} from 'react-toastify'
 // ================================================================
 
 // ================================================================
@@ -24,25 +28,83 @@ const CustomerForm = (props) => {
     validationSchema,
     handleFormSubmit,
     slug = null,
+    buttontext,
+    filedit ={},
+    isedit =false,
+    image ,
+    setImage
   } = props;
   const [files, setFiles] = useState([]);
 
+  const [imagepreview  ,setImagepreview] = useState({})
+
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = (files) => {
-    files.forEach((file) =>
-      Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      })
-    );
-    setFiles(files);
+  const handleChangeDropZone = async(files) => {
+    // files.forEach((file) =>
+    //   Object.assign(file, {
+    //     preview: URL.createObjectURL(file),
+    //   })
+    // );
+    // setFiles(files);
+
+  
+
+
+    console.log(files[0])
+
+    Object.assign(files[0], {
+           preview: URL.createObjectURL(files[0]),
+         })
+
+
+setImagepreview(files[0])
+
+// const formData = new FormData();
+// formData.append("image", files[0]);
+
+//await UploadImage(formData)
+
+
   };
 
   console.log("inFORMIK", initialValues);
 
-  // HANDLE DELETE UPLOAD IMAGE
-  const handleFileDelete = (file) => () => {
-    setFiles((files) => files.filter((item) => item.name !== file.name));
+ 
+
+
+
+  const imageUpload =async(e) => {
+    let file = e.target.files[0];
+   console.log(file)
+
+    const formData = new FormData();
+ formData.append("image", file);
+
+ const res =await UploadImage(formData)
+
+   console.log('res' ,res)
+
+   
+
+    toast.success('Image uploadedsuccessfully')
+    setImage(res)
+   
+
+
+
+
+
   };
+
+
+
+
+ 
+
+
+  // const { onChange, image } = useUploadImage();
+
+
   return (
     <Card
       sx={{
@@ -117,21 +179,7 @@ const CustomerForm = (props) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  name="fullName"
-                  label="fullName"
-                  color="info"
-                  size="medium"
-                  placeholder="fullName"
-                  value={values.fullName}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.fullName && !!errors.fullName}
-                  helperText={touched.fullName && errors.fullName}
-                />
-              </Grid>
+         
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -169,22 +217,54 @@ const CustomerForm = (props) => {
              
 
               <Grid item xs={12}>
-                <DropZone
-                  title="Drop & drag category image"
-                  onChange={(files) => handleChangeDropZone(files)}
-                />
+            
 
                 <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
-                  {files.map((file, index) => {
-                    return (
-                      <UploadImageBox key={index}>
-                        <BazaarImage src={file.preview} width="100%" />
-                        <StyledClear onClick={handleFileDelete(file)} />
-                      </UploadImageBox>
-                    );
-                  })}
+             
+
+                {!isedit && (
+              <Box mb="5">
+                <FormControl>
+                  <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
+                    Document{" "}
+                    <Box as="span" color="red.500">
+                      *
+                    </Box>
+                  </FormLabel>
+                  <FormLabel border="2px dashed lightgrey" h="110px" w="100%" textAlign={"center"} onChange={imageUpload} htmlFor="imageUpload">
+                    <Text mt="8" color="gray">
+                      {image?.preview ? image?.file?.name : "Upload Document"}
+                    </Text>
+                    <Field as={Input} type="file" name="document_url" accept={["application/*, image/*"]} display="none" id="imageUpload" />
+                  </FormLabel>
+                </FormControl>
+                <ErrorMessage
+                  name={"document_url"}
+                  render={(msg) => (
+                    <Box fontSize={"sm"} color={"red.500"} mt={1} textAlign={"left"}>
+                      {msg}
+                    </Box>
+                  )}
+                />
+              </Box>
+            )}
+
+
+
+
+
+
+
+
                 </FlexBox>
+
+
+
+
               </Grid>
+
+
+
 
               {/* <Grid item sm={6} xs={12}>
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
@@ -192,7 +272,8 @@ const CustomerForm = (props) => {
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
-                  Save Agent
+                  {/* Save Agent */}
+                  {buttontext}
                 </Button>
               </Grid>
             </Grid>
