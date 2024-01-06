@@ -13,13 +13,14 @@ import useMuiTable from "hooks/useMuiTable";
 import api from "utils/__api__/dashboard";
 import { useState, useEffect } from "react";
 import CustomerPagination from "./pagination";
+import {toast} from 'react-toastify'
 
 import axiosJWT from "../../../redux/axiosJWT";
 import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
-import { FetchCustomers } from "../../../redux/customerApiRequest";
+import { FetchCustomers ,FetchAgentCustomers } from "../../../redux/customerApiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { useContextApp } from "../../../redux/socket/context";
-import { toast } from "react-toastify";
+
 //import { connectSocket } from '../../../redux/socket/socketConnect';
 
 const tableHeading = [
@@ -107,7 +108,19 @@ export default function CustomerList({ brands }) {
   const [refresh, setRefesh] = useState(false);
   useEffect(() => {
     console.log("refetch execute", custpage);
+    
+    if (userRole[0] === 'admin'){
+    
     dispatch(FetchCustomers(custpage, 2));
+    }
+
+    else if (userRole[0] === 'staff'){
+dispatch(FetchAgentCustomers(custpage,2))
+toast.success("staff fetch customers")
+
+    }
+
+
   }, [custpage, refresh]);
 
   const filteredCustomers = allcustomers?.map((item) => ({
@@ -147,11 +160,15 @@ export default function CustomerList({ brands }) {
     setcustPage(value);
   };
 
+  //FetchAgentCustomers
+
   return (
     <Box py={4}>
-      <H3 mb={2}>All Cusomes {custpage}</H3>
+      <H3 mb={2}>All Customers </H3>
 
-      {filteredList?.length}
+      {/* {userRole} */}
+
+      {/* {count} */}
       <SearchArea
         handleSearch={() => {}}
         buttonText="Add Agent"

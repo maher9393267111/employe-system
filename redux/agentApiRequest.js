@@ -3,31 +3,19 @@ import {
   fetchStart, fetchSuccess, fetchFailed ,addnewAgent
 } from "./agentSlice";
 import axiosJWT from "./axiosJWT";
-
+import {toast} from 'react-toastify'
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? REACT_APP_BASE_URL : REACT_APP_BASE_URL1;
 
-// export const FetchAgentss = async (dispatch) => {
-//   dispatch(loginStart());
-//   try {
-//     const res = await axiosJWT.get(`${baseUrl}/employees`);
-//     console.log("REEEEEEEEEEEEEEEEEEE", res);
-//     dispatch(loginSuccess(res.data));
 
-//     //  dispatch(loginSuccess(res.data));
-//     // navigate.push('/');
-//   } catch (error) {
-//     // setError('password', {
-//     //     type: 'server',
-//     //     message: 'Something went wrong with your password',
-//     // });
+// export const FetchAgentss =
+//   () =>
+//   async (dispatch) => {}
 
-//     dispatch(loginFailed());
-//   }
-// };
+
 
 
 export const FetchAgents =
@@ -50,6 +38,14 @@ export const FetchAgents =
 
 
 
+  // Fetch only specefic agent customers
+
+  
+
+
+
+
+
 
 
 
@@ -57,7 +53,7 @@ export const FetchAgents =
 
 
 export const AddNewAgents = async (data) => {
-  //  dispatch(loginStart());
+   // dispatch(loginStart());
   try {
     console.log("DATA", data);
     //https://clownfish-app-tzjmm.ondigitalocean.app/auth/register
@@ -78,6 +74,9 @@ export const AddNewAgents = async (data) => {
     //  dispatch(loginFailed());
   }
 };
+
+
+
 
 export const getSingleAgent = async (id, dispatch) => {
   // dispatch(loginStart());

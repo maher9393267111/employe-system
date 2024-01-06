@@ -31,6 +31,34 @@ export const FetchCustomers =
   };
 
 
+  export const FetchAgentCustomers =
+  (page = 1 ,size =2) =>
+  async (dispatch) => {
+
+
+    await dispatch(fetchStart());
+    try {
+      console.log("page in request api", page);
+
+      const response = await axiosJWT.get(
+        `${REACT_APP_BASE_URL}/customers/agentCustomers?page=${
+          page === 0 ? 1 : page
+        }&&size=${size}`
+      );
+      console.log("all customers api fetch REFETCH", response.data);
+      return dispatch(fetchSuccess(response.data));
+    } catch (err) {
+      return dispatch(fetchFailed(err));
+    }
+
+
+  }
+
+
+
+
+
+
 
 export const AddCustomer = (data, agentId) => async (dispatch) => {
   await dispatch(fetchStart());

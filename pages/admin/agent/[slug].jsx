@@ -19,7 +19,7 @@ EditAgent.getLayout = function getLayout(page) {
 
 
 
-export default function EditAgent({slug }) {
+export default function EditAgent({ }) {
 
 
 
@@ -70,9 +70,9 @@ export default function EditAgent({slug }) {
 
   useEffect(() => {
    
-    if (slug){
+    if (query.slug){
 
-    getSingleAgent(slug).then((data) => {
+    getSingleAgent(query.slug).then((data) => {
         console.log("DATA" ,data)
       setBrand((state) => ({
         ...state,
@@ -90,7 +90,7 @@ export default function EditAgent({slug }) {
 
 
 
-  }, [slug]);
+  }, [query.slug]);
 
 
 
@@ -112,7 +112,7 @@ UpdateAgent(values ,slug ,dispatch)
 
       {brand?.email &&
       
-      <AgentForm initialValues={brand} validationSchema={validationSchema} handleFormSubmit={handleFormSubmit} slug={slug} />
+      <AgentForm initialValues={brand} validationSchema={validationSchema} handleFormSubmit={handleFormSubmit} slug={query.slug} />
 
       }
 
