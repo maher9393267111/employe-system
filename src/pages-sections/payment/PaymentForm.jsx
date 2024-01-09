@@ -22,6 +22,9 @@ const PaymentForm = () => {
   }) => {
     setPaymentMethod(name);
   };
+
+
+  
   return <Fragment>
       <Card1 sx={{
       mb: 4
@@ -78,10 +81,14 @@ const PaymentForm = () => {
         mb: 3
       }} onChange={handlePaymentMethodChange} label={<Paragraph fontWeight={600}>Pay with Paypal</Paragraph>} control={<Radio checked={paymentMethod === "paypal"} color="primary" size="small" />} />
 
+
+
         <Divider sx={{
         mb: 3,
         mx: -4
       }} />
+
+
 
         {paymentMethod === "paypal" && <Fragment>
             <FlexBox alignItems="flex-end" mb={4}>

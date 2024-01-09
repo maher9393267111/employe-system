@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Avatar ,Box ,Chip } from "@mui/material";
 import { useRouter } from "next/router";
 import { Delete, RemoveRedEye } from "@mui/icons-material";
+
 import BazaarSwitch from "components/BazaarSwitch";
 import {
   StyledIconButton,
@@ -9,6 +10,7 @@ import {
   StyledTableRow,
 } from "../StyledComponents";
 import { DeleteCustomer } from "../../../../redux/customerApiRequest";
+import { openCustomerModel } from "../../../../redux/customerSlice";
 import { useDispatch } from "react-redux";
 // ========================================================================
 
@@ -22,6 +24,8 @@ const CustomersRow = ({ customer, selected }) => {
     email,
     status,
     file,
+    files,
+    audio,
 
     id,
   } = customer;
@@ -31,9 +35,9 @@ const CustomersRow = ({ customer, selected }) => {
     switch (status) {
       case "Pending":
         return "secondary";
-      case "Processing":
-        return "secondary";
-      case "Delivered":
+      // case "p":
+      //   return "secondary";
+      case "accepted":
         return "success";
       case "Cancelled":
         return "error";
@@ -50,7 +54,7 @@ const CustomersRow = ({ customer, selected }) => {
 
   const handleDelete = async (id) => {
     console.log("IDDDDDDDD", customer);
-    dispatch(DeleteCustomer(id ,customer?.file?.filename));
+    dispatch(DeleteCustomer(id ,customer?.files));
   };
 
 
@@ -61,6 +65,11 @@ const CustomersRow = ({ customer, selected }) => {
   const isItemSelected = selected.indexOf(firstName) !== -1;
   const handleNavigate = () => router.push(`/admin/customer/${id}`);
   return (
+    
+
+    
+
+
     <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
       <StyledTableCell align="center">#{id.split("-")[0]}</StyledTableCell>
 
@@ -73,6 +82,8 @@ const CustomersRow = ({ customer, selected }) => {
         {/* {status} */}
         <Box m={0.75}>
           <Chip
+onClick={()=>{dispatch(openCustomerModel(customer))}}
+
             size="small"
             label={status}
             sx={{
@@ -90,6 +101,10 @@ const CustomersRow = ({ customer, selected }) => {
       </StyledTableCell>
 
       <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
+
+
+
+
 
       {/* <StyledTableCell align="center">
         <Avatar src={logo} sx={{
@@ -114,6 +129,10 @@ const CustomersRow = ({ customer, selected }) => {
         </StyledIconButton>
       </StyledTableCell>
     </StyledTableRow>
+
+
+
+
   );
 };
 export default CustomersRow;

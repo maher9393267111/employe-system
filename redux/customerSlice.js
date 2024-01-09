@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const customertSlice = createSlice({
   name: "customer",
   initialState: {
     allcustomers: [],
-    count:0,
+    count: 0,
 
     isFetching: false,
     error: false,
     refetch: false,
+    open: false,
+    customerdata: {},
   },
   reducers: {
     fetchStart: (state) => {
@@ -17,8 +18,8 @@ export const customertSlice = createSlice({
     },
     fetchSuccess: (state, action) => {
       console.log("ACTION ", action.payload);
-      state.allcustomers = action.payload.customers
-      state.count =action.payload.count
+      state.allcustomers = action.payload.customers;
+      state.count = action.payload.count;
       state.isFetching = false;
       state.error = false;
       state.refetch = !state.refetch;
@@ -29,9 +30,19 @@ export const customertSlice = createSlice({
     },
 
     AddNewCustomer: (state) => {
-
-        
       state.refetch = !refetch;
+    },
+
+    openCustomerModel: (state, action) => {
+      state.customerdata = action.payload;
+
+      state.open = true;
+    },
+
+    closeCustomerModel: (state, action) => {
+      state.customerdata = {};
+
+      state.open = false;
     },
 
     // logoutSuccess: (state) => {
@@ -40,6 +51,12 @@ export const customertSlice = createSlice({
   },
 });
 
-export const { fetchStart, fetchFailed, AddNewCustomer, fetchSuccess } =
-  customertSlice.actions;
+export const {
+  fetchStart,
+  fetchFailed,
+  AddNewCustomer,
+  fetchSuccess,
+  closeCustomerModel,
+  openCustomerModel,
+} = customertSlice.actions;
 export default customertSlice.reducer;

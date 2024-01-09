@@ -11,7 +11,9 @@ const SearchArea = props => {
   const {
     searchPlaceholder,
     buttonText,
-    handleBtnClick
+    handleBtnClick ,
+    handlestatus,
+    handlesort
   } = props;
   const downSM = useMediaQuery(theme => theme.breakpoints.down("sm"));
   return <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
@@ -22,6 +24,14 @@ const SearchArea = props => {
     }}>
         {buttonText}
       </Button>
+
+
+
+
+
+
+
+
     </FlexBox>;
 };
 SearchArea.defaultProps = {

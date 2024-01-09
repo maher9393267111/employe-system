@@ -39,6 +39,7 @@ export default function EditAgent({}) {
     city: yup.string().required("required"),
     ssn: yup.number().required("required"),
     gender:yup.string().required("required"),
+
   
   });
 
@@ -52,6 +53,8 @@ export default function EditAgent({}) {
     gender:'',
     city:'',
     zip:'',
+    ssn:'',
+    birthday:''
   });
 
   const [loading, setLoading] = useState(false);
@@ -75,6 +78,11 @@ export default function EditAgent({}) {
             address: data?.address,
             phoneNumber: data?.phoneNumber,
             email: data?.email,
+            city:data?.city,
+            zip:data?.zip,
+            gender:data?.gender,
+            ssn:data?.ssn,
+            birthday:data?.birthday
             
           }));
 
@@ -93,6 +101,7 @@ export default function EditAgent({}) {
 
   const handleFormSubmit = (values) => {
     console.log(values);
+    values.signature = signature
     UpdateCustomer(values, query.slug);
   };
 
@@ -158,7 +167,7 @@ export default function EditAgent({}) {
             audiofile ={audiofile}
             //  setAudioFile ={setAudioFile}
              signature ={signature}
-            //  setSignature = {setSignature}
+              setSignature = {setSignature}
           />
         )}
         

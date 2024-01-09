@@ -6,7 +6,7 @@ import {
   FormControlLabel,
   Grid,
   TextField,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 import { Formik, Field, ErrorMessage, useFormik } from "formik";
 import DropZone from "components/DropZone";
@@ -15,7 +15,7 @@ import BazaarImage from "components/BazaarImage";
 import { UploadImageBox, StyledClear } from "../StyledComponents";
 
 import SignatureCanvas from "react-signature-canvas";
-import ReactPlayer from "react-player"
+import ReactPlayer from "react-player";
 import { init } from "i18next";
 
 import {
@@ -144,8 +144,8 @@ const CustomerForm = (props) => {
 
       formData.append("audiofile", file);
 
-    const res =  await UploadAudio(formData);
-      setAudioFile(res?.link)
+      const res = await UploadAudio(formData);
+      setAudioFile(res?.link);
 
       toast.success("Audio file uploaded successfully");
     }
@@ -155,13 +155,12 @@ const CustomerForm = (props) => {
 
   const sigCanvas = useRef();
   const create = () => {
-    
     // const URL = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
     // setSignature(URL);
-    const signature = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
+    const signature = sigCanvas.current
+      .getTrimmedCanvas()
+      .toDataURL("image/png");
     setSignature(signature);
-
-
   };
 
   return (
@@ -170,9 +169,11 @@ const CustomerForm = (props) => {
         p: 6,
       }}
     >
-    
       <Grid item xs={12}>
         <div>
+
+Add Customer signature here
+
           {signature && (
             <>
               <img src={signature} alt="signature" className="signature" />
@@ -183,15 +184,11 @@ const CustomerForm = (props) => {
             // penColor="black"
             // canvasProps={{ className: "sigCanvas" }}
 
-
-
             // name={name}
             penColor="black"
             canvasProps={{ className: "sigPad" }}
             // ref={sigPad}
             onEnd={create}
-
-
           />
           {/* <button onClick={create}>Create</button> */}
         </div>
@@ -293,8 +290,6 @@ const CustomerForm = (props) => {
                 />
               </Grid>
 
-
-
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
@@ -310,9 +305,6 @@ const CustomerForm = (props) => {
                   helperText={touched.city && errors.city}
                 />
               </Grid>
-
-
-
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -330,7 +322,21 @@ const CustomerForm = (props) => {
                 />
               </Grid>
 
-
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  name="birthday"
+                  label="birthday"
+                  color="info"
+                  size="medium"
+                  placeholder="birthday"
+                  value={values.birthday}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.birthday && !!errors.birthday}
+                  helperText={touched.birthday && errors.birthday}
+                />
+              </Grid>
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -348,35 +354,26 @@ const CustomerForm = (props) => {
                 />
               </Grid>
 
-
-
               <Grid item sm={6} xs={12}>
                 <TextField
-                error={Boolean(touched.gender && errors.gender)}
-                 fullWidth
-                color="info"
-                size="medium"
-                helperText={touched.gender && errors.gender}
-                select
-                label="Worker Gender"
-                margin="normal"
-                name="gender"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.gender}
-                variant="outlined"
-              >
-                <MenuItem value={'male'}>Male</MenuItem>
-                <MenuItem value={'female'}>Female</MenuItem>
-              </TextField>
+                select fullWidth color="info" size="medium" name="gender" onBlur={handleBlur} placeholder="Category" label="Select Gender" onChange={handleChange} value={values.gender} error={Boolean(errors.gender && touched.gendery)} helperText={touched.gender && errors.category}
+                >
+                  <MenuItem color="info" value={"male"}>Male</MenuItem>
+                  <MenuItem color="info" value={"female"}>Female</MenuItem>
+                </TextField>
+
+
+
+
               </Grid>
 
-
-
-
-
               <Grid item xs={12}>
-                <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
+                <div
+                
+                // flexDirection="row" mt={2} flexWrap="wrap" gap={1}
+                
+                
+                >
                   {!isedit && (
                     <Box mb="5">
                       <FormControl>
@@ -423,17 +420,16 @@ const CustomerForm = (props) => {
                         )}
                       />
                     </Box>
+
+
+                    
+        
+
+
                   )}
-                </FlexBox>
+                </div>
 
-
-
-           
-
-
-
-
-                <FlexBox flexDirection="row" mt={2} flexWrap="wrap" gap={1}>
+                <div>
                   {!isedit && (
                     <Box mb="5">
                       <FormControl>
@@ -456,13 +452,8 @@ const CustomerForm = (props) => {
 
                           <Field
                             as={Input}
-                            //   name="audio"
-                            // accept="audio/mp3"
-                            //  display="none"
-                            //   id="imageUpload"
-                            //  type="file"
-                            //    accept="audio/*"
-
+                          
+                            // display="none"
                             type="file"
                             name="music"
                             accept="audio/*"
@@ -485,72 +476,49 @@ const CustomerForm = (props) => {
                       />
                     </Box>
                   )}
-                </FlexBox>
+                </div>
               </Grid>
 
               {/* <Grid item sm={6} xs={12}>
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
               </Grid> */}
 
+              {/* show images in edit page only--- */}
 
-{/* show images in edit page only--- */}
+              <Grid item sm={6} xs={12}>
+                <div style={{ display: "flex", gap: "12px" }}>
+                  {isedit &&
+                    images?.length > 0 &&
+                    images?.map((item, index) => {
+                      return (
+                        <div>
+                          <img
+                            style={{
+                              objectFit: "cover",
+                              height: "50px",
+                              width: "50px",
+                            }}
+                            className=""
+                            src={item.link}
+                            alt=""
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
+              </Grid>
 
+              {/* show audio file--- */}
 
-
-<Grid  item sm={6} xs={12}>
-
-
-<div style={{display:'flex' ,gap:'12px'}}>
-
-
-
-{isedit && images?.length > 0 && ( images?.map((item,index)=>{
-
-return (
-  <div>
-
-
-<img
-
-style={{objectFit:'cover' ,height:'50px' ,width:'50px'}}
-
-className="" src={item.link} alt="" />
-
-  </div>
-)
-
-}))}
-
-
-</div>
-
-
-
-</Grid>
-
-
-
-{/* show audio file--- */}
-
-
-
-
-<div style={{marginTop:'13px'}}>
-
-<ReactPlayer
-                url={audiofile}
-                width="400px"
-                height="50px"
-                playing={false}
-                controls={true}
-            />
-
-</div>
-
-
-
-
-
+              <div style={{ marginTop: "13px" }}>
+                <ReactPlayer
+                  url={audiofile}
+                  width="400px"
+                  height="50px"
+                  playing={false}
+                  controls={true}
+                />
+              </div>
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">

@@ -3,8 +3,8 @@ import * as yup from "yup";
 import { H3 } from "components/Typography";
 import { CustomerForm } from "pages-sections/admin";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
-import { useDispatch ,useSelector } from "react-redux";
-import { AddCustomer} from "../../../redux/customerApiRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { AddCustomer } from "../../../redux/customerApiRequest";
 import { useState } from "react";
 import { UploadImage } from "../../../redux/customerApiRequest";
 
@@ -16,21 +16,17 @@ CreateCustomer.getLayout = function getLayout(page) {
 };
 // =============================================================================
 
-
-
 const INITIAL_VALUES = {
-  firstName:"",
-  lastName:"",
+  firstName: "",
+  lastName: "",
   email: "",
   address: "",
   phoneNumber: "",
-  ssn:'',
-  gender:'',
-  city:'',
-  zip:'',
-  
-  
-  
+  ssn: "",
+  gender: "",
+  city: "",
+  zip: "",
+  birthday:""
 };
 
 // form field validation schema
@@ -44,32 +40,31 @@ const validationSchema = yup.object().shape({
   zip: yup.number().required("required"),
   city: yup.string().required("required"),
   ssn: yup.number().required("required"),
-  gender:yup.string().required("required"),
+  gender: yup.string().required("required"),
   
-
 });
 
 export default function CreateCustomer() {
   const dispatch = useDispatch();
-  const agentId = useSelector((state) => state.auth?.login?.currentUser?.payload?.id);
+  const agentId = useSelector(
+    (state) => state.auth?.login?.currentUser?.payload?.id
+  );
 
-const [images ,setImages] = useState(null)
-const [audiofile ,setAudioFile] = useState(null)
-const [signature ,setSignature] = useState('')
+  const [images, setImages] = useState(null);
+  const [audiofile, setAudioFile] = useState(null);
+  const [signature, setSignature] = useState("");
 
-
-console.log('id' ,agentId)
+  console.log("id", agentId);
   const handleFormSubmit = async (values) => {
+    console.log("IMAGEEEEE", values);
 
-     console.log("IMAGEEEEE" ,values)
+    values.files = images;
 
-values.files = images
-
-values.audio = audiofile
-values.signature = signature
+    values.audio = audiofile;
+    values.signature = signature;
 
     console.log("Customer Create", signature);
-    dispatch(AddCustomer(values ,agentId))
+    dispatch(AddCustomer(values, agentId));
   };
   return (
     <Box py={4}>
@@ -79,13 +74,13 @@ values.signature = signature
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
-        buttontext='Add customer'
+        buttontext="Add customer"
         images={images}
         setImages={setImages}
-        audiofile ={audiofile}
-         setAudioFile ={setAudioFile}
-         signature ={signature}
-         setSignature = {setSignature}
+        audiofile={audiofile}
+        setAudioFile={setAudioFile}
+        signature={signature}
+        setSignature={setSignature}
       />
     </Box>
   );
