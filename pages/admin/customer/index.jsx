@@ -105,22 +105,19 @@ export default function CustomerList({ brands }) {
   const [status, setStatus] = useState(customerdata?.status || "");
   const [note, setNote] = useState("");
 
-  const [searchstatus, setSearchStatus] = useState("");
+  const [searchstatus, setSearchStatus] = useState("pending");
 
-  const [sortText ,setSortText] = useState("")
+  const [sortText, setSortText] = useState("sorTBy");
   const [sortBy, setSortBy] = useState("");
   const [sortDirection, setSortDirection] = useState("desc");
 
-
-
   const handleSort = (event) => {
-
-    setSortText(event.target.value)
+    setSortText(event.target.value);
     if (event.target.value === "firstnameAsc") {
-      setSortBy("firstname");
+      setSortBy("firstName");
       setSortDirection("asc");
     } else if (event.target.value === "firstnameDesc") {
-      setSortBy("firstname");
+      setSortBy("firstName");
       setSortDirection("desc");
     } else if (event.target.value === "emailAsc") {
       setSortBy("email");
@@ -129,8 +126,6 @@ export default function CustomerList({ brands }) {
       setSortBy("email");
       setSortDirection("desc");
     }
-
-
   };
 
   const handleSearchStatusChange = (event) => {
@@ -195,12 +190,14 @@ export default function CustomerList({ brands }) {
     console.log("refetch execute", custpage);
 
     if (userRole[0] === "admin") {
-      dispatch(FetchCustomers(custpage, 2, searchstatus ,sortBy,sortDirection));
+      dispatch(
+        FetchCustomers(custpage, 2, searchstatus, sortBy, sortDirection)
+      );
     } else if (userRole[0] === "staff") {
-      dispatch(FetchAgentCustomers(custpage, 2, searchstatus));
+      dispatch(FetchAgentCustomers(custpage, 2, sortBy, sortDirection));
       toast.success("staff fetch customers");
     }
-  }, [custpage, refresh, searchstatus , sortBy ,sortDirection]);
+  }, [custpage, refresh, searchstatus, sortBy, sortDirection]);
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -306,21 +303,28 @@ export default function CustomerList({ brands }) {
               </Select>
             </FormControl> */}
 
-<div>
-
-      <Select
-        labelId="Sort By:"
-        id="sort-by-select"
-        value={sortText}
-        onChange={handleSort}
-        fullWidth
-        variant="outlined"
-        color="info"
-      >
-     
-     
-       
-        <MenuItem value={"firstnameAsc"} sx={{ alignItems: "center" }}>
+            <div>
+              <Select
+                sx={{
+                  height: 44,
+                  paddingRight: 0,
+                  borderRadius: 300,
+                  color: "grey.700",
+                  overflow: "hidden",
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "primary.info",
+                  },
+                }}
+                labelId="SortBy"
+                id="sort-by-select"
+                value={sortText}
+                onChange={handleSort}
+                placeholder="SortBy"
+                fullWidth
+                variant="outlined"
+                color="info"
+              >
+                <MenuItem value={"firstnameAsc"} sx={{ alignItems: "center" }}>
                   sortBy FirstName Asc
                 </MenuItem>
 
@@ -331,20 +335,9 @@ export default function CustomerList({ brands }) {
                 <MenuItem value="emailAsc">sortBy Email Asc</MenuItem>
 
                 <MenuItem value="emailDesc">sortBy Email Desc</MenuItem>
-
-
-
-
-      </Select>
-    </div>
-
-
+              </Select>
+            </div>
           </Grid>
-
-
-
-
-
 
           {userRole[0] === "admin" && (
             <Grid item sx={12} lg={3}>
@@ -363,7 +356,17 @@ export default function CustomerList({ brands }) {
                   Status
                 </InputLabel>
                 <Select
-                  sx={{ width: "full" }}
+                  sx={{
+                    height: 44,
+                    paddingRight: 0,
+                    borderRadius: 300,
+                    color: "grey.700",
+                    overflow: "hidden",
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "primary.info",
+                    },
+                  }}
+                  // sx={{ width: "full" }}
                   color="info"
                   labelId="bucket-simple-select-label"
                   id="bucket-simple-select"
@@ -372,12 +375,24 @@ export default function CustomerList({ brands }) {
                   onChange={handleSearchStatusChange}
                   fullWidth
                 >
-                  <MenuItem value="accepted" sx={{ alignItems: "center" }}>
+                  <MenuItem color="info" value="">
+                    All
+                  </MenuItem>
+
+                  <MenuItem
+                    color="info"
+                    value="accepted"
+                    sx={{ alignItems: "center" }}
+                  >
                     Accepted
                   </MenuItem>
-                  <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem color="info" value="pending">
+                    Pending
+                  </MenuItem>
 
-                  <MenuItem value="admincustomers">admin customers</MenuItem>
+                  <MenuItem color="info" value="admincustomers">
+                    admin customers
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -400,7 +415,7 @@ export default function CustomerList({ brands }) {
             </Button>
           </Grid>
         </Grid>
-        {/* </FlexBox> */};
+        {/* </FlexBox> */}
       </div>
 
       <Card>
@@ -424,6 +439,7 @@ export default function CustomerList({ brands }) {
               <TableBody>
                 {filteredCustomers?.map((customer) => (
                   <CustomersRow
+                  userRole ={ userRole}
                     customer={customer}
                     key={customer.id}
                     selected={selected}
@@ -493,7 +509,7 @@ export default function CustomerList({ brands }) {
               <TextField
                 label="Note"
                 name="note"
-                rows={4}
+                rows={2}
                 multiline
                 value={note}
                 onChange={onChange}
@@ -512,7 +528,8 @@ export default function CustomerList({ brands }) {
 
             {customerdata?.status === "pending" && (
               <Button
-                className="   text-indigo-600"
+                sx={{ backgroundColor: "primary.info" }}
+                className=" "
                 onClick={() =>
                   dispatch(ChangeCustomerStatus(customerdata, status, note))
                 }

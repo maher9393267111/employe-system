@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 
 // ========================================================================
 
-const CustomersRow = ({ customer, selected }) => {
+const CustomersRow = ({ customer, selected , userRole }) => {
   const {
     firstName,
     address,
@@ -124,9 +124,14 @@ onClick={()=>{dispatch(openCustomerModel(customer))}}
           <RemoveRedEye />
         </StyledIconButton>
 
+{ userRole[0] === 'admin' &&
         <StyledIconButton onClick={() => handleDelete(id)}>
           <Delete />
         </StyledIconButton>
+}
+
+
+
       </StyledTableCell>
     </StyledTableRow>
 

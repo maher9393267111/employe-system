@@ -32,17 +32,17 @@ export const FetchCustomers =
   };
 
 export const FetchAgentCustomers =
-  (page = 1, size = 2 ,status , sortBy,sortDirection) =>
+  (page = 1, size = 2  , sortBy,sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
       console.log("page in@@@@@@@@@@@@@@@@@ request api", page);
-      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!" , status ,sortBy ,sortDirection)
+      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!"  ,sortBy ,sortDirection)
 
       const response = await axiosJWT.get(
         `${REACT_APP_BASE_URL}/customers/agentCustomers?page=${
           page === 0 ? 1 : page
-        }&&size=${size}&&status=${status}&&sortBy=${sortBy}&&sortDirection=${sor}`
+        }&&size=${size}&&sortBy=${sortBy}&&sortDirection=${sortDirection}`
       );
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
