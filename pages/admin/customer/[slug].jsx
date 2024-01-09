@@ -13,6 +13,7 @@ import {
 } from "../../../redux/customerApiRequest";
 // import Skeleton from 'react-loading-skeleton';
 import Skeleton from "@mui/material/Skeleton";
+
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -34,6 +35,11 @@ export default function EditAgent({}) {
     email: yup.string().email("invalid email").required("Email is required"),
     address: yup.string().required("required"),
     phoneNumber: yup.number().required("required"),
+    zip: yup.number().required("required"),
+    city: yup.string().required("required"),
+    ssn: yup.number().required("required"),
+    gender:yup.string().required("required"),
+  
   });
 
   const [customer, setCustomer] = useState({
@@ -42,9 +48,19 @@ export default function EditAgent({}) {
     email: "",
     address: "",
     phoneNumber: "",
+    ssn:'',
+    gender:'',
+    city:'',
+    zip:'',
   });
 
   const [loading, setLoading] = useState(false);
+
+  const [images ,setImages] = useState(null)
+  const [audiofile ,setAudioFile] = useState(null)
+  const [signature ,setSignature] = useState('')
+
+
   useEffect(() => {
     setLoading(true);
     if (query.slug) {
@@ -59,7 +75,13 @@ export default function EditAgent({}) {
             address: data?.address,
             phoneNumber: data?.phoneNumber,
             email: data?.email,
+            
           }));
+
+          setImages(data?.files)
+          setSignature(data?.signature)
+          setAudioFile(data?.audio)
+
         })
         .then(() => {
           setLoading(false);
@@ -131,9 +153,15 @@ export default function EditAgent({}) {
             slug={query.slug}
             buttontext="Edit customer"
             isedit={true}
+            images={images}
+            // setImages={setImages}
+            audiofile ={audiofile}
+            //  setAudioFile ={setAudioFile}
+             signature ={signature}
+            //  setSignature = {setSignature}
           />
         )}
-        nnn
+        
       </div>
     </Box>
   );

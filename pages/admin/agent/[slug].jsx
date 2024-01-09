@@ -33,11 +33,11 @@ export default function EditAgent({}) {
 
   // form field validation schema
   const validationSchema = yup.object().shape({
-    // fullName: yup.string().required("required"),
-    // username: yup.string().required("required"),
-    // email: yup.string().email("invalid email").required("Email is required"),
-    // address: yup.string().required("required"),
-    // phoneNumber: yup.number().required("required"),
+    fullName: yup.string().required("required"),
+    username: yup.string().required("required"),
+    email: yup.string().email("invalid email").required("Email is required"),
+    address: yup.string().required("required"),
+    phoneNumber: yup.number().required("required"),
     // password: yup.string().required("Password is required"),
   });
 
@@ -131,6 +131,7 @@ export default function EditAgent({}) {
           validationSchema={validationSchema}
           handleFormSubmit={handleFormSubmit}
           slug={query.slug}
+          isedit ={true}
         />
       )}
     </Box>

@@ -23,7 +23,13 @@ const INITIAL_VALUES = {
   lastName:"",
   email: "",
   address: "",
-  phoneNumber: ""
+  phoneNumber: "",
+  ssn:'',
+  gender:'',
+  city:'',
+  zip:'',
+  
+  
   
 };
 
@@ -35,6 +41,11 @@ const validationSchema = yup.object().shape({
   email: yup.string().email("invalid email").required("Email is required"),
   address: yup.string().required("required"),
   phoneNumber: yup.number().required("required"),
+  zip: yup.number().required("required"),
+  city: yup.string().required("required"),
+  ssn: yup.number().required("required"),
+  gender:yup.string().required("required"),
+  
 
 });
 
@@ -42,16 +53,22 @@ export default function CreateCustomer() {
   const dispatch = useDispatch();
   const agentId = useSelector((state) => state.auth?.login?.currentUser?.payload?.id);
 
-const [image ,setImage] = useState(null)
+const [images ,setImages] = useState(null)
+const [audiofile ,setAudioFile] = useState(null)
+const [signature ,setSignature] = useState('')
 
 
 console.log('id' ,agentId)
   const handleFormSubmit = async (values) => {
 
-     console.log("IMAGEEEEE" ,image)
+     console.log("IMAGEEEEE" ,values)
 
-values.file = image
-    console.log("Customer Create", values);
+values.files = images
+
+values.audio = audiofile
+values.signature = signature
+
+    console.log("Customer Create", signature);
     dispatch(AddCustomer(values ,agentId))
   };
   return (
@@ -63,8 +80,12 @@ values.file = image
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
         buttontext='Add customer'
-        image={image}
-        setImage={setImage}
+        images={images}
+        setImages={setImages}
+        audiofile ={audiofile}
+         setAudioFile ={setAudioFile}
+         signature ={signature}
+         setSignature = {setSignature}
       />
     </Box>
   );

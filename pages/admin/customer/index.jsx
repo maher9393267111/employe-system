@@ -131,6 +131,7 @@ toast.success("staff fetch customers")
     address: item?.address,
     phoneNumber: item?.phoneNumber,
     status: item?.status,
+    file:item?.file
   }));
 
   console.log("filterdcystomers", filteredCustomers);
@@ -164,7 +165,7 @@ toast.success("staff fetch customers")
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers </H3>
+      <H3 mb={2}>All Customers  </H3>
 
       {/* {userRole} */}
 

@@ -24,6 +24,7 @@ const AgentForm = (props) => {
     validationSchema,
     handleFormSubmit,
     slug = null,
+    isedit =false
   } = props;
   const [files, setFiles] = useState([]);
 
@@ -148,6 +149,9 @@ const AgentForm = (props) => {
                 />
               </Grid>
 
+
+{!isedit && 
+
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
@@ -163,6 +167,10 @@ const AgentForm = (props) => {
                   helperText={touched.password && errors.password}
                 />
               </Grid>
+
+}
+
+
 
               <Grid item xs={12}>
                 <DropZone

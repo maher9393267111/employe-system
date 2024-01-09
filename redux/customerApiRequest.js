@@ -65,6 +65,9 @@ export const AddCustomer = (data, agentId) => async (dispatch) => {
   }
 };
 
+
+
+
 export const getSingleCustomerRedux = (customerId) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
@@ -106,11 +109,18 @@ export const UpdateCustomer = async (values, id) => {
 
 
 
-export const DeleteCustomer = (customerId) => async (dispatch) => {
+export const DeleteCustomer = (customerId ,filename) => async (dispatch) => {
   try {
+
+console.log("image filename" ,filename)
+
+ await DeleteImage(filename)
+
+
     const response = await axiosJWT.delete(
       `${baseUrl}/customers/${customerId}`
     );
+
 
     toast.success("Customer deleted successfully");
     console.log("RESPONSE DATA", response.data);
@@ -127,7 +137,7 @@ export const DeleteCustomer = (customerId) => async (dispatch) => {
 
 // http://localhost:8000/upload/avatar
 
-
+// single
 export const UploadImage = async (file ,oldfile=null) => {
   try {
     const res = await axiosJWT.post(`${baseUrl}/upload/avatar?oldfile=${oldfile}` ,file);
@@ -139,3 +149,51 @@ export const UploadImage = async (file ,oldfile=null) => {
     return res?.data;
   } catch (error) {}
 };
+
+
+export const UploadImages = async (files ,oldfile=null) => {
+  try {
+    const res = await axiosJWT.post(`${baseUrl}/upload/uploadmulti` ,files);
+
+    console.log("Array of images", res?.data.images);
+
+
+
+    return res?.data.images
+  } catch (error) {}
+};
+
+
+
+// Upload audio File
+
+export const UploadAudio = async (files ,oldfile=null) => {
+  try {
+    const res = await axiosJWT.post(`${baseUrl}/upload/uploadaudio` ,files);
+
+    console.log("Array of images", res?.data);
+
+
+
+    return res?.data
+  } catch (error) {}
+};
+
+
+
+
+
+export const DeleteImage = async (filename ) => {
+  try {
+    const res = await axiosJWT.post(`${baseUrl}/upload/deleteimage` ,filename);
+
+    console.log("single", res?.data);
+    toast.success('customer file deleted successfully')
+
+
+
+    return res?.data;
+  } catch (error) {}
+};
+
+

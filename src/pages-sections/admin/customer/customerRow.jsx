@@ -21,11 +21,12 @@ const CustomersRow = ({ customer, selected }) => {
     phoneNumber,
     email,
     status,
+    file,
 
     id,
   } = customer;
 
-  console.log(customer);
+  console.log(customer ,"DATA CUSTOMER");
   const getColor = status => {
     switch (status) {
       case "Pending":
@@ -48,8 +49,8 @@ const CustomersRow = ({ customer, selected }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
-    console.log("IDDDDDDDD", id);
-    dispatch(DeleteCustomer(id));
+    console.log("IDDDDDDDD", customer);
+    dispatch(DeleteCustomer(id ,customer?.file?.filename));
   };
 
 
