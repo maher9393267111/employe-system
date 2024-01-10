@@ -12,7 +12,7 @@ import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
 import api from "utils/__api__/dashboard";
 import { useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
 import axiosJWT from "../../../redux/axiosJWT";
 import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
 import { FetchAgents } from "../../../redux/agentApiRequest";
@@ -88,10 +88,38 @@ AgentList.getLayout = function getLayout(page) {
 export default function AgentList({ brands }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
+  const router =useRouter()
+  
+  const user = useSelector(
+    (state) => state.auth.login.currentUser
+  );
+
+  useEffect(() => {
+   // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+    if (user === null) {
+        router.push('/login');
+    }
+}, [router ,user]);
+
+
+
+
+
+
+
   const employeesData = useSelector((state) => state.agent?.agent?.allagents);
   const name = useSelector((state) => state.auth?.login.nane);
   const refetch = useSelector((state) => state.agent?.agent?.refetch);
  
+  const userRole = useSelector(
+    (state) => state.auth.login.currentUser.payload.roles
+  );
+
+
+
+
+
+
 
   const dispatch = useDispatch();
   const [employees, setEmployees] = useState(employeesData ?? []);
@@ -151,13 +179,19 @@ export default function AgentList({ brands }) {
   return (
     <Box py={4}>
       <H3 mb={2}>All Agents</H3>
+      
+      {userRole[0] === 'admin' &&
 
       <SearchArea
         handleSearch={() => {}}
         buttonText="Add Agent"
         searchPlaceholder="Search Agent..."
-        handleBtnClick={() => Router.push("/admin/brands/create")}
+        handleBtnClick={() => Router.push("/admin/agent/create")}
+        userRole ={userRole}
       />
+  }
+
+
 
       <Card>
         <Scrollbar>
@@ -179,7 +213,7 @@ export default function AgentList({ brands }) {
 
               <TableBody>
                 {filteredList.map((agent) => (
-                  <AgentRow agent={agent} key={agent.id} selected={selected} />
+                  <AgentRow userRole={userRole } agent={agent} key={agent.id} selected={selected} />
                 ))}
               </TableBody>
             </Table>

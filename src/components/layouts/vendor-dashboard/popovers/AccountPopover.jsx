@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { H6, Small } from "components/Typography";
-
+import {useDispatch} from 'react-redux'
+import { logoutSuccess } from "../../../../../redux/authSlice";
+import {useRouter} from 'next/router' 
 // styled components
 const Divider = styled(Box)(({
   theme
@@ -10,6 +12,21 @@ const Divider = styled(Box)(({
   border: `1px dashed ${theme.palette.grey[200]}`
 }));
 const AccountPopover = () => {
+
+const dispatch = useDispatch()
+const router = useRouter()
+
+const handleLogout=()=>{
+
+
+  dispatch(logoutSuccess())
+router.push('/login')
+
+}
+
+
+
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClose = () => setAnchorEl(null);
@@ -68,7 +85,7 @@ const AccountPopover = () => {
         <MenuItem>Settings</MenuItem>
 
         <Divider />
-        <MenuItem>Logout</MenuItem>
+        <MenuItem  onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </Box>;
 };

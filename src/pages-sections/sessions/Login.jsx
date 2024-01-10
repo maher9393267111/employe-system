@@ -13,7 +13,7 @@ import axios from 'axios'
 import { loginUser } from '../../../redux/apiRequest';
 import { useEffect } from 'react';
 import { useRouter } from "next/router";
-import { useDispatch } from 'react-redux'
+import { useDispatch , useSelector } from 'react-redux'
 const fbStyle = {
   background: "#3B5998",
   color: "white"
@@ -77,14 +77,19 @@ console.log("start")
   });
 
 
-
+  const user = useSelector(
+    (state) => state.auth.login.currentUser
+  );
 
   useEffect(() => {
-    const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+   // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
     if (user !== null) {
         router.push('/admin/agent');
     }
-}, [router]);
+}, [router ,user]);
+
+
+
 
 
 
@@ -96,15 +101,17 @@ console.log("start")
        {handleSubmit}
      
        >
-        <BazaarImage src="/assets/images/bazaar-black-sm.svg" sx={{
+
+        {/* <BazaarImage src="/assets/images/bazaar-black-sm.svg" sx={{
         m: "auto"
-      }} />
+      }} /> */}
+
+
 
         <H1 textAlign="center" mt={1} mb={4} fontSize={16}>
-          Welcome To Bazaars
+          Welcome To Dashboard
         </H1>
 
-{values.username}
 
         <BazaarTextField mb={1.5} fullWidth name="username" size="small" label="Full Name" variant="outlined" onBlur={handleBlur} value={values.username} onChange={handleChange} placeholder="Ralph Adwards" error={!!touched.name && !!errors.username} helperText={touched.username && errors.username} />
 
@@ -127,9 +134,9 @@ console.log("start")
         </Button>
       </form>
 
-      <SocialButtons />
+      {/* <SocialButtons /> */}
 
-      <FlexRowCenter mt="1.25rem">
+      {/* <FlexRowCenter mt="1.25rem">
         <Box>Don&apos;t have account?</Box>
         <Link href="/signup" passHref legacyBehavior>
           <a>
@@ -138,7 +145,7 @@ console.log("start")
             </H6>
           </a>
         </Link>
-      </FlexRowCenter>
+      </FlexRowCenter> */}
 
       <FlexBox justifyContent="center" bgcolor="grey.200" borderRadius="4px" py={2.5} mt="1.25rem">
         Forgot your password?
@@ -149,6 +156,8 @@ console.log("start")
             </H6>
           </a>
         </Link>
+
+
       </FlexBox>
     </Wrapper>;
 };

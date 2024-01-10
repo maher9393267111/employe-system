@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Avatar, Box, useMediaQuery } from "@mui/material";
@@ -7,6 +7,7 @@ import Scrollbar from "components/Scrollbar";
 import { FlexBetween } from "components/flex-box";
 import { navigations } from "./NavigationList";
 import SidebarAccordion from "./SidebarAccordion";
+import {useDispatch , useSelector} from 'react-redux'
 import { ListLabel, BadgeValue, StyledText, BulletIcon, NavWrapper, ExternalLink, NavItemButton, SidebarWrapper, ChevronLeftIcon, ListIconWrapper } from "./LayoutStyledComponents";
 const TOP_HEADER_AREA = 70;
 
@@ -21,7 +22,18 @@ const DashboardSidebar = props => {
     setShowMobileSideBar,
     setSidebarCompact
   } = props;
-  const router = useRouter();
+
+
+
+
+const router =useRouter()
+
+
+
+
+
+
+
   const [onHover, setOnHover] = useState(false);
   const downLg = useMediaQuery(theme => theme.breakpoints.down("lg"));
 

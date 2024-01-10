@@ -2,7 +2,9 @@ import { Box, styled } from "@mui/material";
 import { Fragment, useState } from "react";
 import DashboardNavbar from "./DashboardNavbar";
 import DashboardSidebar from "./DashboardSidebar";
-
+import { useEffect } from 'react';
+import { useRouter } from "next/router";
+import { useDispatch , useSelector } from 'react-redux'
 // styled components
 const BodyWrapper = styled(Box)(({
   theme,
@@ -37,6 +39,27 @@ const VendorDashboardLayout = ({
 }) => {
   const [sidebarCompact, setSidebarCompact] = useState(0);
   const [showMobileSideBar, setShowMobileSideBar] = useState(0);
+
+
+  const router =useRouter()
+  const dispatch = useDispatch();
+
+  const user = useSelector(
+    (state) => state.auth.login.currentUser
+  );
+
+  useEffect(() => {
+   // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+    if (user === null) {
+        router.push('/login');
+    }
+}, [router ,user]);
+
+
+
+
+
+
 
   // handle sidebar toggle for desktop device
   const handleCompactToggle = () => setSidebarCompact(state => state ? 0 : 1);

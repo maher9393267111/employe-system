@@ -3,48 +3,41 @@ import { Avatar } from "@mui/material";
 import { useRouter } from "next/router";
 import { Delete, RemoveRedEye } from "@mui/icons-material";
 import BazaarSwitch from "components/BazaarSwitch";
-import { StyledIconButton, StyledTableCell, StyledTableRow } from "../StyledComponents";
-import {DeleteAgent } from '../../../../redux/agentApiRequest'
-import {useDispatch} from 'react-redux'
+import {
+  StyledIconButton,
+  StyledTableCell,
+  StyledTableRow,
+} from "../StyledComponents";
+import { DeleteAgent } from "../../../../redux/agentApiRequest";
+import { useDispatch } from "react-redux";
 // ========================================================================
 
 // ========================================================================
 
-const AgentRow = ({
-  agent,
-  selected
-}) => {
+const AgentRow = ({ agent, selected ,userRole  }) => {
   const {
     username,
     address,
     phoneNumber,
     email,
-   
-   
+
     id,
-    
   } = agent;
 
+  console.log(agent);
 
-  console.log(agent)
+  const dispatch = useDispatch();
 
-const dispatch =useDispatch()
-
-const handleDelete =async()=>{
-dispatch(DeleteAgent(id))
-
-
-
-}
-
-
-
+  const handleDelete = async () => {
+    dispatch(DeleteAgent(id));
+  };
 
   const router = useRouter();
-//   const [featuredCategory, setFeaturedCategory] = useState(featured);
+  //   const [featuredCategory, setFeaturedCategory] = useState(featured);
   const isItemSelected = selected.indexOf(username) !== -1;
   const handleNavigate = () => router.push(`/admin/agent/${id}`);
-  return <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
+  return (
+    <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
       <StyledTableCell align="center">#{id.split("-")[0]}</StyledTableCell>
 
       <StyledTableCell align="center">{username}</StyledTableCell>
@@ -62,8 +55,6 @@ dispatch(DeleteAgent(id))
       }} />
       </StyledTableCell> */}
 
-
-
       {/* <StyledTableCell align="center">
         <BazaarSwitch color="info" checked={featuredCategory} onChange={() => setFeaturedCategory(state => !state)} />
       </StyledTableCell> */}
@@ -73,10 +64,17 @@ dispatch(DeleteAgent(id))
           <RemoveRedEye />
         </StyledIconButton>
 
+{userRole[0] === 'admin' &&
+
         <StyledIconButton onClick={handleDelete}>
           <Delete />
         </StyledIconButton>
+}
+
+
+
       </StyledTableCell>
-    </StyledTableRow>;
+    </StyledTableRow>
+  );
 };
 export default AgentRow;

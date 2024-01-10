@@ -13,11 +13,14 @@ const SearchArea = props => {
     buttonText,
     handleBtnClick ,
     handlestatus,
-    handlesort
+    handlesort,
+    userRole
   } = props;
   const downSM = useMediaQuery(theme => theme.breakpoints.down("sm"));
   return <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
       <SearchInput placeholder={searchPlaceholder} />
+
+
 
       <Button color="info" fullWidth={downSM} variant="contained" startIcon={<Add />} onClick={handleBtnClick} sx={{
       minHeight: 44

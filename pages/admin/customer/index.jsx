@@ -142,7 +142,7 @@ export default function CustomerList({ brands }) {
     setNote(event.target.value);
   };
 
-  const { allcustomers, count, open, customerdata ,isFetching } = useSelector(
+  const { allcustomers, count, open, customerdata, isFetching } = useSelector(
     (state) => state.customer
   );
   const currentUserId = useSelector(
@@ -158,6 +158,7 @@ export default function CustomerList({ brands }) {
   const userRole = useSelector(
     (state) => state.auth.login.currentUser.payload.roles
   );
+
   console.log("Role", userRole[0]);
   console.log("customer redux toolkit", allcustomers);
 
@@ -419,12 +420,10 @@ export default function CustomerList({ brands }) {
         {/* </FlexBox> */}
       </div>
 
-{isFetching ?  <div>
-
-<Card sx={{marginTop:'12px'}}>
-
-
-<Skeleton
+      {isFetching ? (
+        <div>
+          <Card sx={{ marginTop: "12px" }}>
+            <Skeleton
               variant="rounded"
               width={"full"}
               height={60}
@@ -436,58 +435,51 @@ export default function CustomerList({ brands }) {
               height={60}
               sx={{ margin: "12px" }}
             />
+          </Card>
+        </div>
+      ) : (
+        <Card>
+          <Scrollbar>
+            <TableContainer
+              sx={{
+                minWidth: 600,
+              }}
+            >
+              <Table>
+                <TableHeader
+                  order={order}
+                  hideSelectBtn
+                  orderBy={orderBy}
+                  heading={tableHeading}
+                  numSelected={selected.length}
+                  rowCount={filteredList.length}
+                  onRequestSort={handleRequestSort}
+                />
 
-</Card>
+                <TableBody>
+                  {filteredCustomers?.map((customer) => (
+                    <CustomersRow
+                      userRole={userRole}
+                      customer={customer}
+                      key={customer.id}
+                      selected={selected}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
 
-</div>   
-: 
+          <Stack alignItems="center" my={4}>
+            <CustomerPagination
+              count={Math.ceil(count / rowsPerPage)}
+              // {count / rowsPerPage}
 
-      <Card>
-        <Scrollbar>
-          <TableContainer
-            sx={{
-              minWidth: 600,
-            }}
-          >
-            <Table>
-              <TableHeader
-                order={order}
-                hideSelectBtn
-                orderBy={orderBy}
-                heading={tableHeading}
-                numSelected={selected.length}
-                rowCount={filteredList.length}
-                onRequestSort={handleRequestSort}
-              />
-
-              <TableBody>
-                {filteredCustomers?.map((customer) => (
-                  <CustomersRow
-                  userRole ={ userRole}
-                    customer={customer}
-                    key={customer.id}
-                    selected={selected}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
-
-        <Stack alignItems="center" my={4}>
-          <CustomerPagination
-            count={Math.ceil(count / rowsPerPage)}
-            // {count / rowsPerPage}
-
-            handleChange={handleChange1}
-          />
-        </Stack>
-      </Card>
-
-                }
-
-
-
+              handleChange={handleChange1}
+            />
+          </Stack>
+        </Card>
+      )}
 
       {/* -----status update modal--- */}
       {customerdata?.status === "pending" && (

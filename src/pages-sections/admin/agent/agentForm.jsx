@@ -13,6 +13,7 @@ import { FlexBox } from "components/flex-box";
 import BazaarImage from "components/BazaarImage";
 import { UploadImageBox, StyledClear } from "../StyledComponents";
 import { init } from "i18next";
+import {useSelector , useDispatch} from 'react-redux'
 
 // ================================================================
 
@@ -44,6 +45,15 @@ const AgentForm = (props) => {
   const handleFileDelete = (file) => () => {
     setFiles((files) => files.filter((item) => item.name !== file.name));
   };
+
+
+
+   
+  const userRole = useSelector(
+    (state) => state.auth.login.currentUser.payload.roles
+  );
+
+
   return (
     <Card
       sx={{
@@ -189,11 +199,17 @@ const AgentForm = (props) => {
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
               </Grid> */}
 
+{userRole[0] === 'admin' &&
+
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
                   Save Agent
                 </Button>
               </Grid>
+
+
+            }
+
             </Grid>
           </form>
         )}
