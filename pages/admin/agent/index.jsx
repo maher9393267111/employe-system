@@ -17,6 +17,7 @@ import axiosJWT from "../../../redux/axiosJWT";
 import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
 import { FetchAgents } from "../../../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
+import {toast} from 'react-toastify'
 
 // TABLE HEADING DATA LIST
 // const tableHeading = [{
@@ -90,16 +91,22 @@ export default function AgentList({ brands }) {
 
   const router =useRouter()
   
-  const user = useSelector(
-    (state) => state.auth.login.currentUser
-  );
+ 
+//const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
 
-  useEffect(() => {
-   // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
-    if (user === null) {
-        router.push('/login');
-    }
+const user = useSelector(
+  (state) => state.auth.login.currentUser
+);
+
+useEffect(() => {
+ // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+  if (user === null) {
+      router.push('/login');
+      toast.success('redirect to login')
+  }
 }, [router ,user]);
+
+
 
 
 
@@ -112,7 +119,7 @@ export default function AgentList({ brands }) {
   const refetch = useSelector((state) => state.agent?.agent?.refetch);
  
   const userRole = useSelector(
-    (state) => state.auth.login.currentUser.payload.roles
+    (state) => state.auth.login.currentUser?.payload?.roles
   );
 
 

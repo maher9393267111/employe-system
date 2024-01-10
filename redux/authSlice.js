@@ -25,6 +25,8 @@ export const authSlice = createSlice({
         },
         logoutSuccess: (state) => {
             state.login.currentUser = null;
+            localStorage.removeItem('persist:root');
+            window.location.href = `/login`;
         },
     },
 });
