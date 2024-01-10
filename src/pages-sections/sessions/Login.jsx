@@ -113,7 +113,7 @@ console.log("start")
         </H1>
 
 
-        <BazaarTextField mb={1.5} fullWidth name="username" size="small" label="Full Name" variant="outlined" onBlur={handleBlur} value={values.username} onChange={handleChange} placeholder="Ralph Adwards" error={!!touched.name && !!errors.username} helperText={touched.username && errors.username} />
+        <BazaarTextField mb={1.5} fullWidth name="username" size="small" label="UserName" variant="outlined" onBlur={handleBlur} value={values.username} onChange={handleChange} placeholder="Ralph Adwards" error={!!touched.name && !!errors.username} helperText={touched.username && errors.username} />
 
 {/* 
 

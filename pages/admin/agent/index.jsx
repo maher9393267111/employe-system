@@ -17,7 +17,7 @@ import axiosJWT from "../../../redux/axiosJWT";
 import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
 import { FetchAgents } from "../../../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 // TABLE HEADING DATA LIST
 // const tableHeading = [{
@@ -89,44 +89,15 @@ AgentList.getLayout = function getLayout(page) {
 export default function AgentList({ brands }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
-  const router =useRouter()
-  
- 
-
-
-// const user = useSelector(
-//   (state) => state.auth.login.currentUser
-// );
-
-// useEffect(() => {
-//  // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
-//   if (user === null) {
-//    //   router.push('/login');
-//       toast.success('redirect to login')
-//   }
-// }, [router ,user]);
-
-
-
-
-
-
-
-
+  const router = useRouter();
 
   const employeesData = useSelector((state) => state.agent?.agent?.allagents);
   const name = useSelector((state) => state.auth?.login.nane);
   const refetch = useSelector((state) => state.agent?.agent?.refetch);
- 
+
   const userRole = useSelector(
     (state) => state.auth.login.currentUser?.payload?.roles
   );
-
-
-
-
-
-
 
   const dispatch = useDispatch();
   const [employees, setEmployees] = useState(employeesData ?? []);
@@ -144,10 +115,7 @@ export default function AgentList({ brands }) {
 
     // fetchData();
 
-
-    dispatch(FetchAgents())
-
-
+    dispatch(FetchAgents());
   }, [refetch]);
 
   const filteredBrands = brands.map((item) => ({
@@ -181,29 +149,21 @@ export default function AgentList({ brands }) {
     defaultSort: "name",
   });
 
-  console.log("??",  filteredAgents);
+  console.log("??", filteredAgents);
 
   return (
     <Box py={4}>
       <H3 mb={2}>All Agents</H3>
-    
 
-{/* {user && */}
-
-{/* <div> */}
-
-      { userRole[0] === 'admin' &&
-
-      <SearchArea
-        handleSearch={() => {}}
-        buttonText="Add Agent"
-        searchPlaceholder="Search Agent..."
-        handleBtnClick={() => Router.push("/admin/agent/create")}
-        userRole ={userRole}
-      />
-  }
-
-
+      {userRole[0] === "admin" && (
+        <SearchArea
+          handleSearch={() => {}}
+          buttonText="Add Agent"
+          searchPlaceholder="Search Agent..."
+          handleBtnClick={() => Router.push("/admin/agent/create")}
+          userRole={userRole}
+        />
+      )}
 
       <Card>
         <Scrollbar>
@@ -225,13 +185,18 @@ export default function AgentList({ brands }) {
 
               <TableBody>
                 {filteredList.map((agent) => (
-                  <AgentRow userRole={userRole } agent={agent} key={agent.id} selected={selected} />
+                  <AgentRow
+                    userRole={userRole}
+                    agent={agent}
+                    key={agent.id}
+                    selected={selected}
+                  />
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Scrollbar>
-       
+
         <Stack alignItems="center" my={4}>
           <TablePagination
             onChange={handleChangePage}
@@ -239,15 +204,6 @@ export default function AgentList({ brands }) {
           />
         </Stack>
       </Card>
-
-
-      {/* </div>
-
-                } */}
-
-
-
-
     </Box>
   );
 }

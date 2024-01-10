@@ -265,45 +265,7 @@ export default function CustomerList({ brands }) {
           </Grid>
 
           <Grid item sx={12} lg={2}>
-            {/* <FormControl
-              style={{ width: "100% !important" }}
-              sx={{ width: "full" }}
-              size="small"
-            >
-              <InputLabel
-                sx={{ width: "full" }}
-                id="bucket-simple-select-label"
-                size="small"
-                color="info"
-                variant="outlined"
-              >
-                SortBy
-              </InputLabel>
-              <Select
-                sx={{ width: "full" }}
-                color="info"
-                labelId="bucket-simple-select-label"
-                id="bucket-simple-select"
-             
-                label="Bucket"
-                value={sortText}
-                onChange={handleSort}
-               // onChange={handleSort}
-                fullWidth
-              >
-                <MenuItem value="firstnameAsc" sx={{ alignItems: "center" }}>
-                  sortBy FirstName Asc
-                </MenuItem>
-
-                <MenuItem value="firstnameDesc" sx={{ alignItems: "center" }}>
-                  sortBy FirstName Desc
-                </MenuItem>
-
-                <MenuItem value="emailAsc">sortBy Email Asc</MenuItem>
-
-                <MenuItem value="emailDesc">sortBy Email Desc</MenuItem>
-              </Select>
-            </FormControl> */}
+          
 
             <div>
               <Select
@@ -340,6 +302,8 @@ export default function CustomerList({ brands }) {
               </Select>
             </div>
           </Grid>
+
+          {userRole[0]}
 
           {userRole[0] === "admin" && (
             <Grid item sx={12} lg={3}>
