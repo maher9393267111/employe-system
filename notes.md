@@ -137,5 +137,103 @@
         )}
       </Formik>
 
-----------------------
+--------------------------
 
+
+
+  {userRole[0] === "admin" && (
+            <Grid item sx={12} lg={3}>
+              <FormControl
+                style={{ width: "100% !important" }}
+                sx={{ width: "full" }}
+                size="medium"
+              >
+                <InputLabel
+                  sx={{ width: "full" }}
+                  id="bucket-simple-select-label"
+                  size="small"
+                  color="info"
+                  variant="outlined"
+                >
+                  Status
+                </InputLabel>
+                <Select
+                  sx={{
+                    height: 44,
+                    paddingRight: 0,
+                    borderRadius: 300,
+                    color: "grey.700",
+                    overflow: "hidden",
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "primary.info",
+                    },
+                  }}
+                  // sx={{ width: "full" }}
+                  color="info"
+                  labelId="bucket-simple-select-label"
+                  id="bucket-simple-select"
+                  value={searchstatus}
+                  label="FilterBy"
+                  onChange={handleSearchStatusChange}
+                  fullWidth
+                >
+                  <MenuItem color="info" value="">
+                    All
+                  </MenuItem>
+
+                  <MenuItem
+                    color="info"
+                    value="accepted"
+                    sx={{ alignItems: "center" }}
+                  >
+                    Accepted
+                  </MenuItem>
+                  <MenuItem color="info" value="pending">
+                    Pending
+                  </MenuItem>
+
+                  <MenuItem color="info" value="admincustomers">
+                    admin customers
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
+
+
+-----------------------
+
+ <div>
+              <Select
+                sx={{
+                  height: 44,
+                  paddingRight: 0,
+                  borderRadius: 300,
+                  color: "grey.700",
+                  overflow: "hidden",
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "primary.info",
+                  },
+                }}
+                labelId="SortBy"
+                id="sort-by-select"
+                value={sortText}
+                onChange={handleSort}
+                placeholder="SortBy"
+                fullWidth
+                variant="outlined"
+                color="info"
+              >
+                <MenuItem value={"firstnameAsc"} sx={{ alignItems: "center" }}>
+                  sortBy FirstName Asc
+                </MenuItem>
+
+                <MenuItem value="firstnameDesc" sx={{ alignItems: "center" }}>
+                  sortBy FirstName Desc
+                </MenuItem>
+
+                <MenuItem value="emailAsc">sortBy Email Asc</MenuItem>
+
+                <MenuItem value="emailDesc">sortBy Email Desc</MenuItem>
+              </Select>
+            </div>

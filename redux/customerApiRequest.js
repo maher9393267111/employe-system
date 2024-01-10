@@ -13,7 +13,7 @@ const baseUrl =
     : REACT_APP_BASE_URL1;
 
 export const FetchCustomers =
-  (page = 1, size = 2, status, sortBy, sortDirection) =>
+  (page = 1, size =2 , status, sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
@@ -39,7 +39,7 @@ export const FetchCustomers =
   };
 
 export const FetchAgentCustomers =
-  (page = 1, size = 2, sortBy, sortDirection) =>
+  (page = 1, size , sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {

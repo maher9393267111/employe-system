@@ -1,3 +1,6 @@
+
+
+
 import Router from "next/router";
 import {
   Box,
@@ -12,6 +15,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Pagination
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TableBody from "@mui/material/TableBody";
@@ -112,6 +116,10 @@ export default function CustomerList({ brands }) {
   const [sortBy, setSortBy] = useState("");
   const [sortDirection, setSortDirection] = useState("desc");
 
+  const [size, setSize] = useState(2);
+
+  const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
+
   const handleSort = (event) => {
     setSortText(event.target.value);
     if (event.target.value === "firstnameAsc") {
@@ -136,6 +144,10 @@ export default function CustomerList({ brands }) {
 
   const handlePaymentMethodChange = ({ target: { name } }) => {
     setStatus(name);
+  };
+
+  const handleSize = (event) => {
+    setSize(event.target.value);
   };
 
   const onChange = (event) => {
@@ -193,13 +205,18 @@ export default function CustomerList({ brands }) {
 
     if (userRole[0] === "admin") {
       dispatch(
-        FetchCustomers(custpage, 2, searchstatus, sortBy, sortDirection)
+        FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
       );
     } else if (userRole[0] === "staff") {
-      dispatch(FetchAgentCustomers(custpage, 2, sortBy, sortDirection));
+      dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
       toast.success("staff fetch customers");
     }
-  }, [custpage, refresh, searchstatus, sortBy, sortDirection]);
+  }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
+
+
+
+
+
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -242,11 +259,13 @@ export default function CustomerList({ brands }) {
     setcustPage(value);
   };
 
+
+
   //FetchAgentCustomers
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers </H3>
+      <H3 mb={2}>All Customers {custpage} </H3>
       {/* 
       <SearchArea
         handleSearch={() => {}}
@@ -258,35 +277,24 @@ export default function CustomerList({ brands }) {
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
         <Grid container spacing={3}>
-          <Grid item sx={12} lg={3}>
+          <Grid item sx={12} lg={2}>
             <SearchInput
             //  placeholder={searchPlaceholder}
             />
           </Grid>
 
           <Grid item sx={12} lg={2}>
-          
-
-            <div>
+            <FormControl fullWidth size="small">
+              <InputLabel color="info" id="demo-simple-select-label">
+                SortBy
+              </InputLabel>
               <Select
-                sx={{
-                  height: 44,
-                  paddingRight: 0,
-                  borderRadius: 300,
-                  color: "grey.700",
-                  overflow: "hidden",
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "primary.info",
-                  },
-                }}
-                labelId="SortBy"
-                id="sort-by-select"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                color="info"
+                label="FilterBy"
                 value={sortText}
                 onChange={handleSort}
-                placeholder="SortBy"
-                fullWidth
-                variant="outlined"
-                color="info"
               >
                 <MenuItem value={"firstnameAsc"} sx={{ alignItems: "center" }}>
                   sortBy FirstName Asc
@@ -300,46 +308,42 @@ export default function CustomerList({ brands }) {
 
                 <MenuItem value="emailDesc">sortBy Email Desc</MenuItem>
               </Select>
-            </div>
+            </FormControl>
           </Grid>
 
-          {userRole[0]}
+          <Grid item xs={12} lg={2}>
+            <FormControl fullWidth size="small">
+              <InputLabel color="info" id="demo-simple-select-label">
+                Size
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={size}
+                label="Size"
+                color="info"
+                onChange={handleSize}
+              >
+                {size_list.map((item) => (
+                  <MenuItem value={item}>{item}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
 
           {userRole[0] === "admin" && (
-            <Grid item sx={12} lg={3}>
-              <FormControl
-                style={{ width: "100% !important" }}
-                sx={{ width: "full" }}
-                size="medium"
-              >
-                <InputLabel
-                  sx={{ width: "full" }}
-                  id="bucket-simple-select-label"
-                  size="small"
-                  color="info"
-                  variant="outlined"
-                >
+            <Grid item xs={12} lg={2}>
+              <FormControl fullWidth size="small">
+                <InputLabel color="info" id="demo-simple-select-label">
                   Status
                 </InputLabel>
                 <Select
-                  sx={{
-                    height: 44,
-                    paddingRight: 0,
-                    borderRadius: 300,
-                    color: "grey.700",
-                    overflow: "hidden",
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "primary.info",
-                    },
-                  }}
-                  // sx={{ width: "full" }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   color="info"
-                  labelId="bucket-simple-select-label"
-                  id="bucket-simple-select"
                   value={searchstatus}
                   label="FilterBy"
                   onChange={handleSearchStatusChange}
-                  fullWidth
                 >
                   <MenuItem color="info" value="">
                     All
@@ -435,13 +439,25 @@ export default function CustomerList({ brands }) {
           </Scrollbar>
 
           <Stack alignItems="center" my={4}>
-            <CustomerPagination
-              count={Math.ceil(count / rowsPerPage)}
-              // {count / rowsPerPage}
+            {/* <CustomerPagination
+              count={Math.ceil(count / size)}
+              
 
               handleChange={handleChange1}
+            /> */}
+    <Pagination
+               count={Math.ceil(count / size)}
+               variant='outlined'
+               color='info'
+               page={custpage}
+               onChange={handleChange1}
+               sx={{ '& ul': { justifyContent: 'center' }, my: 3 }}
             />
+
+
           </Stack>
+
+
         </Card>
       )}
 
