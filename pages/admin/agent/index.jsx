@@ -92,19 +92,19 @@ export default function AgentList({ brands }) {
   const router =useRouter()
   
  
-//const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
 
-const user = useSelector(
-  (state) => state.auth.login.currentUser
-);
 
-useEffect(() => {
- // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
-  if (user === null) {
-      router.push('/login');
-      toast.success('redirect to login')
-  }
-}, [router ,user]);
+// const user = useSelector(
+//   (state) => state.auth.login.currentUser
+// );
+
+// useEffect(() => {
+//  // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
+//   if (user === null) {
+//    //   router.push('/login');
+//       toast.success('redirect to login')
+//   }
+// }, [router ,user]);
 
 
 
@@ -186,8 +186,13 @@ useEffect(() => {
   return (
     <Box py={4}>
       <H3 mb={2}>All Agents</H3>
-      
-      {userRole[0] === 'admin' &&
+    
+
+{/* {user && */}
+
+{/* <div> */}
+
+      { userRole[0] === 'admin' &&
 
       <SearchArea
         handleSearch={() => {}}
@@ -234,6 +239,15 @@ useEffect(() => {
           />
         </Stack>
       </Card>
+
+
+      {/* </div>
+
+                } */}
+
+
+
+
     </Box>
   );
 }

@@ -44,18 +44,21 @@ const VendorDashboardLayout = ({
   const router =useRouter()
   const dispatch = useDispatch();
 
+
   const user = useSelector(
     (state) => state.auth.login.currentUser
   );
-
+  
   useEffect(() => {
    // const user = JSON.parse(JSON.parse(window.localStorage.getItem('persist:root'))?.auth)?.login?.currentUser;
     if (user === null) {
         router.push('/login');
+    //    toast.success('redirect to login')
     }
-}, [router ,user]);
-
-
+  }, [router ,user]);
+  
+  
+  
 
 
 
@@ -66,12 +69,21 @@ const VendorDashboardLayout = ({
   // handle sidebar toggle in mobile device
   const handleMobileDrawerToggle = () => setShowMobileSideBar(state => state ? 0 : 1);
   return <Fragment>
+
+{user &&
+<div>
+
       <DashboardSidebar sidebarCompact={sidebarCompact} showMobileSideBar={showMobileSideBar} setSidebarCompact={handleCompactToggle} setShowMobileSideBar={handleMobileDrawerToggle} />
 
       <BodyWrapper compact={sidebarCompact ? 1 : 0}>
         <DashboardNavbar handleDrawerToggle={handleMobileDrawerToggle} />
         <InnerWrapper>{children}</InnerWrapper>
       </BodyWrapper>
+
+</div>
+}
+
+
     </Fragment>;
 };
 export default VendorDashboardLayout;
