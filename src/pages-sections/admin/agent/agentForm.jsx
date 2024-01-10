@@ -24,7 +24,7 @@ const AgentForm = (props) => {
     validationSchema,
     handleFormSubmit,
     slug = null,
-    isedit =false
+    isedit = false,
   } = props;
   const [files, setFiles] = useState([]);
 
@@ -149,30 +149,25 @@ const AgentForm = (props) => {
                 />
               </Grid>
 
+              {!isedit && (
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    name="password"
+                    label="password"
+                    color="info"
+                    size="medium"
+                    placeholder="Password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    error={!!touched.password && !!errors.password}
+                    helperText={touched.password && errors.password}
+                  />
+                </Grid>
+              )}
 
-{!isedit && 
-
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  name="password"
-                  label="password"
-                  color="info"
-                  size="medium"
-                  placeholder="Password"
-                  value={values.password}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={!!touched.password && !!errors.password}
-                  helperText={touched.password && errors.password}
-                />
-              </Grid>
-
-}
-
-
-
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <DropZone
                   title="Drop & drag category image"
                   onChange={(files) => handleChangeDropZone(files)}
@@ -188,7 +183,7 @@ const AgentForm = (props) => {
                     );
                   })}
                 </FlexBox>
-              </Grid>
+              </Grid> */}
 
               {/* <Grid item sm={6} xs={12}>
                 <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />

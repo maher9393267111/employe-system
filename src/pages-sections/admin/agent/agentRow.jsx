@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Delete, RemoveRedEye } from "@mui/icons-material";
 import BazaarSwitch from "components/BazaarSwitch";
 import { StyledIconButton, StyledTableCell, StyledTableRow } from "../StyledComponents";
-import {DeleteAgent ,FetchAgents} from '../../../../redux/agentApiRequest'
+import {DeleteAgent } from '../../../../redux/agentApiRequest'
 import {useDispatch} from 'react-redux'
 // ========================================================================
 
@@ -31,9 +31,8 @@ const AgentRow = ({
 const dispatch =useDispatch()
 
 const handleDelete =async()=>{
+dispatch(DeleteAgent(id))
 
-await DeleteAgent(id)
-await FetchAgents(dispatch)
 
 
 }

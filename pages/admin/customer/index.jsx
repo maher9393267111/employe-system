@@ -38,6 +38,7 @@ import { Paragraph } from "components/Typography";
 import { Add } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { FlexBox } from "components/flex-box";
+import Skeleton from "@mui/material/Skeleton";
 import SearchInput from "components/SearchInput";
 
 import axiosJWT from "../../../redux/axiosJWT";
@@ -141,7 +142,7 @@ export default function CustomerList({ brands }) {
     setNote(event.target.value);
   };
 
-  const { allcustomers, count, open, customerdata } = useSelector(
+  const { allcustomers, count, open, customerdata ,isFetching } = useSelector(
     (state) => state.customer
   );
   const currentUserId = useSelector(
@@ -418,6 +419,29 @@ export default function CustomerList({ brands }) {
         {/* </FlexBox> */}
       </div>
 
+{isFetching ?  <div>
+
+<Card sx={{marginTop:'12px'}}>
+
+
+<Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+            <Skeleton
+              variant="rounded"
+              width={"full"}
+              height={60}
+              sx={{ margin: "12px" }}
+            />
+
+</Card>
+
+</div>   
+: 
+
       <Card>
         <Scrollbar>
           <TableContainer
@@ -459,6 +483,11 @@ export default function CustomerList({ brands }) {
           />
         </Stack>
       </Card>
+
+                }
+
+
+
 
       {/* -----status update modal--- */}
       {customerdata?.status === "pending" && (

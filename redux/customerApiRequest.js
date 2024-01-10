@@ -4,7 +4,6 @@ import axiosJWT from "./axiosJWT";
 import { fetchStart, fetchFailed, fetchSuccess } from "./customerSlice";
 import { toast } from "react-toastify";
 
-
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
@@ -14,30 +13,38 @@ const baseUrl =
     : REACT_APP_BASE_URL1;
 
 export const FetchCustomers =
-  (page = 1, size = 2 ,status ,sortBy ,sortDirection) =>
+  (page = 1, size = 2, status, sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
       console.log("page in request api", page);
-      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!" , status ,sortBy ,sortDirection)
+      console.log(
+        "QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!",
+        status,
+        sortBy,
+        sortDirection
+      );
 
       const response = await axiosJWT.get(
-        `${baseUrl}/customers?page=${page === 0 ? 1 : page}&&size=${size}&&status=${status}&&sortBy=${sortBy}&&sortDirection=${sortDirection}`
+        `${baseUrl}/customers?page=${
+          page === 0 ? 1 : page
+        }&&size=${size}&&status=${status}&&sortBy=${sortBy}&&sortDirection=${sortDirection}`
       );
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
     } catch (err) {
+      toast.error(err?.message)
       return dispatch(fetchFailed(err));
     }
   };
 
 export const FetchAgentCustomers =
-  (page = 1, size = 2  , sortBy,sortDirection) =>
+  (page = 1, size = 2, sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
       console.log("page in@@@@@@@@@@@@@@@@@ request api", page);
-      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!"  ,sortBy ,sortDirection)
+      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!", sortBy, sortDirection);
 
       const response = await axiosJWT.get(
         `${REACT_APP_BASE_URL}/customers/agentCustomers?page=${
@@ -47,11 +54,12 @@ export const FetchAgentCustomers =
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
     } catch (err) {
+      toast.error(err?.message)
       return dispatch(fetchFailed(err));
     }
   };
 
-export const AddCustomer = (data, agentId) => async (dispatch) => {
+export const AddCustomer = (data, agentId, router) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
     data = { ...data, employe_id: agentId };
@@ -64,6 +72,7 @@ export const AddCustomer = (data, agentId) => async (dispatch) => {
 
     return dispatch(FetchCustomers());
   } catch (err) {
+    toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
@@ -81,6 +90,7 @@ export const getSingleCustomerRedux = (customerId) => async (dispatch) => {
     //
     // return dispatch(fetchSingleSuccess(response.data));
   } catch (err) {
+    toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
@@ -91,10 +101,12 @@ export const getSingleCustomer = async (id, dispatch) => {
 
     console.log("single", res?.data);
     return res?.data;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error?.message)
+  }
 };
 
-export const UpdateCustomer = async (values, id) => {
+export const UpdateCustomer = async (values, id, router) => {
   try {
     const res = await axiosJWT.put(`${baseUrl}/customers/${id}`, values);
     console.log("UPDATE", res?.data);
@@ -102,6 +114,7 @@ export const UpdateCustomer = async (values, id) => {
 
     return res?.data;
   } catch (error) {
+    toast.error(error?.message)
     console.log(error?.message);
   }
 };
@@ -126,56 +139,47 @@ export const DeleteCustomer = (customerId, files) => async (dispatch) => {
 
     return dispatch(FetchCustomers());
   } catch (err) {
+    toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
-
 
 // chnage customer status by admin
 //http://localhost:8000/customers/status/659d1a5bd115075f79ac1022
 
-export const ChangeCustomerStatus = (customerdata ,status ,note) => async (dispatch) => {
-  try {
-    //console.log("image filename" ,filename)
+export const ChangeCustomerStatus =
+  (customerdata, status, note) => async (dispatch) => {
+    try {
+      //console.log("image filename" ,filename)
 
-if (status === 'rejected') {
+      if (status === "rejected") {
+        customerdata?.files.forEach(async (file) => {
+          console.log("single fieeeeee", file.filename);
+          await DeleteImage(file?.filename);
+        });
+      }
 
-    customerdata?.files.forEach(async (file) => {
-      console.log("single fieeeeee", file.filename);
-      await DeleteImage(file?.filename);
-    });
+      const data = {
+        status: status,
+        note: note,
+      };
 
+      //await DeleteImage(filename)
 
-  }
+      const response = await axiosJWT.put(
+        `${baseUrl}/customers/status/${customerdata?.id}`,
+        data
+      );
 
-  const data ={
-    status:status,
-    note:note
-  }
+      toast.success("Customer deleted successfully");
+      console.log("RESPONSE DATA", response.data);
 
-
-
-    //await DeleteImage(filename)
-
-    const response = await axiosJWT.put(
-      `${baseUrl}/customers/status/${customerdata?.id}`,
-data
-    );
-
-    toast.success("Customer deleted successfully");
-    console.log("RESPONSE DATA", response.data);
-
-    return dispatch(FetchCustomers());
-  } catch (err) {
-    return dispatch(fetchFailed(err));
-  }
-};
-
-
-
-
-
-
+      return dispatch(FetchCustomers());
+    } catch (err) {
+      toast.error(err?.message)
+      return dispatch(fetchFailed(err));
+    }
+  };
 
 // Upload Single file
 
@@ -192,7 +196,9 @@ export const UploadImage = async (file, oldfile = null) => {
     console.log("single", res?.data);
 
     return res?.data;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error?.message)
+  }
 };
 
 export const UploadImages = async (files, oldfile = null) => {
@@ -202,7 +208,9 @@ export const UploadImages = async (files, oldfile = null) => {
     console.log("Array of images", res?.data.images);
 
     return res?.data.images;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error?.message)
+  }
 };
 
 // Upload audio File
@@ -214,7 +222,9 @@ export const UploadAudio = async (files, oldfile = null) => {
     console.log("Array of images", res?.data);
 
     return res?.data;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error?.message)
+  }
 };
 
 export const DeleteImage = async (filename) => {
@@ -228,5 +238,7 @@ export const DeleteImage = async (filename) => {
     toast.success("customer file deleted successfully");
 
     return res?.data;
-  } catch (error) {}
+  } catch (error) {
+    toast.error(error?.message)
+  }
 };
