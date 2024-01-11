@@ -186,3 +186,42 @@ export const navigations = [{
 
 
 ];
+
+
+
+
+
+
+
+
+// agentNavigatio
+
+export const agentNavigations = [{
+
+  type: "label",
+  label: "Admin"
+}, {
+  name: "Dashboard",
+  icon: duotone.Dashboard,
+  path: "/vendor/dashboard"
+}, 
+
+
+
+
+, {
+  name: "Customers",
+  icon: duotone.Accounts,
+  children: [{
+    name: "Customer List",
+    path: "/admin/customer"
+  }, {
+    name: "Create Customer",
+    path: "/admin/customer/create"
+  }]
+}, 
+
+
+
+
+]

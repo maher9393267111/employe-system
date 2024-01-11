@@ -149,7 +149,22 @@ export default function AgentList({ brands }) {
     defaultSort: "name",
   });
 
-  console.log("??", filteredAgents);
+  
+
+  
+
+ 
+
+  useEffect(() => {
+    if (userRole[0] !== "admin") {
+      router.push("/admin/customers");
+    }
+  }, [router]);
+
+
+
+
+
 
   return (
     <Box py={4}>

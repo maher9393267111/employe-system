@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { H6, Small } from "components/Typography";
-import {useDispatch} from 'react-redux'
+import {useDispatch ,useSelector} from 'react-redux'
 import { logoutSuccess } from "../../../../../redux/authSlice";
 import {useRouter} from 'next/router' 
 // styled components
@@ -15,6 +15,11 @@ const AccountPopover = () => {
 
 const dispatch = useDispatch()
 const router = useRouter()
+const userData = useSelector(
+  (state) => state.auth.login.currentUser?.payload
+);
+
+
 
 const handleLogout=()=>{
 
@@ -75,8 +80,8 @@ router.push('/login')
       }
     }}>
         <Box px={2} pt={1}>
-          <H6>Gage Paquette</H6>
-          <Small color="grey.500">Admin</Small>
+          <H6>{userData?.fullName}</H6>
+          <Small   sx={{color:'info.600'}}>{userData?.roles}</Small>
         </Box>
 
         <Divider />
