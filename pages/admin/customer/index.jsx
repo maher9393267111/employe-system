@@ -190,10 +190,10 @@ export default function CustomerList({ brands }) {
   const { socket } = useContextApp();
 
   useEffect(() => {
-    // socket.on("fetch", (data) => {
-    //   console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
-    //   setSocText(data);
-    // });
+    socket.on("fetch", (data) => {
+      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+    
+    });
 
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
