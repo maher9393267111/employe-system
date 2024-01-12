@@ -62,6 +62,12 @@ const StyledGridContainer = styled(Grid)(({
 const Section9 = ({
   testimonials = []
 }) => {
+
+//FetchNotifications
+
+
+
+
   return <Carousel spacing="0px" showDots={true} totalSlides={3} visibleSlides={1} showArrowOnHover={true} arrowButtonColor="inherit">
       {testimonials.map((data, ind) => <StyledBazaarCard key={ind}>
           <StyledFlexBox position="relative" flexWrap="wrap">

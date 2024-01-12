@@ -50,8 +50,10 @@ import {
   ChangeCustomerStatus,
   CustomerSerch,
 } from "../../../redux/customerApiRequest";
+
+import {FetchNotifications} from '../../../redux/notificationsApiRequest'
 import { closeCustomerModel } from "../../../redux/customerSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { useContextApp } from "../../../redux/socket/context";
 
 //import { connectSocket } from '../../../redux/socket/socketConnect';
@@ -186,6 +188,75 @@ export default function CustomerList({ brands }) {
 
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
+
+  useEffect(() => {
+    // socket.on("fetch", (data) => {
+    //   console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+    //   setSocText(data);
+    // });
+
+    if (userRole[0] === "admin") {
+      socket.on("createcustomer", (data) => {
+        toast.info("new POST CREATED");
+      });
+
+
+
+      // search notification only show form admin
+      socket.on("search_customer", (data) => {
+        toast.info("some agent search for customer");
+        dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
+       dispatch(FetchNotifications())
+        
+      });
+
+      
+
+    }
+
+    socket.on("status", (data) => {
+      console.log(
+        "reciever",
+        data?.receiver,
+        "curre📌📌📌📌📌ntUser",
+        userData?.id
+      );
+
+      if (data?.receiver === userData?.id) {
+        console.log("reciever", data.receiver, "currentUser", userData?.id);
+        console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
+        toast.info("customer status changed");
+       
+
+
+        if (data?.notificationData?.myRole === "staff") {
+          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+          dispatch(FetchNotifications())
+        } else {
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
+        }
+
+        // then refetch notifications refetch agent customers
+      }
+    });
+
+
+//search socket  search_customer
+
+// if (userRole[0] === "admin") {
+//   socket.on("search_customer", (data) => {
+//     toast.info("some agent search for customer");
+//     FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
+//   });
+// }
+
+
+
+
+
+
+
+  }, []);
 
   const [custpage, setcustPage] = useState(0);
 
