@@ -190,6 +190,7 @@ export default function CustomerList({ brands }) {
   const { socket } = useContextApp();
 
   useEffect(() => {
+    console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET")
     socket.on("fetch", (data) => {
       console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
     
