@@ -17,6 +17,7 @@ import { UploadImageBox, StyledClear } from "../StyledComponents";
 import SignatureCanvas from "react-signature-canvas";
 import ReactPlayer from "react-player";
 import { init } from "i18next";
+import {useSelector} from 'react-redux'
 
 import {
   Box,
@@ -162,6 +163,14 @@ const CustomerForm = (props) => {
       .toDataURL("image/png");
     setSignature(signature);
   };
+
+
+  const userRole = useSelector(
+    (state) => state.auth.login.currentUser.payload.roles
+  );
+
+
+
 
   return (
     <Card
@@ -521,12 +530,18 @@ Add Customer signature here
                 />
               </div>
 
+              {userRole[0] === 'admin' &&
+
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
                   {/* Save Agent */}
                   {buttontext}
                 </Button>
               </Grid>
+
+                  }
+
+
             </Grid>
           </form>
         )}
