@@ -6,12 +6,20 @@ import socketIO from "socket.io-client";
 
 const StateContext = createContext();
 
-const devSocket = "http://localhost:8000";
-const prodSocket = "https://monkfish-app-yobnp.ondigitalocean.app";
-// "https://server-dashboard-nine.vercel.app"
+
+
+const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
+const REACT_APP_BASE_URL = "http://localhost:8000";
+
+const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? REACT_APP_BASE_URL
+    : REACT_APP_BASE_URL1;
+
+
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(devSocket);
+  const socket = socketIO.connect(baseUrl);
 
 
 
