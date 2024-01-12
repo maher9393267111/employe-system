@@ -120,7 +120,7 @@ export default function CustomerList({ brands }) {
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
 
-//////search customer
+//////search customer  IIIIIIII
 const [searchValue , setSearchValue] = useState('')
 const [searchType ,setSearchType] = useState('')
 
