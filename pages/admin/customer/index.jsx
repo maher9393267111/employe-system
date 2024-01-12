@@ -13,7 +13,6 @@ import {
   InputLabel,
   Select,
   Pagination,
-  
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TableBody from "@mui/material/TableBody";
@@ -119,26 +118,17 @@ export default function CustomerList({ brands }) {
 
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
+  // //search customer
+  // const [searchValue , setSearchValue] = useState('')
+  // const [searchType ,setSearchType] = useState('')
 
-// //search customer
-// const [searchValue , setSearchValue] = useState('')
-// const [searchType ,setSearchType] = useState('')
+  // const handleSearchTypeChange = ({ target: { name } }) => {
+  //   setSearchType(name);
+  // };
 
-// const handleSearchTypeChange = ({ target: { name } }) => {
-//   setSearchType(name);
-// };
-
-
-
-
-
-const handlePaymentMethodChange = ({ target: { name } }) => {
-  setStatus(name);
-};
-
-
-
-
+  const handlePaymentMethodChange = ({ target: { name } }) => {
+    setStatus(name);
+  };
 
   const handleSort = (event) => {
     setSortText(event.target.value);
@@ -161,14 +151,6 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
     setSearchStatus(event.target.value);
     console.log("name", event.target.value);
   };
-
-
-
-
-
-
-  
-
 
   const handleSize = (event) => {
     setSize(event.target.value);
@@ -199,16 +181,49 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
     (state) => state.auth.login?.currentUser?.payload
   );
 
-
   console.log("Role", userRole[0]);
   console.log("customer redux toolkit", allcustomers);
 
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
 
+  // Socket
 
+  useEffect(() => {
+    // socket.on("fetch", (data) => {
+    //   console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+    //   setSocText(data);
+    // });
 
+    if (userRole[0] === "admin") {
+      socket.on("createcustomer", (data) => {
+        toast.info("new POST CREATED");
+      });
+    }
 
+    socket.on("status", (data) => {
+      console.log(
+        "reciever",
+        data?.receiver,
+        "curre📌📌📌📌📌ntUser",
+        userData?.id
+      );
+
+      if (data?.receiver === userData?.id) {
+        console.log("reciever", data.receiver, "currentUser", userData?.id);
+        console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
+        toast.info("customer status changed");
+
+        if (data?.notificationData?.myRole[0] === "staff") {
+          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+        } else {
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
+        }
+
+        // then refetch notifications refetch agent customers
+      }
+    });
+  }, []);
 
   const [custpage, setcustPage] = useState(0);
 
@@ -278,12 +293,7 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers  </H3>
-    
-
-
-
-
+      <H3 mb={2}>All Customers </H3>
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
@@ -372,7 +382,7 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
                   </MenuItem>
 
                   <MenuItem color="info" value="rejected">
-                  Rejected
+                    Rejected
                   </MenuItem>
 
                   <MenuItem color="info" value="admincustomers">
@@ -474,7 +484,7 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
 
       {/* -----status update modal--- */}
 
-       {userRole[0] === "admin" && ( 
+      {userRole[0] === "admin" && (
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Edit customer status</DialogTitle>
           <DialogContent>
@@ -540,22 +550,19 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
             </Button>
 
             {/* {customerdata?.status === "pending" && ( */}
-              <Button
-                sx={{ backgroundColor: "primary.info" }}
-                className=" "
-                onClick={() =>
-                  dispatch(ChangeCustomerStatus(customerdata, status, note))
-                }
-              >
-                Change status
-              </Button>
+            <Button
+              sx={{ backgroundColor: "primary.info" }}
+              className=" "
+              onClick={() =>
+                dispatch(ChangeCustomerStatus(customerdata, status, note))
+              }
+            >
+              Change status
+            </Button>
             {/* )} */}
           </DialogActions>
         </Dialog>
-       )} 
-
-
-
+      )}
     </Box>
   );
 }
