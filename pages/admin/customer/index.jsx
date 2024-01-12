@@ -229,7 +229,7 @@ export default function CustomerList({ brands }) {
        
 
 
-        if (data?.notificationData?.myRole === "staff") {
+        if (data?.notificationData?.myRole[0] === "staff") {
           dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
           dispatch(FetchNotifications())
         } else {
