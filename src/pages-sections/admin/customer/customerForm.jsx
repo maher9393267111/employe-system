@@ -169,6 +169,9 @@ const CustomerForm = (props) => {
     (state) => state.auth.login.currentUser.payload.roles
   );
 
+const buttonCondition = (isedit && userRole[0] === 'admin') || (!isedit)
+
+
 
 
 
@@ -530,7 +533,7 @@ Add Customer signature here
                 />
               </div>
 
-              {/* {userRole[0] === 'admin' && !isedit && */}
+              {buttonCondition  &&
 
 
               <Grid item xs={12}>
@@ -543,7 +546,7 @@ Add Customer signature here
 
 
 
-        {/* } */}
+         } 
 
 
             </Grid>
