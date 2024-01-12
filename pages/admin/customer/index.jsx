@@ -13,7 +13,6 @@ import {
   InputLabel,
   Select,
   Pagination,
-  
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TableBody from "@mui/material/TableBody";
@@ -49,7 +48,7 @@ import {
   FetchCustomers,
   FetchAgentCustomers,
   ChangeCustomerStatus,
-    CustomerSerch
+  CustomerSerch,
 } from "../../../redux/customerApiRequest";
 import { closeCustomerModel } from "../../../redux/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -119,26 +118,17 @@ export default function CustomerList({ brands }) {
 
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
+  //////search customer  IIIIIIII
+  const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState("");
 
-//////search customer  IIIIIIII
-const [searchValue , setSearchValue] = useState('')
-const [searchType ,setSearchType] = useState('')
+  const handleSearchTypeChange = ({ target: { name } }) => {
+    setSearchType(name);
+  };
 
-const handleSearchTypeChange = ({ target: { name } }) => {
-  setSearchType(name);
-};
-
-
-
-
-
-const handlePaymentMethodChange = ({ target: { name } }) => {
-  setStatus(name);
-};
-
-
-
-
+  const handlePaymentMethodChange = ({ target: { name } }) => {
+    setStatus(name);
+  };
 
   const handleSort = (event) => {
     setSortText(event.target.value);
@@ -161,14 +151,6 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
     setSearchStatus(event.target.value);
     console.log("name", event.target.value);
   };
-
-
-
-
-
-
-  
-
 
   const handleSize = (event) => {
     setSize(event.target.value);
@@ -199,16 +181,11 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
     (state) => state.auth.login?.currentUser?.payload
   );
 
-
   console.log("Role", userRole[0]);
   console.log("customer redux toolkit", allcustomers);
 
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
-
-
-
-
 
   const [custpage, setcustPage] = useState(0);
 
@@ -278,95 +255,72 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers  </H3>
-    
+      <H3 mb={2}>All Customers </H3>
 
+      <Card
+        backgroundColor="grey.900"
+        sx={{ height: "160px", marginBottom: "20px", padding: "14px" }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <SearchInput
+            sx={{ flexGrow: 1 }}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
 
-      <Card  
-
-backgroundColor='grey.900'
-
-
-sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
-  
-
-  <Box sx={{ display: 'flex' }}>
-
-<SearchInput
-         sx={{ flexGrow: 1}}
-
-         onChange={(e)=>setSearchValue(e.target.value)}
-
-         />
-
-
-<Button
-
-              color="info"
-              fullWidth={downSM}
-              variant="contained"
-              // startIcon={<Add />}
-              onClick={() => dispatch(CustomerSerch(searchValue ,searchType))}
-              sx={
-                {
-                  // minHeight: 44,
-                }
+          <Button
+            color="info"
+            fullWidth={downSM}
+            variant="contained"
+            // startIcon={<Add />}
+            onClick={() => dispatch(CustomerSerch(searchValue, searchType))}
+            sx={
+              {
+                // minHeight: 44,
               }
-            >
-              Search
-            </Button>
+            }
+          >
+            Search
+          </Button>
+        </Box>
 
-
-</Box>
-
-
-<Stack spacing={3} mb={3}>
-              <div>
-                <FormControlLabel
-                  name="name"
-                  sx={{
-                    mb: 3,
-                  }}
-                  value={searchType}
-                  onChange={handleSearchTypeChange }
-                  label={<Paragraph fontWeight={600}>NAME</Paragraph>}
-                  control={
-                    <Radio
-                      checked={searchType === "name"}
-                      color="info"
-                      size="small"
-                    />
-                  }
+        <Stack spacing={3} mb={3}>
+          <div>
+            <FormControlLabel
+              name="name"
+              sx={{
+                mb: 3,
+              }}
+              value={searchType}
+              onChange={handleSearchTypeChange}
+              label={<Paragraph fontWeight={600}>NAME</Paragraph>}
+              control={
+                <Radio
+                  checked={searchType === "name"}
+                  color="info"
+                  size="small"
                 />
+              }
+            />
 
-                <FormControlLabel
-                  name="ssn"
-                  sx={{
-                    mb: 3,
-                  }}
-                  value={searchType}
-                  onChange={handleSearchTypeChange }
-                  label={<Paragraph fontWeight={600}>SSN</Paragraph>}
-                  control={
-                    <Radio
-                      checked={searchType === "ssn"}
-                      color="info"
-                      size="small"
-                    />
-                  }
+            <FormControlLabel
+              name="ssn"
+              sx={{
+                mb: 3,
+              }}
+              value={searchType}
+              onChange={handleSearchTypeChange}
+              label={<Paragraph fontWeight={600}>SSN</Paragraph>}
+              control={
+                <Radio
+                  checked={searchType === "ssn"}
+                  color="info"
+                  size="small"
                 />
-              </div>
-
-            
-            </Stack>
-
-
-
-</Card>
-
-
-
-
+              }
+            />
+          </div>
+        </Stack>
+      </Card>
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
@@ -455,7 +409,7 @@ sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
                   </MenuItem>
 
                   <MenuItem color="info" value="rejected">
-                  Rejected
+                    Rejected
                   </MenuItem>
 
                   <MenuItem color="info" value="admincustomers">
@@ -557,7 +511,7 @@ sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
 
       {/* -----status update modal--- */}
 
-       {userRole[0] === "admin" && ( 
+      {userRole[0] === "admin" && (
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Edit customer status</DialogTitle>
           <DialogContent>
@@ -623,22 +577,19 @@ sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
             </Button>
 
             {/* {customerdata?.status === "pending" && ( */}
-              <Button
-                sx={{ backgroundColor: "primary.info" }}
-                className=" "
-                onClick={() =>
-                  dispatch(ChangeCustomerStatus(customerdata, status, note))
-                }
-              >
-                Change status
-              </Button>
+            <Button
+              sx={{ backgroundColor: "primary.info" }}
+              className=" "
+              onClick={() =>
+                dispatch(ChangeCustomerStatus(customerdata, status, note))
+              }
+            >
+              Change status
+            </Button>
             {/* )} */}
           </DialogActions>
         </Dialog>
-       )} 
-
-
-
+      )}
     </Box>
   );
 }
