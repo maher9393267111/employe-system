@@ -224,6 +224,9 @@ export default function CustomerList({ brands }) {
         userData?.id
       );
 
+      console.log(`status !!!!!!!!!@@@@is ch12222222222anged ${data?.receiver} ,,,,, ${userData?.id}`)
+
+
       if (data?.receiver === userData?.id) {
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
