@@ -251,8 +251,32 @@ export const DeleteImage = async (filename) => {
   }
 };
 
+
+
+
 //Search Customer --> http://localhost:8000/customers/find/anemous?searchtype=name
 
 
+export const CustomerSerch = (value, type) => async (dispatch) => {
+  try {
+    //await DeleteImage(filename)
+
+    const response = await axiosJWT.get(
+      `${baseUrl}/customers/find/${value}?searchtype=${type}`
+    );
+
+    console.log("RESPONSE DATA", response.data?.message);
+
+    if (response?.data?.message === false) {
+      toast.success("Customer not founded ");
+      return dispatch(FetchCustomers());
+    } else if (response?.data?.message === true) {
+      toast.success("Customer already exist");
+    }
+  } catch (err) {
+    toast.error(err?.message);
+    return dispatch(fetchFailed(err));
+  }
+};
 
 
