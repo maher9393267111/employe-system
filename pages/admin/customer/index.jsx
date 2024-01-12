@@ -48,7 +48,7 @@ import {
   FetchCustomers,
   FetchAgentCustomers,
   ChangeCustomerStatus,
-  //  CustomerSerch
+    CustomerSerch
 } from "../../../redux/customerApiRequest";
 import { closeCustomerModel } from "../../../redux/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -118,13 +118,18 @@ export default function CustomerList({ brands }) {
 
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
-  // //search customer
-  // const [searchValue , setSearchValue] = useState('')
-  // const [searchType ,setSearchType] = useState('')
 
-  // const handleSearchTypeChange = ({ target: { name } }) => {
-  //   setSearchType(name);
-  // };
+// //search customer
+// const [searchValue , setSearchValue] = useState('')
+// const [searchType ,setSearchType] = useState('')
+
+// const handleSearchTypeChange = ({ target: { name } }) => {
+//   setSearchType(name);
+// };
+
+
+
+
 
   const handlePaymentMethodChange = ({ target: { name } }) => {
     setStatus(name);
@@ -293,7 +298,12 @@ export default function CustomerList({ brands }) {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers </H3>
+      <H3 mb={2}>All Customers  </H3>
+    
+
+
+
+
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
