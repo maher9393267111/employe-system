@@ -49,7 +49,7 @@ import {
   FetchCustomers,
   FetchAgentCustomers,
   ChangeCustomerStatus,
-  //  CustomerSerch
+    CustomerSerch
 } from "../../../redux/customerApiRequest";
 import { closeCustomerModel } from "../../../redux/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,13 +120,13 @@ export default function CustomerList({ brands }) {
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
 
-// //search customer
-// const [searchValue , setSearchValue] = useState('')
-// const [searchType ,setSearchType] = useState('')
+//search customer
+const [searchValue , setSearchValue] = useState('')
+const [searchType ,setSearchType] = useState('')
 
-// const handleSearchTypeChange = ({ target: { name } }) => {
-//   setSearchType(name);
-// };
+const handleSearchTypeChange = ({ target: { name } }) => {
+  setSearchType(name);
+};
 
 
 
@@ -280,6 +280,89 @@ const handlePaymentMethodChange = ({ target: { name } }) => {
     <Box py={4}>
       <H3 mb={2}>All Customers  </H3>
     
+
+
+      <Card  
+
+backgroundColor='grey.900'
+
+
+sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
+  
+
+  <Box sx={{ display: 'flex' }}>
+
+<SearchInput
+         sx={{ flexGrow: 1}}
+
+         onChange={(e)=>setSearchValue(e.target.value)}
+
+         />
+
+
+<Button
+
+              color="info"
+              fullWidth={downSM}
+              variant="contained"
+              // startIcon={<Add />}
+              onClick={() => dispatch(CustomerSerch(searchValue ,searchType))}
+              sx={
+                {
+                  // minHeight: 44,
+                }
+              }
+            >
+              Search
+            </Button>
+
+
+</Box>
+
+
+<Stack spacing={3} mb={3}>
+              <div>
+                <FormControlLabel
+                  name="name"
+                  sx={{
+                    mb: 3,
+                  }}
+                  value={searchType}
+                  onChange={handleSearchTypeChange }
+                  label={<Paragraph fontWeight={600}>NAME</Paragraph>}
+                  control={
+                    <Radio
+                      checked={searchType === "name"}
+                      color="info"
+                      size="small"
+                    />
+                  }
+                />
+
+                <FormControlLabel
+                  name="ssn"
+                  sx={{
+                    mb: 3,
+                  }}
+                  value={searchType}
+                  onChange={handleSearchTypeChange }
+                  label={<Paragraph fontWeight={600}>SSN</Paragraph>}
+                  control={
+                    <Radio
+                      checked={searchType === "ssn"}
+                      color="info"
+                      size="small"
+                    />
+                  }
+                />
+              </div>
+
+            
+            </Stack>
+
+
+
+</Card>
 
 
 
