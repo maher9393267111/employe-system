@@ -1,6 +1,3 @@
-
-
-
 import Router from "next/router";
 import {
   Box,
@@ -15,7 +12,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Pagination
+  Pagination,
+  
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TableBody from "@mui/material/TableBody";
@@ -51,6 +49,7 @@ import {
   FetchCustomers,
   FetchAgentCustomers,
   ChangeCustomerStatus,
+  //  CustomerSerch
 } from "../../../redux/customerApiRequest";
 import { closeCustomerModel } from "../../../redux/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -120,6 +119,27 @@ export default function CustomerList({ brands }) {
 
   const [size_list, setSizeList] = useState([1, 2, 3, 4, 5, 6, 8, 9]);
 
+
+// //search customer
+// const [searchValue , setSearchValue] = useState('')
+// const [searchType ,setSearchType] = useState('')
+
+// const handleSearchTypeChange = ({ target: { name } }) => {
+//   setSearchType(name);
+// };
+
+
+
+
+
+const handlePaymentMethodChange = ({ target: { name } }) => {
+  setStatus(name);
+};
+
+
+
+
+
   const handleSort = (event) => {
     setSortText(event.target.value);
     if (event.target.value === "firstnameAsc") {
@@ -142,9 +162,13 @@ export default function CustomerList({ brands }) {
     console.log("name", event.target.value);
   };
 
-  const handlePaymentMethodChange = ({ target: { name } }) => {
-    setStatus(name);
-  };
+
+
+
+
+
+  
+
 
   const handleSize = (event) => {
     setSize(event.target.value);
@@ -171,24 +195,20 @@ export default function CustomerList({ brands }) {
     (state) => state.auth.login.currentUser.payload.roles
   );
 
+  const userData = useSelector(
+    (state) => state.auth.login?.currentUser?.payload
+  );
+
+
   console.log("Role", userRole[0]);
   console.log("customer redux toolkit", allcustomers);
 
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
 
-  useEffect(() => {
-    socket.on("fetch", (data) => {
-      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
-      setSocText(data);
-    });
 
-    if (userRole[0] === "admin") {
-      socket.on("createcustomer", (data) => {
-        toast.info("new POST CREATED");
-      });
-    }
-  }, []);
+
+
 
   const [custpage, setcustPage] = useState(0);
 
@@ -212,11 +232,6 @@ export default function CustomerList({ brands }) {
       toast.success("staff fetch customers");
     }
   }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
-
-
-
-
-
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -259,31 +274,27 @@ export default function CustomerList({ brands }) {
     setcustPage(value);
   };
 
-
-
   //FetchAgentCustomers
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers {custpage} </H3>
-      {/* 
-      <SearchArea
-        handleSearch={() => {}}
-        buttonText="Add Customer"
-        searchPlaceholder="Search Customer..."
-        handleBtnClick={() => Router.push("/admin/customer/create")}
-      /> */}
+      <H3 mb={2}>All Customers  </H3>
+    
+
+
+
+
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
         <Grid container spacing={3}>
-          <Grid item sx={12} lg={2}>
+          {/* <Grid item sx={12} lg={2}>
             <SearchInput
-            //  placeholder={searchPlaceholder}
+         
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item sx={12} lg={2}>
+          <Grid item xs={12} lg={3}>
             <FormControl fullWidth size="small">
               <InputLabel color="info" id="demo-simple-select-label">
                 SortBy
@@ -358,6 +369,10 @@ export default function CustomerList({ brands }) {
                   </MenuItem>
                   <MenuItem color="info" value="pending">
                     Pending
+                  </MenuItem>
+
+                  <MenuItem color="info" value="rejected">
+                  Rejected
                   </MenuItem>
 
                   <MenuItem color="info" value="admincustomers">
@@ -445,24 +460,21 @@ export default function CustomerList({ brands }) {
 
               handleChange={handleChange1}
             /> */}
-    <Pagination
-               count={Math.ceil(count / size)}
-               variant='outlined'
-               color='info'
-               page={custpage}
-               onChange={handleChange1}
-               sx={{ '& ul': { justifyContent: 'center' }, my: 3 }}
+            <Pagination
+              count={Math.ceil(count / size)}
+              variant="outlined"
+              color="info"
+              page={custpage}
+              onChange={handleChange1}
+              sx={{ "& ul": { justifyContent: "center" }, my: 3 }}
             />
-
-
           </Stack>
-
-
         </Card>
       )}
 
       {/* -----status update modal--- */}
-      {customerdata?.status === "pending" && (
+
+       {userRole[0] === "admin" && ( 
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Edit customer status</DialogTitle>
           <DialogContent>
@@ -527,7 +539,7 @@ export default function CustomerList({ brands }) {
               Close
             </Button>
 
-            {customerdata?.status === "pending" && (
+            {/* {customerdata?.status === "pending" && ( */}
               <Button
                 sx={{ backgroundColor: "primary.info" }}
                 className=" "
@@ -537,10 +549,13 @@ export default function CustomerList({ brands }) {
               >
                 Change status
               </Button>
-            )}
+            {/* )} */}
           </DialogActions>
         </Dialog>
-      )}
+       )} 
+
+
+
     </Box>
   );
 }

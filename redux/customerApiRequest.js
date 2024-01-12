@@ -1,7 +1,12 @@
 import axios from "axios";
 
 import axiosJWT from "./axiosJWT";
-import { fetchStart, fetchFailed, fetchSuccess } from "./customerSlice";
+import {
+  fetchStart,
+  fetchFailed,
+  fetchSuccess,
+  closeCustomerModel,
+} from "./customerSlice";
 import { toast } from "react-toastify";
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
@@ -13,7 +18,7 @@ const baseUrl =
     : REACT_APP_BASE_URL1;
 
 export const FetchCustomers =
-  (page = 1, size =2 , status, sortBy, sortDirection) =>
+  (page = 1, size = 2, status, sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
@@ -33,13 +38,13 @@ export const FetchCustomers =
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
     } catch (err) {
-      toast.error(err?.message)
+      toast.error(err?.message);
       return dispatch(fetchFailed(err));
     }
   };
 
 export const FetchAgentCustomers =
-  (page = 1, size , sortBy, sortDirection) =>
+  (page = 1, size, sortBy, sortDirection) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
@@ -54,7 +59,7 @@ export const FetchAgentCustomers =
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
     } catch (err) {
-      toast.error(err?.message)
+      toast.error(err?.message);
       return dispatch(fetchFailed(err));
     }
   };
@@ -72,7 +77,7 @@ export const AddCustomer = (data, agentId, router) => async (dispatch) => {
 
     return dispatch(FetchCustomers());
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.message);
     return dispatch(fetchFailed(err));
   }
 };
@@ -90,7 +95,7 @@ export const getSingleCustomerRedux = (customerId) => async (dispatch) => {
     //
     // return dispatch(fetchSingleSuccess(response.data));
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.message);
     return dispatch(fetchFailed(err));
   }
 };
@@ -102,7 +107,7 @@ export const getSingleCustomer = async (id, dispatch) => {
     console.log("single", res?.data);
     return res?.data;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
   }
 };
 
@@ -114,7 +119,7 @@ export const UpdateCustomer = async (values, id, router) => {
 
     return res?.data;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
     console.log(error?.message);
   }
 };
@@ -139,7 +144,7 @@ export const DeleteCustomer = (customerId, files) => async (dispatch) => {
 
     return dispatch(FetchCustomers());
   } catch (err) {
-    toast.error(err?.message)
+    toast.error(err?.message);
     return dispatch(fetchFailed(err));
   }
 };
@@ -152,16 +157,17 @@ export const ChangeCustomerStatus =
     try {
       //console.log("image filename" ,filename)
 
-      if (status === "rejected") {
-        customerdata?.files.forEach(async (file) => {
-          console.log("single fieeeeee", file.filename);
-          await DeleteImage(file?.filename);
-        });
-      }
+      // if (status === "rejected") {
+      //   customerdata?.files.forEach(async (file) => {
+      //     console.log("single fieeeeee", file.filename);
+      //     await DeleteImage(file?.filename);
+      //   });
+      // }
 
       const data = {
         status: status,
         note: note,
+        agentId: customerdata?.employe_id,
       };
 
       //await DeleteImage(filename)
@@ -174,9 +180,11 @@ export const ChangeCustomerStatus =
       toast.success("Customer deleted successfully");
       console.log("RESPONSE DATA", response.data);
 
+      dispatch(closeCustomerModel());
+
       return dispatch(FetchCustomers());
     } catch (err) {
-      toast.error(err?.message)
+      toast.error(err?.message);
       return dispatch(fetchFailed(err));
     }
   };
@@ -197,7 +205,7 @@ export const UploadImage = async (file, oldfile = null) => {
 
     return res?.data;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
   }
 };
 
@@ -209,7 +217,7 @@ export const UploadImages = async (files, oldfile = null) => {
 
     return res?.data.images;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
   }
 };
 
@@ -223,7 +231,7 @@ export const UploadAudio = async (files, oldfile = null) => {
 
     return res?.data;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
   }
 };
 
@@ -239,6 +247,12 @@ export const DeleteImage = async (filename) => {
 
     return res?.data;
   } catch (error) {
-    toast.error(error?.message)
+    toast.error(error?.message);
   }
 };
+
+//Search Customer --> http://localhost:8000/customers/find/anemous?searchtype=name
+
+
+
+

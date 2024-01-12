@@ -154,7 +154,7 @@ export default function EditAgent({}) {
           </div>
         )}
 
-        {customer && customer?.email  && (
+        {customer && customer?.firstName  && (
           <CustomerForm
             initialValues={customer}
             validationSchema={validationSchema}

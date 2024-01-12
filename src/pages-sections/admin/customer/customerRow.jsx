@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar ,Box ,Chip } from "@mui/material";
+import { Avatar, Box, Chip } from "@mui/material";
 import { useRouter } from "next/router";
 import { Delete, RemoveRedEye } from "@mui/icons-material";
 
@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 
 // ========================================================================
 
-const CustomersRow = ({ customer, selected , userRole }) => {
+const CustomersRow = ({ customer, selected, userRole }) => {
   const {
     firstName,
     address,
@@ -30,8 +30,8 @@ const CustomersRow = ({ customer, selected , userRole }) => {
     id,
   } = customer;
 
-  console.log(customer ,"DATA CUSTOMER");
-  const getColor = status => {
+  console.log(customer, "DATA CUSTOMER");
+  const getColor = (status) => {
     switch (status) {
       case "Pending":
         return "secondary";
@@ -39,37 +39,25 @@ const CustomersRow = ({ customer, selected , userRole }) => {
       //   return "secondary";
       case "accepted":
         return "success";
-      case "Cancelled":
+      case "rejected":
         return "error";
       default:
         return "";
     }
   };
 
-
-
-
-
   const dispatch = useDispatch();
 
   const handleDelete = async (id) => {
     console.log("IDDDDDDDD", customer);
-    dispatch(DeleteCustomer(id ,customer?.files));
+    dispatch(DeleteCustomer(id, customer?.files));
   };
-
-
-
 
   const router = useRouter();
   //   const [featuredCategory, setFeaturedCategory] = useState(featured);
   const isItemSelected = selected.indexOf(firstName) !== -1;
   const handleNavigate = () => router.push(`/admin/customer/${id}`);
   return (
-    
-
-    
-
-
     <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
       <StyledTableCell align="center">#{id.split("-")[0]}</StyledTableCell>
 
@@ -82,16 +70,15 @@ const CustomersRow = ({ customer, selected , userRole }) => {
         {/* {status} */}
         <Box m={0.75}>
           <Chip
-onClick={()=>{dispatch(openCustomerModel(customer))}}
-
+            onClick={() => {
+              dispatch(openCustomerModel(customer));
+            }}
             size="small"
             label={status}
             sx={{
               p: "0.25rem 0.5rem",
               fontSize: 12,
-              color: !!getColor(status)
-                ? `${getColor(status)}.900`
-                : "inherit",
+              color: !!getColor(status) ? `${getColor(status)}.900` : "inherit",
               backgroundColor: !!getColor(status)
                 ? `${getColor(status)}.100`
                 : "none",
@@ -101,10 +88,6 @@ onClick={()=>{dispatch(openCustomerModel(customer))}}
       </StyledTableCell>
 
       <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
-
-
-
-
 
       {/* <StyledTableCell align="center">
         <Avatar src={logo} sx={{
@@ -124,20 +107,13 @@ onClick={()=>{dispatch(openCustomerModel(customer))}}
           <RemoveRedEye />
         </StyledIconButton>
 
-{ userRole[0] === 'admin' &&
-        <StyledIconButton onClick={() => handleDelete(id)}>
-          <Delete />
-        </StyledIconButton>
-}
-
-
-
+        {(userRole[0] === "admin" || status === "rejected") && (
+          <StyledIconButton onClick={() => handleDelete(id)}>
+            <Delete />
+          </StyledIconButton>
+        )}
       </StyledTableCell>
     </StyledTableRow>
-
-
-
-
   );
 };
 export default CustomersRow;

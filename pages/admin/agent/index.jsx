@@ -157,7 +157,7 @@ export default function AgentList({ brands }) {
 
   useEffect(() => {
     if (userRole[0] !== "admin") {
-      router.push("/admin/customers");
+      router.push("/admin/customer");
     }
   }, [router]);
 

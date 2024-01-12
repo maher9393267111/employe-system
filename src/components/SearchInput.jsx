@@ -13,7 +13,8 @@ const StyledInputBase = styled(InputBase)(({
   padding: "0 1rem",
   borderRadius: "8px",
   color: theme.palette.grey[600],
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor:theme.palette.grey[200],
+  // theme.palette.background.paper,
   [theme.breakpoints.down("sm")]: {
     maxWidth: "100%"
   },
