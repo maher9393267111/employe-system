@@ -530,7 +530,8 @@ Add Customer signature here
                 />
               </div>
 
-              {userRole[0] === 'admin' &&
+              {/* {userRole[0] === 'admin' && !isedit && */}
+
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
@@ -539,7 +540,10 @@ Add Customer signature here
                 </Button>
               </Grid>
 
-                  }
+
+
+
+        {/* } */}
 
 
             </Grid>
