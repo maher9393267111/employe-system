@@ -10,7 +10,7 @@ import CartX from "components/icons/CartX";
 import CartCheck from "components/icons/CartCheck";
 import TruckFast from "components/icons/TruckFast";
 import { H6, Paragraph } from "components/Typography";
-import { FetchNotifications ,MakeNotificationRead } from "../../../../../redux/notificationsApiRequest";
+
 import { useDispatch, useSelector } from "react-redux";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
@@ -105,27 +105,10 @@ const NotificationsPopover = () => {
     setTabValue(value);
   };
 
-  //FetchNotifications
+  
 
-  const dispatch = useDispatch();
 
-  const notifications = useSelector(
-    (state) => state.notification.notifications
-  );
 
-  console.log("notifsAll", notifications);
-
-  useEffect(() => {
-    console.log("refetch execute");
-
-    dispatch(FetchNotifications());
-  }, []);
-
-const HandleRead=(id)=>{
-
-  dispatch(MakeNotificationRead(id))
-
-}
 
 
 
@@ -181,7 +164,7 @@ const HandleRead=(id)=>{
                     {/* <StyledTab disableRipple value="2" label="Archived" /> */}
                   </StyledTabList>
 
-                  {notifications?.length === 0 ? (
+                  {orders?.length === 0 ? (
                     <Paragraph fontWeight="500" textAlign="center" p={2}>
                       There are no notifications
                     </Paragraph>
@@ -194,18 +177,14 @@ const HandleRead=(id)=>{
                     >
                       {/* {orders.map(order => <ListItem key={order.id} type={order.type} Icon={order.icon} title={order.title} createdAt={order.createdAt} />)} */}
 
-                      {notifications?.map((notification) => (
-                        <ListItem
-                          key={notification._id}
-                          id={notification?._id}
-                          type={notification?.notificationType}
-                          sender={notification?.notificationData?.senderData}
-                          createdAt={notification?.date}
-                          HandleRead={HandleRead}
-                        />
-                      ))}
+                   
                     </TabPanel>
                   )}
+
+
+
+
+
 
                   {/* 
                   {archives.length === 0 ? <Paragraph fontWeight="500" textAlign="center" p={2}>
@@ -231,23 +210,24 @@ const HandleRead=(id)=>{
 // ListItem component props
 
 function ListItem(props) {
-  const { type, sender, createdAt ,key ,HandleRead, id } = props;
+  // const { type, sender, createdAt ,key ,HandleRead, id } = props;
   return (
     <ListItemWrapper p={2} gap={2} alignItems="center">
       <VisibilityIcon
-      onClick={()=>{HandleRead(id) }}
+    
       
       color="info" />
 
       <Box>
         
-        <H6 fontSize={13}>{sender}</H6>
+        {/* <H6 fontSize={13}>{sender}</H6>
         <H6>{type}</H6>
         <Paragraph fontSize={11}>
-          {/* {formatDistance(createdAt, new Date(), {
-          addSuffix: true
-        })} */}
-        </Paragraph>
+      
+        </Paragraph> */}
+
+
+
       </Box>
     </ListItemWrapper>
   );

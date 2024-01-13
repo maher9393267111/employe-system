@@ -51,7 +51,7 @@ import {
   CustomerSerch,
 } from "../../../redux/customerApiRequest";
 
-import {FetchNotifications} from '../../../redux/notificationsApiRequest'
+
 import { closeCustomerModel } from "../../../redux/customerSlice";
 import {  useDispatch, useSelector } from "react-redux";
 import { useContextApp } from "../../../redux/socket/context";
@@ -124,6 +124,7 @@ export default function CustomerList({ brands }) {
   const [searchValue, setSearchValue] = useState("");
   const [searchType, setSearchType] = useState("");
 
+
   const handleSearchTypeChange = ({ target: { name } }) => {
     setSearchType(name);
   };
@@ -189,80 +190,11 @@ export default function CustomerList({ brands }) {
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
 
-  useEffect(() => {
-    console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET")
-    socket.on("fetch", (data) => {
-      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
-    
-    });
-
-    if (userRole[0] === "admin") {
-      socket.on("createcustomer", (data) => {
-        toast.info("new POST CREATED");
-        dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
-        dispatch(FetchNotifications())
-      });
-
-
-
-      // search notification only show form admin
-      socket.on("search_customer", (data) => {
-        toast.info("some agent search for customer");
-        dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
-       dispatch(FetchNotifications())
-        
-      });
-
-      
-
-    }
-
-    socket.on("status", (data) => {
-      console.log(
-        "reciever",
-        data?.receiver,
-        "curre📌📌📌📌📌ntUser",
-        userData?.id
-      );
-
-      console.log(`status !!!!!!!!!@@@@is ch12222222222anged ${data?.receiver} ,,,,, ${userData?.id}`)
-
-
-      if (data?.receiver === userData?.id) {
-        console.log("reciever", data.receiver, "currentUser", userData?.id);
-        console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
-        toast.info("customer status changed");
-       
-
-
-        if (data?.notificationData?.myRole[0] === "staff") {
-          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-          dispatch(FetchNotifications())
-        } else {
-          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
-        }
-
-        // then refetch notifications refetch agent customers
-      }
-    });
-
-
-//search socket  search_customer
-
-// if (userRole[0] === "admin") {
-//   socket.on("search_customer", (data) => {
-//     toast.info("some agent search for customer");
-//     FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
-//   });
-// }
 
 
 
 
 
-
-
-  }, []);
 
   const [custpage, setcustPage] = useState(0);
 
@@ -328,76 +260,13 @@ export default function CustomerList({ brands }) {
     setcustPage(value);
   };
 
-  //FetchAgentCustomers
+  
 
   return (
     <Box py={4}>
       <H3 mb={2}>All Customers </H3>
 
-      <Card
-        backgroundColor="grey.900"
-        sx={{ height: "160px", marginBottom: "20px", padding: "14px" }}
-      >
-        <Box sx={{ display: "flex" }}>
-          <SearchInput
-            sx={{ flexGrow: 1 }}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-
-          <Button
-            color="info"
-            fullWidth={downSM}
-            variant="contained"
-            // startIcon={<Add />}
-            onClick={() => dispatch(CustomerSerch(searchValue, searchType))}
-            sx={
-              {
-                // minHeight: 44,
-              }
-            }
-          >
-            Search
-          </Button>
-        </Box>
-
-        <Stack spacing={3} mb={3}>
-          <div>
-            <FormControlLabel
-              name="name"
-              sx={{
-                mb: 3,
-              }}
-              value={searchType}
-              onChange={handleSearchTypeChange}
-              label={<Paragraph fontWeight={600}>NAME</Paragraph>}
-              control={
-                <Radio
-                  checked={searchType === "name"}
-                  color="info"
-                  size="small"
-                />
-              }
-            />
-
-            <FormControlLabel
-              name="ssn"
-              sx={{
-                mb: 3,
-              }}
-              value={searchType}
-              onChange={handleSearchTypeChange}
-              label={<Paragraph fontWeight={600}>SSN</Paragraph>}
-              control={
-                <Radio
-                  checked={searchType === "ssn"}
-                  color="info"
-                  size="small"
-                />
-              }
-            />
-          </div>
-        </Stack>
-      </Card>
+  
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
