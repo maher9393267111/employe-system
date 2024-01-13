@@ -122,7 +122,7 @@ export default function CustomerList({ brands }) {
 
   //////search customer  IIIIIIII
   const [searchValue, setSearchValue] = useState("");
-  const [searchType, setSearchType] = useState("");
+  const [searchType, setSearchType] = useState("name");
 
   const handleSearchTypeChange = ({ target: { name } }) => {
     setSearchType(name);
