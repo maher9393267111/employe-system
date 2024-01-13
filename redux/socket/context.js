@@ -20,7 +20,7 @@ const baseUrl =
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(devSocket);
+  const socket = socketIO.connect(baseUrl);
 
 
 
