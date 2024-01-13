@@ -169,7 +169,7 @@ const CustomerForm = (props) => {
     (state) => state.auth.login.currentUser.payload.roles
   );
 
-
+  const buttonCondition = (isedit && userRole[0] === 'admin') || (!isedit)
 
 
   return (
@@ -530,8 +530,9 @@ Add Customer signature here
                 />
               </div>
 
-              {userRole[0] === 'admin' &&
-
+              {/* {userRole[0] === 'admin' &&
+               */}
+ {buttonCondition  &&
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
                   {/* Save Agent */}
