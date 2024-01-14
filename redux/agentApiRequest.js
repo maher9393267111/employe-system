@@ -4,6 +4,7 @@ import {
   fetchSuccess,
   fetchFailed,
   addnewAgent,
+  fetchAgentChart
 } from "./agentSlice";
 import axiosJWT from "./axiosJWT";
 import { toast } from "react-toastify";
@@ -134,3 +135,30 @@ export const DeleteAgent = (id ) => async (dispatch) => {
     return dispatch(fetchFailed(err));
   }
 };
+
+
+
+
+export const AgentCustomersCharts = () => async (dispatch) => {
+  await dispatch(fetchStart());
+  try {
+    
+
+    const response = await axiosJWT.get(
+      `${baseUrl}/employees/chart/find`
+    );
+
+    console.log("RESPONSE DATA", response.data);
+
+dispatch(fetchAgentChart(response.data?.agentsNames))
+
+return response.data
+
+
+  } catch (err) {
+    toast.error(err?.message)
+    return dispatch(fetchFailed(err));
+  }
+};
+
+

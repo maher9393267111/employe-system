@@ -8,7 +8,8 @@ export const agentSlice = createSlice({
            
             isFetching: false,
             error: false,
-            refetch : false
+            refetch : false,
+            agentsChart:[]
         },
     },
     reducers: {
@@ -35,6 +36,14 @@ export const agentSlice = createSlice({
 
         }
 
+,
+        fetchAgentChart: (state ,action) => {
+            
+            state.agent.agentsChart = action.payload ;
+        },
+
+
+
 
 
         // logoutSuccess: (state) => {
@@ -43,5 +52,5 @@ export const agentSlice = createSlice({
     },
 });
 
-export const { fetchStart, fetchSuccess, fetchFailed ,addnewAgent } = agentSlice.actions;
+export const { fetchStart, fetchSuccess, fetchFailed ,addnewAgent ,  fetchAgentChart } = agentSlice.actions;
 export default agentSlice.reducer;

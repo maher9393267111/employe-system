@@ -1,6 +1,7 @@
 const { i18n } = require("./next-i18next.config");
 
 module.exports = {
+
   i18n,
   devIndicators: {},
   publicRuntimeConfig: {
@@ -8,6 +9,11 @@ module.exports = {
     theme: "DEFAULT",
     currency: "USD",
   },
+
+  reactStrictMode: true,
+  transpilePackages: ['@mui/x-charts'],
+
+
 
 
   webpack: (config, { dev }) => {

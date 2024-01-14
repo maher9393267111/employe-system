@@ -31,7 +31,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "^5.0.0-alpha.106",
     "@mui/material": "^5.10.12",
-    "@mui/x-charts": "^6.18.1",
+    "@mui/x-charts": "^6.0.0-alpha.17",
     "@mui/x-date-pickers": "^5.0.6",
     "@reduxjs/toolkit": "^2.0.1",
     "apexcharts": "^3.35.3",
