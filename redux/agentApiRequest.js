@@ -151,7 +151,7 @@ export const AgentCustomersCharts = () => async (dispatch) => {
     console.log("RESPONSE DATA", response.data);
     toast.success("fetch data")
 
-dispatch(fetchAgentChart(response.data?.agentsNames))
+dispatch(fetchAgentChart(response.data))
 
 return response.data
 

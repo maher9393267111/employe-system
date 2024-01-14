@@ -20,7 +20,21 @@ Home.getLayout = function getLayout(page) {
 export default function Home() {
   const dispatch = useDispatch();
   const agents = useSelector((state) => state.agent.agent.agentsChart);
+  const totalCustomers = useSelector((state) => state.agent.agent.totalCustomers);
+
+  const totalAgents = useSelector((state) => state.agent.agent.totalAgents);
+
+
+  const user = useSelector(
+    (state) => state.auth.login.currentUser.payload
+  );
+
+
   console.log("selector", agents);
+
+
+
+
 
   useEffect(() => {
     dispatch(AgentCustomersCharts());
@@ -57,6 +71,13 @@ export default function Home() {
           p: 4,
           height: "100%",
           width: "70%",
+
+          width: {
+             xs: "100%",
+            md: "80%",
+          },
+
+
           marginX: "auto",
           marginY: "15px",
 
@@ -67,25 +88,31 @@ export default function Home() {
         }}
       >
         <H5 color="info.main" mb={0.5}>
-          Good Morning, Admin!
+          Good Morning, { user?.fullName}
         </H5>
         <Paragraph color="grey.600">
           Here’s what happening with your store today!
         </Paragraph>
 
-        <H3 mt={3}>15,350.25</H3>
-        <Paragraph color="grey.600">Today’s Visit</Paragraph>
+        <H3 mt={3}>{totalAgents && totalAgents}</H3>
+        <Paragraph color="grey.600">Today’s Agents</Paragraph>
 
-        <H3 mt={1.5}>{currency(10360.66)}</H3>
-        <Paragraph color="grey.600">Today’s total sales</Paragraph>
+        <H3 mt={1.5}>{totalCustomers && totalCustomers}</H3>
+        <Paragraph color="grey.600">Today’s total Customers</Paragraph>
 
         <Box
           sx={{
             right: 24,
             bottom: 0,
-            position: "absolute",
+            // position: "absolute",
+
+position:{
+xs:'relative',
+md:'absolute'
+},
+
             display: {
-              xs: "none",
+              // xs: "none",
               sm: "block",
             },
           }}

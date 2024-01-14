@@ -9,7 +9,10 @@ export const agentSlice = createSlice({
             isFetching: false,
             error: false,
             refetch : false,
-            agentsChart:[]
+            agentsChart:[],
+            totalAgents:0,
+            totalCustomers:0
+
         },
     },
     reducers: {
@@ -39,7 +42,10 @@ export const agentSlice = createSlice({
 ,
         fetchAgentChart: (state ,action) => {
             
-            state.agent.agentsChart = action.payload ;
+            state.agent.agentsChart = action.payload.agentsNames ;
+            state.agent.totalAgents = action.payload.totalAgents ;
+            state.agent.totalCustomers = action.payload.totalCustomers ;
+
         },
 
 
