@@ -149,22 +149,11 @@ export default function AgentList({ brands }) {
     defaultSort: "name",
   });
 
-  
-
-  
-
- 
-
   useEffect(() => {
     if (userRole[0] !== "admin") {
       router.push("/admin/customer");
     }
   }, [router]);
-
-
-
-
-
 
   return (
     <Box py={4}>
@@ -198,26 +187,18 @@ export default function AgentList({ brands }) {
                 onRequestSort={handleRequestSort}
               />
 
-{filteredList &&
-
-              <TableBody>
-                {filteredList?.map((agent) => (
-                  <AgentRow
-                    userRole={userRole}
-                    agent={agent}
-                    key={agent.id}
-                    selected={selected}
-                  />
-                ))}
-
-
-
-
-              </TableBody>
-
-
-                }
-
+              {filteredList && (
+                <TableBody>
+                  {filteredList?.map((agent) => (
+                    <AgentRow
+                      userRole={userRole}
+                      agent={agent}
+                      key={agent.id}
+                      selected={selected}
+                    />
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
         </Scrollbar>
