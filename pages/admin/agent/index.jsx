@@ -194,12 +194,14 @@ export default function AgentList({ brands }) {
                 orderBy={orderBy}
                 heading={tableHeading}
                 numSelected={selected.length}
-                rowCount={filteredList.length}
+                rowCount={filteredList?.length}
                 onRequestSort={handleRequestSort}
               />
 
+{filteredList &&
+
               <TableBody>
-                {filteredList.map((agent) => (
+                {filteredList?.map((agent) => (
                   <AgentRow
                     userRole={userRole}
                     agent={agent}
@@ -207,7 +209,15 @@ export default function AgentList({ brands }) {
                     selected={selected}
                   />
                 ))}
+
+
+
+
               </TableBody>
+
+
+                }
+
             </Table>
           </TableContainer>
         </Scrollbar>

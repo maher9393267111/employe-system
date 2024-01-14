@@ -422,6 +422,8 @@ export default function CustomerList({ brands }) {
                   onRequestSort={handleRequestSort}
                 />
 
+{filteredCustomers &&
+
                 <TableBody>
                   {filteredCustomers?.map((customer) => (
                     <CustomersRow
@@ -432,6 +434,11 @@ export default function CustomerList({ brands }) {
                     />
                   ))}
                 </TableBody>
+
+                  }
+
+
+
               </Table>
             </TableContainer>
           </Scrollbar>
