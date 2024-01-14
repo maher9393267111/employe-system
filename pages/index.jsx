@@ -20,21 +20,15 @@ Home.getLayout = function getLayout(page) {
 export default function Home() {
   const dispatch = useDispatch();
   const agents = useSelector((state) => state.agent.agent.agentsChart);
-  const totalCustomers = useSelector((state) => state.agent.agent.totalCustomers);
+  const totalCustomers = useSelector(
+    (state) => state.agent.agent.totalCustomers
+  );
 
   const totalAgents = useSelector((state) => state.agent.agent.totalAgents);
 
-
-  const user = useSelector(
-    (state) => state.auth.login.currentUser.payload
-  );
-
+  const user = useSelector((state) => state.auth.login.currentUser.payload);
 
   console.log("selector", agents);
-
-
-
-
 
   useEffect(() => {
     dispatch(AgentCustomersCharts());
@@ -66,6 +60,7 @@ export default function Home() {
         // marginY:"15px",
       }}
     >
+      {agents &&
       <Card
         sx={{
           p: 4,
@@ -73,10 +68,9 @@ export default function Home() {
           width: "70%",
 
           width: {
-             xs: "100%",
+            xs: "100%",
             md: "80%",
           },
-
 
           marginX: "auto",
           marginY: "15px",
@@ -88,7 +82,7 @@ export default function Home() {
         }}
       >
         <H5 color="info.main" mb={0.5}>
-          Good Morning, { user?.fullName}
+          Good Morning, {user?.fullName}
         </H5>
         <Paragraph color="grey.600">
           Here’s what happening with your store today!
@@ -106,10 +100,10 @@ export default function Home() {
             bottom: 0,
             // position: "absolute",
 
-position:{
-xs:'relative',
-md:'absolute'
-},
+            position: {
+              xs: "relative",
+              md: "absolute",
+            },
 
             display: {
               // xs: "none",
@@ -117,30 +111,25 @@ md:'absolute'
             },
           }}
         >
-          {agents &&
-
-<Chart
-  options={pieOptions}
-  series={pieSeries}
-  type="donut"
-  width={380}
-/>
-
-}
-
-       
-
-
+          {/* {agents && ( */}
+            <Chart
+              options={pieOptions}
+              series={pieSeries}
+              type="donut"
+              width={380}
+            />
+           {/* )} */}
         </Box>
       </Card>
+}
       ;
+
+
+
+
     </Box>
   );
 }
-
-
-
-
 
 // import { Box, Grid } from "@mui/material";
 // import Card1 from "pages-sections/dashboard/Card1";
@@ -214,5 +203,3 @@ md:'absolute'
 //     }
 //   };
 // };
-
-

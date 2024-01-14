@@ -5,7 +5,7 @@ export const navigations = [{
 }, {
   name: "Dashboard",
   icon: duotone.Dashboard,
-  path: "/vendor/dashboard"
+  path: "/"
 }, 
 
 
@@ -203,7 +203,7 @@ export const agentNavigations = [{
 }, {
   name: "Dashboard",
   icon: duotone.Dashboard,
-  path: "/vendor/dashboard"
+  path: "/"
 }, 
 
 
