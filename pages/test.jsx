@@ -90,12 +90,19 @@ export default function Pie() {
             },
           }}
         >
+
+{agents &&
+
           <Chart
             options={pieOptions}
             series={pieSeries}
             type="donut"
             width={380}
           />
+
+}
+
+
         </Box>
       </Card>
       ;
