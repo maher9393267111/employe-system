@@ -37,14 +37,14 @@ export default function Home() {
   const pieOptions = {
     colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)"],
 
-    labels: agents.map((agent, index) => {
+    labels: agents?.map((agent, index) => {
       return agent.data.fullName;
     }),
   };
 
   console.log("LABELS", pieOptions.labels);
 
-  const pieSeries = agents.map((agent, index) => {
+  const pieSeries = agents?.map((agent, index) => {
     return agent.count;
   });
 
