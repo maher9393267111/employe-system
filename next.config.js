@@ -14,6 +14,33 @@ module.exports = {
   transpilePackages: ['@mui/x-charts'],
 
 
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // don't resolve 'fs' module on the client to prevent this error on build --> Error: Can't resolve 'fs'
+      config.resolve.fallback = {
+       // fixes proxy-agent dependencies
+       net: false,
+       dns: false,
+       tls: false,
+       assert: false,
+       // fixes next-i18next dependencies
+       path: false,
+       fs: false,
+       // fixes mapbox dependencies
+       events: false,
+       // fixes sentry dependencies
+       async_hooks: false,
+      //  topLevelAwait: true,
+      //  layers: true,
+      };
+    }
+
+    return config;
+  },
+
+
+
+
 
 
   // webpack: (config, { dev }) => {
@@ -36,6 +63,9 @@ module.exports = {
   //     ]
   //     }
   //   )
+
+
+
   //   return config
   // }
 

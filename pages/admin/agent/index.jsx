@@ -19,28 +19,6 @@ import { FetchAgents } from "../../../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-// TABLE HEADING DATA LIST
-// const tableHeading = [{
-//   id: "id",
-//   label: "ID",
-//   align: "center"
-// }, {
-//   id: "name",
-//   label: "Name",
-//   align: "center"
-// }, {
-//   id: "logo",
-//   label: "Logo",
-//   align: "center"
-// }, {
-//   id: "featured",
-//   label: "Featured",
-//   align: "center"
-// }, {
-//   id: "action",
-//   label: "Action",
-//   align: "center"
-// }];
 
 const tableHeading = [
   {
@@ -125,6 +103,10 @@ export default function AgentList({ brands }) {
     logo: item.image,
     featured: item.featured,
   }));
+
+
+
+  
 
   const filteredAgents = employeesData?.map((item) => ({
     id: item._id,

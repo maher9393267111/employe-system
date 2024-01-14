@@ -10,6 +10,8 @@ import {
 } from "../StyledComponents";
 import { DeleteAgent } from "../../../../redux/agentApiRequest";
 import { useDispatch } from "react-redux";
+import EditIcon from '@mui/icons-material/Edit';
+
 // ========================================================================
 
 // ========================================================================
@@ -60,9 +62,24 @@ const AgentRow = ({ agent, selected ,userRole  }) => {
       </StyledTableCell> */}
 
       <StyledTableCell align="center">
-        <StyledIconButton onClick={handleNavigate}>
+
+
+      <StyledIconButton
+      onClick={handleNavigate}
+       >
+          <EditIcon />
+        </StyledIconButton>
+
+
+        <StyledIconButton onClick={()=>router.push(`/admin/customer?agent=${id}`)} >
           <RemoveRedEye />
         </StyledIconButton>
+
+    
+
+
+
+{/* //onClick={()=>router.push(`/admin/customer?agent=${id}`) */}
 
 {userRole[0] === 'admin' &&
 

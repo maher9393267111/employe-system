@@ -1,205 +1,337 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-// AgentCustomersCharts
-import { AgentCustomersCharts } from "../redux/agentApiRequest";
-import { useSelector, useDispatch } from "react-redux";
-import NextImage from "next/image";
-import { Box, Card } from "@mui/material";
-import { H3, H5, Paragraph } from "components/Typography";
-import { currency } from "lib";
+import Router from "next/router";
+import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
+import TableBody from "@mui/material/TableBody";
+import SearchArea from "components/dashboard/SearchArea";
+import TableHeader from "components/data-table/TableHeader";
+import TablePagination from "components/data-table/TablePagination";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import Scrollbar from "components/Scrollbar";
+import { H3 } from "components/Typography";
+import { BrandRow } from "pages-sections/admin";
+import { AgentRow } from "pages-sections/admin";
+import useMuiTable from "hooks/useMuiTable";
+import api from "utils/__api__/dashboard";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import axiosJWT from "../redux/axiosJWT";
+import { REACT_APP_BASE_URL } from "../redux/baseURL";
+import { FetchAgents } from "../redux/agentApiRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import HomeChart from 'components/homeChart'
 
-Home.getLayout = function getLayout(page) {
+
+const tableHeading = [
+  {
+    id: "_id",
+    label: "ID",
+    align: "center",
+  },
+  {
+    id: "username",
+    label: "UserName",
+    align: "center",
+  },
+  {
+    id: "email",
+    label: "Email",
+    align: "center",
+  },
+
+  // {
+  //   id: "adress",
+  //   label: "Adress",
+  //   align: "center",
+  // },
+
+  {
+    id: "phoneNumber",
+    label: "PhoneNumber",
+    align: "center",
+  },
+
+  {
+    id: "action",
+    label: "Action",
+    align: "center",
+  },
+];
+
+// =============================================================================
+AgentList.getLayout = function getLayout(page) {
   return <VendorDashboardLayout>{page}</VendorDashboardLayout>;
 };
+// =============================================================================
 
-export default function Home() {
-  const dispatch = useDispatch();
-  const agents = useSelector((state) => state.agent.agent.agentsChart);
-  const totalCustomers = useSelector(
-    (state) => state.agent.agent.totalCustomers
+// =============================================================================
+
+export default function AgentList({  }) {
+  // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
+
+  const router = useRouter();
+
+  const employeesData = useSelector((state) => state.agent?.agent?.allagents);
+  const name = useSelector((state) => state.auth?.login.nane);
+  const refetch = useSelector((state) => state.agent?.agent?.refetch);
+
+  const userRole = useSelector(
+    (state) => state.auth.login.currentUser?.payload?.roles
   );
 
-  const totalAgents = useSelector((state) => state.agent.agent.totalAgents);
-
-  const user = useSelector((state) => state.auth.login.currentUser.payload);
-
-  console.log("selector", agents);
-
+  const dispatch = useDispatch();
+  const [employees, setEmployees] = useState(employeesData ?? []);
+  const [refresh, setRefesh] = useState(false);
   useEffect(() => {
-    dispatch(AgentCustomersCharts());
-  }, [dispatch]);
+ 
 
-  const pieOptions = {
-    colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)"],
+    dispatch(FetchAgents());
+  }, [refetch]);
 
-    labels: agents?.map((agent, index) => {
-      return agent.data.fullName;
-    }),
-  };
 
-  console.log("LABELS", pieOptions.labels);
 
-  const pieSeries = agents?.map((agent, index) => {
-    return agent.count;
+  
+
+  const filteredAgents = employeesData?.map((item) => ({
+    id: item._id,
+    slug: item._id,
+    username: item.username,
+    email: item.email,
+    address: item.address,
+    phoneNumber: item.phoneNumber,
+  }));
+
+  const {
+    order,
+    orderBy,
+    selected,
+    rowsPerPage,
+    filteredList,
+    handleChangePage,
+    handleRequestSort,
+  } = useMuiTable({
+    listData: filteredAgents,
+    //filteredBrands,
+    defaultSort: "name",
   });
 
-  console.log("SEARIES", pieSeries);
+  useEffect(() => {
+    if (userRole[0] !== "admin") {
+      router.push("/admin/customer");
+    }
+  }, [router]);
 
   return (
-    <Box
-      sx={{
-        p: 4,
-        height: "100%",
-        // width:"70%",
-        // marginX:'auto',
-        // marginY:"15px",
-      }}
-    >
-      {agents &&
-      <Card
-        sx={{
-          p: 4,
-          height: "100%",
-          width: "70%",
+    <Box py={4}>
 
-          width: {
-            xs: "100%",
-            md: "80%",
-          },
+<HomeChart/>
 
-          marginX: "auto",
-          marginY: "15px",
 
-          display: "flex",
-          position: "relative",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <H5 color="info.main" mb={0.5}>
-          Good Morning, {user?.fullName}
-        </H5>
-        <Paragraph color="grey.600">
-          Here’s what happening with your store today!
-        </Paragraph>
+      <H3 mb={2}>All Agents</H3>
 
-        <H3 mt={3}>{totalAgents && totalAgents}</H3>
-        <Paragraph color="grey.600">Today’s Agents</Paragraph>
+      {userRole[0] === "admin" && (
+        <SearchArea
+          handleSearch={() => {}}
+          buttonText="Add Agent"
+          searchPlaceholder="Search Agent..."
+          handleBtnClick={() => Router.push("/admin/agent/create")}
+          userRole={userRole}
+        />
+      )}
 
-        <H3 mt={1.5}>{totalCustomers && totalCustomers}</H3>
-        <Paragraph color="grey.600">Today’s total Customers</Paragraph>
+      <Card>
+        <Scrollbar>
+          <TableContainer
+            sx={{
+              minWidth: 600,
+            }}
+          >
+            <Table>
+              <TableHeader
+                order={order}
+                hideSelectBtn
+                orderBy={orderBy}
+                heading={tableHeading}
+                numSelected={selected.length}
+                rowCount={filteredList?.length}
+                onRequestSort={handleRequestSort}
+              />
 
-        <Box
-          sx={{
-            right: 24,
-            bottom: 0,
-            // position: "absolute",
+              {filteredList && (
+                <TableBody>
+                  {filteredList?.map((agent) => (
+                    <AgentRow
+                      userRole={userRole}
+                      agent={agent}
+                      key={agent.id}
+                      selected={selected}
+                    />
+                  ))}
+                </TableBody>
+              )}
+            </Table>
+          </TableContainer>
+        </Scrollbar>
 
-            position: {
-              xs: "relative",
-              md: "absolute",
-            },
-
-            display: {
-              // xs: "none",
-              sm: "block",
-            },
-          }}
-        >
-          {/* {agents && ( */}
-            <Chart
-              options={pieOptions}
-              series={pieSeries}
-              type="donut"
-              width={380}
-            />
-           {/* )} */}
-        </Box>
+        <Stack alignItems="center" my={4}>
+          <TablePagination
+            onChange={handleChangePage}
+            count={Math.ceil(filteredAgents.length / rowsPerPage)}
+          />
+        </Stack>
       </Card>
-}
-      ;
-
-
-
-
     </Box>
   );
 }
 
-// import { Box, Grid } from "@mui/material";
-// import Card1 from "pages-sections/dashboard/Card1";
-// import Section3 from "pages-sections/dashboard/Section3";
-// import WishCard from "pages-sections/dashboard/WishCard";
-// import Analytics from "pages-sections/dashboard/Analytics";
-// import RecentPurchase from "pages-sections/dashboard/RecentPurchase";
-// import VendorDashboardLayout from "components/layouts/vendor-dashboard";
-// import StockOutProducts from "pages-sections/dashboard/StockOutProducts";
-// import api from "utils/__api__/dashboard";
 
-// // =============================================================================
-// IndexPage.getLayout = function getLayout(page) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import dynamic from "next/dynamic";
+// import Link from "next/link";
+// import { useEffect, useState } from "react";
+// // AgentCustomersCharts
+// import { AgentCustomersCharts } from "../redux/agentApiRequest";
+// import { useSelector, useDispatch } from "react-redux";
+// import NextImage from "next/image";
+// import { Box, Card } from "@mui/material";
+// import { H3, H5, Paragraph } from "components/Typography";
+// import { currency } from "lib";
+// import VendorDashboardLayout from "components/layouts/vendor-dashboard";
+// const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+// Home.getLayout = function getLayout(page) {
 //   return <VendorDashboardLayout>{page}</VendorDashboardLayout>;
 // };
-// // =============================================================================
 
-// // =============================================================================
+// export default function Home() {
+//   const dispatch = useDispatch();
+//   const agents = useSelector((state) => state.agent.agent.agentsChart);
+//   const totalCustomers = useSelector(
+//     (state) => state.agent.agent.totalCustomers
+//   );
 
-// export default function IndexPage(props) {
-//   const {
-//     cardList,
-//     recentPurchase,
-//     stockOutProducts
-//   } = props;
-//   return <Box py={4}>
-//       <Grid container spacing={3}>
-//         {/* WISHING CARD */}
-//         <Grid item md={6} xs={12}>
-//           <WishCard />
-//         </Grid>
+//   const totalAgents = useSelector((state) => state.agent.agent.totalAgents);
 
-//         {/* ALL TRACKING CARDS */}
-//         <Grid container item md={6} xs={12} spacing={3}>
-//           {cardList.map(item => <Grid item md={6} sm={6} xs={12} key={item.id}>
-//               <Card1 title={item.title} color={item.color} amount1={item.amount1} amount2={item.amount2} percentage={item.percentage} status={item.status === "down" ? "down" : "up"} />
-//             </Grid>)}
-//         </Grid>
+//   const user = useSelector((state) => state.auth.login.currentUser.payload);
 
-//         {/* SALES AREA */}
-//         <Grid item xs={12}>
-//           <Section3 />
-//         </Grid>
+//   console.log("selector", agents);
 
-//         {/* ANALYTICS AREA */}
-//         <Grid item xs={12}>
-//           <Analytics />
-//         </Grid>
+//   useEffect(() => {
+//     dispatch(AgentCustomersCharts());
+//   }, [dispatch]);
 
-//         {/* RECENT PURCHASE AREA */}
-//         <Grid item md={7} xs={12}>
-//           <RecentPurchase data={recentPurchase} />
-//         </Grid>
+//   const pieOptions = {
+//     colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)"],
 
-//         {/* STOCK OUT PRODUCTS */}
-//         <Grid item md={5} xs={12}>
-//           <StockOutProducts data={stockOutProducts} />
-//         </Grid>
-//       </Grid>
-//     </Box>;
-// }
-// export const getStaticProps = async () => {
-//   const cardList = await api.getAllCard();
-//   const recentPurchase = await api.recentPurchase();
-//   const stockOutProducts = await api.stockOutProducts();
-//   return {
-//     props: {
-//       cardList,
-//       recentPurchase,
-//       stockOutProducts
-//     }
+//     labels: agents?.map((agent, index) => {
+//       return agent.data.fullName;
+//     }),
 //   };
-// };
+
+//   console.log("LABELS", pieOptions.labels);
+
+//   const pieSeries = agents?.map((agent, index) => {
+//     return agent.count;
+//   });
+
+//   console.log("SEARIES", pieSeries);
+
+//   return (
+//     <Box
+//       sx={{
+//         p: 4,
+//         height: "100%",
+//         // width:"70%",
+//         // marginX:'auto',
+//         // marginY:"15px",
+//       }}
+//     >
+//       {agents &&
+//       <Card
+//         sx={{
+//           p: 4,
+//           height: "100%",
+//           width: "70%",
+
+//           width: {
+//             xs: "100%",
+//             md: "80%",
+//           },
+
+//           marginX: "auto",
+//           marginY: "15px",
+
+//           display: "flex",
+//           position: "relative",
+//           flexDirection: "column",
+//           justifyContent: "center",
+//         }}
+//       >
+//         <H5 color="info.main" mb={0.5}>
+//           Good Morning, {user?.fullName}
+//         </H5>
+//         <Paragraph color="grey.600">
+//           Here’s what happening with your store today!
+//         </Paragraph>
+
+//         <H3 mt={3}>{totalAgents && totalAgents}</H3>
+//         <Paragraph color="grey.600">Today’s Agents</Paragraph>
+
+//         <H3 mt={1.5}>{totalCustomers && totalCustomers}</H3>
+//         <Paragraph color="grey.600">Today’s total Customers</Paragraph>
+
+//         <Box
+//           sx={{
+//             right: 24,
+//             bottom: 0,
+//             // position: "absolute",
+
+//             position: {
+//               xs: "relative",
+//               md: "absolute",
+//             },
+
+//             display: {
+//               // xs: "none",
+//               sm: "block",
+//             },
+//           }}
+//         >
+//           {/* {agents && ( */}
+//             <Chart
+//               options={pieOptions}
+//               series={pieSeries}
+//               type="donut"
+//               width={380}
+//             />
+//            {/* )} */}
+//         </Box>
+//       </Card>
+// }
+//       ;
+
+
+
+
+//     </Box>
+//   );
+// }
+

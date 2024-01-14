@@ -11,7 +11,7 @@ import SettingsProvider from "contexts/SettingContext";
 import SnackbarProvider from "components/SnackbarProvider";
 import { ChakraProvider } from '@chakra-ui/react'
 
-
+import { useState ,useEffect } from "react";
 import nextI18NextConfig from "../next-i18next.config";
 
 import { ToastContainer,toast } from 'react-toastify'
@@ -45,6 +45,17 @@ const App = ({
 }) => {
   const AnyComponent = Component;
   const getLayout = AnyComponent.getLayout ?? (page => page);
+
+
+  const [isSSR, setIsSSR] = useState(true);
+
+  useEffect(() => {
+    setIsSSR(false);
+  
+  }, []);
+  
+
+
   return <Fragment>
       <Head>
         <meta charSet="utf-8" />
@@ -54,6 +65,7 @@ const App = ({
         <OpenGraphTags />
         <title>Bazaar - Next.js Ecommerce Template</title>
       </Head>
+      {/* {!isSSR &&  */}
       <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
 
@@ -83,6 +95,8 @@ const App = ({
 </ChakraProvider>
       </PersistGate>
         </Provider>
+{/* } */}
+
     </Fragment>;
 };
 

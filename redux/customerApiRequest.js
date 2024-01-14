@@ -18,11 +18,11 @@ const baseUrl =
     : REACT_APP_BASE_URL1;
 
 export const FetchCustomers =
-  (page = 1, size = 2, status, sortBy, sortDirection) =>
+  (page = 1, size = 2, status, sortBy, sortDirection ,employeid) =>
   async (dispatch) => {
     await dispatch(fetchStart());
     try {
-      console.log("page in request api", page);
+      console.log("page in request api 📱 📱 📱", employeid);
       console.log(
         "QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!",
         status,
@@ -33,7 +33,7 @@ export const FetchCustomers =
       const response = await axiosJWT.get(
         `${baseUrl}/customers?page=${
           page === 0 ? 1 : page
-        }&&size=${size}&&status=${status}&&sortBy=${sortBy}&&sortDirection=${sortDirection}`
+        }&&size=${size}&&status=${status}&&sortBy=${sortBy}&&sortDirection=${sortDirection}&&employeid=${employeid}`
       );
       console.log("all customers api fetch REFETCH", response.data);
       return dispatch(fetchSuccess(response.data));
@@ -182,7 +182,7 @@ export const ChangeCustomerStatus =
 
       dispatch(closeCustomerModel());
 
-      return dispatch(FetchCustomers());
+      // return dispatch(FetchCustomers());
     } catch (err) {
       toast.error(err?.message);
       return dispatch(fetchFailed(err));
