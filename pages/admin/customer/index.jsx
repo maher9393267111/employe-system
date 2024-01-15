@@ -374,12 +374,17 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
                   </MenuItem>
 
                   <MenuItem color="info" value="admincustomers">
-                    admin customers
+                    admin  customer
                   </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
           )}
+
+
+
+
+
 
           <Grid item sx={12} lg={4}>
             <Button
@@ -387,7 +392,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
               fullWidth={downSM}
               variant="contained"
               startIcon={<Add />}
-              onClick={() => Router.push("/admin/customer/create")}
+              onClick={() => router.push("/admin/customer/create")}
               sx={
                 {
                   // minHeight: 44,
