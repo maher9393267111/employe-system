@@ -356,6 +356,60 @@ const {locale} = useRouter()
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
+                  name="state"
+                  label={fetchWord("state", locale)}
+                  color="info"
+                  size="medium"
+                  placeholder={fetchWord("state", locale)}
+                  // value={values.address}
+                  value={values.state}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.state && !!errors.state}
+                  helperText={touched.state && errors.state}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  name="work"
+                  label={fetchWord("work", locale)}
+                  color="info"
+                  size="medium"
+                  placeholder={fetchWord("work", locale)}
+                  // value={values.address}
+                  value={values.work}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.work && !!errors.work}
+                  helperText={touched.work && errors.work}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  name="date"
+                  label={fetchWord("date", locale)}
+                  color="info"
+                  size="medium"
+                  placeholder={fetchWord("date", locale)}
+                  // value={values.address}
+                  value={values.date}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.date && !!errors.date}
+                  helperText={touched.date && errors.date}
+                />
+              </Grid>
+
+
+
+
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
                   name="ssn"
                   label="ssn"
                   color="info"

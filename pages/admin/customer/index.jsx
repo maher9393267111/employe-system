@@ -230,7 +230,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
       );
     } else if (userRole[0] === "staff") {
       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-      toast.success("staff fetch customers");
+      //toast.success("staff fetch customers");
     }
   }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
 

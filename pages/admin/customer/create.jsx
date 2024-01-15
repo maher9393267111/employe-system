@@ -43,6 +43,9 @@ const validationSchema = yup.object().shape({
   city: yup.string().required("required"),
   ssn: yup.number().required("required"),
   gender: yup.string().required("required"),
+  work: yup.string().required("required"),
+  state: yup.string().required("required"),
+  date: yup.string().required("required"),
   
 });
 
@@ -79,7 +82,7 @@ export default function CreateCustomer() {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>Create New Customer</H3>
+      <H3 mb={2}>{fetchWord("addCustomer",locale)}</H3>
 
 {locale}
 

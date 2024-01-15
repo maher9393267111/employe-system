@@ -39,6 +39,9 @@ export default function EditAgent({}) {
     city: yup.string().required("required"),
     ssn: yup.number().required("required"),
     gender:yup.string().required("required"),
+    work: yup.string().required("required"),
+    state: yup.string().required("required"),
+    date: yup.string().required("required"),
 
   
   });
@@ -54,7 +57,10 @@ export default function EditAgent({}) {
     city:'',
     zip:'',
     ssn:'',
-    birthday:''
+    birthday:'',
+    work:'',
+    state:'',
+    date:''
   });
 
   const [loading, setLoading] = useState(false);
@@ -82,7 +88,10 @@ export default function EditAgent({}) {
             zip:data?.zip,
             gender:data?.gender,
             ssn:data?.ssn,
-            birthday:data?.birthday
+            birthday:data?.birthday,
+            work:data?.work,
+            state:data?.state,
+            date:data?.date
             
           }));
 
@@ -109,7 +118,14 @@ export default function EditAgent({}) {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>Edit Customer</H3>
+      <H3 mb={2}>
+        
+        
+      {fetchWord("editCustomer",locale)}
+      
+      
+      
+      </H3>
 
       <div>
         {!customer?.email  && (
