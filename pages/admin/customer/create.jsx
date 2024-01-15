@@ -84,7 +84,7 @@ export default function CreateCustomer() {
     <Box py={4}>
       <H3 mb={2}>{fetchWord("addCustomer",locale)}</H3>
 
-{locale}
+
 
 
       <CustomerForm

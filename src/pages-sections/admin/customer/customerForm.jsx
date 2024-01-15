@@ -184,15 +184,15 @@ const {locale} = useRouter()
       }}
     >
       <Grid item xs={12}>
+
+      { buttonCondition &&
+
         <div>
 
         {fetchWord("signatureAdd", locale)}
 
-          {/* {signature && (
-            <>
-              <img src={signature} alt="signature" className="signature" />
-            </>
-          )} */}
+   
+ 
           <SignatureCanvas
             ref={sigCanvas}
             // penColor="black"
@@ -204,8 +204,17 @@ const {locale} = useRouter()
             // ref={sigPad}
             onEnd={create}
           />
-          {/* <button onClick={create}>Create</button> */}
+
+
+    
+
+
         </div>
+
+    }
+
+
+
       </Grid>
 
       <Formik
