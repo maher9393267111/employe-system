@@ -188,11 +188,11 @@ const {locale} = useRouter()
 
         {fetchWord("signatureAdd", locale)}
 
-          {signature && (
+          {/* {signature && (
             <>
               <img src={signature} alt="signature" className="signature" />
             </>
-          )}
+          )} */}
           <SignatureCanvas
             ref={sigCanvas}
             // penColor="black"
@@ -435,8 +435,58 @@ const {locale} = useRouter()
 
 
 
+          
+
 
               </Grid>
+
+
+
+
+              {signature && (
+            <Grid sx={{my:'15px'}} item xs={12} md={12}>
+
+
+<div style={{display:"flex" , justifyContent:'' ,gap:'30px'}}>
+
+
+
+            <div>
+
+           
+            <p>2024</p>
+              <img src={signature} alt="signature" className="signature" />
+
+              </div>
+
+<div>
+
+
+              <p>2025</p>
+              <img src={signature} alt="signature" className="signature" />
+
+
+              </div>
+
+              <div>
+
+              <p>2026</p>
+              <img src={signature} alt="signature" className="signature" />
+              </div>
+
+
+              </div>
+
+
+
+            </Grid>
+          )}
+
+
+
+
+
+
 
               <Grid item xs={12}>
                 <div
