@@ -18,6 +18,8 @@ import SignatureCanvas from "react-signature-canvas";
 import ReactPlayer from "react-player";
 import { init } from "i18next";
 import {useSelector} from 'react-redux'
+import {fetchWord} from '../../../../redux/lang/fetchword'
+import { useRouter } from "next/router";
 
 import {
   Box,
@@ -171,7 +173,7 @@ const CustomerForm = (props) => {
 
 const buttonCondition = (isedit && userRole[0] === 'admin') || (!isedit)
 
-
+const {locale} = useRouter()
 
 
 
@@ -184,7 +186,7 @@ const buttonCondition = (isedit && userRole[0] === 'admin') || (!isedit)
       <Grid item xs={12}>
         <div>
 
-Add Customer signature here
+        {fetchWord("signatureAdd", locale)}
 
           {signature && (
             <>
@@ -226,10 +228,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="firstName"
-                  label="firstName"
+                  label={fetchWord("firstname", locale)}
                   color="info"
                   size="medium"
-                  placeholder="firstName"
+                  placeholder={fetchWord("firstname", locale)}
                   value={values.firstName}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -242,10 +244,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="lastName"
-                  label="lastName"
+                  label={fetchWord("lastname", locale)}
                   color="info"
                   size="medium"
-                  placeholder="lastName"
+                  placeholder={fetchWord("lastname", locale)}
                   value={values.lastName}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -258,10 +260,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="email"
-                  label="Email"
+                  label={fetchWord("email", locale)}
                   color="info"
                   size="medium"
-                  placeholder="Email"
+                  placeholder={fetchWord("email", locale)}
                   value={values.email}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -274,10 +276,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="address"
-                  label="Address"
+                  label={fetchWord("adress", locale)}
                   color="info"
                   size="medium"
-                  placeholder="Name"
+                  placeholder={fetchWord("adress", locale)}
                   // value={values.address}
                   value={values.address}
                   onBlur={handleBlur}
@@ -291,10 +293,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="phoneNumber"
-                  label="phone"
+                  label={fetchWord("phone", locale)}
                   color="info"
                   size="medium"
-                  placeholder="Name"
+                  placeholder={fetchWord("phone", locale)}
                   value={values.phoneNumber}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -307,10 +309,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="city"
-                  label="city"
+                  label={fetchWord("city", locale)}
                   color="info"
                   size="medium"
-                  placeholder="City"
+                  placeholder={fetchWord("city", locale)}
                   value={values.city}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -323,10 +325,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="zip"
-                  label="zip"
+                  label={fetchWord("zipcode", locale)}
                   color="info"
                   size="medium"
-                  placeholder="zip"
+                  placeholder={fetchWord("zipcode", locale)}
                   value={values.zip}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -339,10 +341,10 @@ Add Customer signature here
                 <TextField
                   fullWidth
                   name="birthday"
-                  label="birthday"
+                  label={fetchWord("birthday", locale)}
                   color="info"
                   size="medium"
-                  placeholder="birthday"
+                  placeholder={fetchWord("birthday", locale)}
                   value={values.birthday}
                   onBlur={handleBlur}
                   onChange={handleChange}
@@ -369,10 +371,12 @@ Add Customer signature here
 
               <Grid item sm={6} xs={12}>
                 <TextField
-                select fullWidth color="info" size="medium" name="gender" onBlur={handleBlur} placeholder="Category" label="Select Gender" onChange={handleChange} value={values.gender} error={Boolean(errors.gender && touched.gendery)} helperText={touched.gender && errors.category}
+                select fullWidth color="info" size="medium" name="gender" onBlur={handleBlur} placeholder="Category" label={fetchWord("gender", locale)}
+                
+                onChange={handleChange} value={values.gender} error={Boolean(errors.gender && touched.gendery)} helperText={touched.gender && errors.category}
                 >
-                  <MenuItem color="info" value={"male"}>Male</MenuItem>
-                  <MenuItem color="info" value={"female"}>Female</MenuItem>
+                  <MenuItem color="info" value={"male"}>{fetchWord("male", locale)}</MenuItem>
+                  <MenuItem color="info" value={"female"}>{fetchWord("female", locale)}</MenuItem>
                 </TextField>
 
 
@@ -391,7 +395,7 @@ Add Customer signature here
                     <Box mb="5">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
-                          Images{" "}
+                        {fetchWord("images", locale)}
                           <Box as="span" color="red.500">
                             *
                           </Box>
@@ -405,7 +409,7 @@ Add Customer signature here
                           htmlFor="imageUpload"
                         >
                           <Text mt="8" color="gray">
-                            Upload Documents
+                          {fetchWord("uploadDocs", locale)}
                           </Text>
 
                           <Field
@@ -447,7 +451,7 @@ Add Customer signature here
                     <Box mb="5">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
-                          Audio File{" "}
+                          {fetchWord("audiofile", locale)}
                           <Box as="span" color="red.500">
                             *
                           </Box>
@@ -460,7 +464,7 @@ Add Customer signature here
                           htmlFor="imageUpload"
                         >
                           <Text mt="8" color="gray">
-                            Upload Audio
+                          {fetchWord("uploadAudio", locale)}
                           </Text>
 
                           <Field

@@ -1,4 +1,18 @@
 {
+  "firstname":"firstName",
+  "lastname": "lastName",
+  "adress":"adress",
+  "city":"city",
+  "zip code":"zip code",
+  "state":"state",
+  "birthday":"birthday",
+  "ssn":"ssn",
+  "email":"email",
+  "signature":"signature",
+  "work":"work",
+  "phone":"phone",
+  "date":"date",
+
   "title": "Then you may have a look at <1>this blog post</1>.",
   "description": "Do you like to unleash some super powers to have all side optimized translations?",
   "Free Express Shipping": "Free Express Shipping"

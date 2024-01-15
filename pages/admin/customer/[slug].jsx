@@ -13,7 +13,7 @@ import {
 } from "../../../redux/customerApiRequest";
 // import Skeleton from 'react-loading-skeleton';
 import Skeleton from "@mui/material/Skeleton";
-
+import { fetchWord } from "../../../redux/lang/fetchword";
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -25,7 +25,7 @@ EditAgent.getLayout = function getLayout(page) {
 export default function EditAgent({}) {
   // console.log("inSERVER" ,data)
   const dispatch = useDispatch();
-  const { query } = useRouter();
+  const { query ,locale } = useRouter();
 
   // form field validation schema
   const validationSchema = yup.object().shape({
@@ -160,7 +160,7 @@ export default function EditAgent({}) {
             validationSchema={validationSchema}
             handleFormSubmit={handleFormSubmit}
             slug={query.slug}
-            buttontext="Edit customer"
+            buttontext={fetchWord("editCustomer",locale)}
             isedit={true}
             images={images}
             // setImages={setImages}

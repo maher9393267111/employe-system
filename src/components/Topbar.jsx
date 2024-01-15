@@ -80,6 +80,9 @@ const Topbar = ({
   const {
     t
   } = useTranslation("common");
+
+
+  
   const {
     pathname,
     asPath,
@@ -109,7 +112,7 @@ const Topbar = ({
               pr: ".8rem"
             }
           }} />
-            <Span className="title">{t("Free Express Shipping")}</Span>
+          
           </FlexBox>
 
           <IconButton disableRipple className="expand" onClick={() => setExpand(state => !state)}>

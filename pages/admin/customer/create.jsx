@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddCustomer } from "../../../redux/customerApiRequest";
 import { useState } from "react";
 import { UploadImage } from "../../../redux/customerApiRequest";
-
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import { fetchWord } from "../../../redux/lang/fetchword";
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -66,15 +68,27 @@ export default function CreateCustomer() {
     console.log("Customer Create", signature);
     dispatch(AddCustomer(values, agentId));
   };
+
+
+  const {locale} = useRouter();
+  // const [locale, setLocale] = useState(i18n.language)
+
+
+
+
+
   return (
     <Box py={4}>
       <H3 mb={2}>Create New Customer</H3>
+
+{locale}
+
 
       <CustomerForm
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
-        buttontext="Add customer"
+        buttontext={fetchWord("addCustomer",locale)}
         images={images}
         setImages={setImages}
         audiofile={audiofile}

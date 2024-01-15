@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
+import  Link from "next/link";
 import { Search } from "@mui/icons-material";
-import { Box, Button, styled, useMediaQuery } from "@mui/material";
+import { Box, Button, styled, useMediaQuery  } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
@@ -10,6 +11,10 @@ import Toggle from "components/icons/Toggle";
 import AccountPopover from "./popovers/AccountPopover";
 import { FlexBox, FlexRowCenter } from "components/flex-box";
 import NotificationsPopover from "./popovers/NoficationPopover";
+import { useState } from "react";
+
+import TouchRipple from "@mui/material/ButtonBase";
+import { TranslateTwoTone } from "@mui/icons-material";
 
 // custom styled components
 const DashboardNavbarRoot = styled(AppBar)(({
@@ -72,8 +77,59 @@ const StyledInputBase = styled(InputBase)(({
 const DashboardNavbar = ({
   handleDrawerToggle
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const downLg = useMediaQuery(theme => theme.breakpoints.down("lg"));
+
+
+  // const { locale, asPath } = useRouter();
+
+
+  const languageList = [{
+    title: "EN",
+    value: "en"
+  },
+
+  {
+    title: "SE",
+    value: "se"
+  }
+
+];
+
+
+const router = useRouter();
+  const {
+    pathname,
+    asPath,
+    query,
+    
+  } = router;
+  const [expand, setExpand] = useState(false);
+  const [language, setLanguage] = useState(router.locale);
+  const handleLanguageClick = lang => () => {
+    setLanguage(lang);
+
+router.locale = language
+
+    // router.push({
+    //   pathname,
+    //   query
+    // }, asPath, {
+    //   locale: lang
+    // });
+
+
+
+  };
+
+
+
+
+
+
+
+
+
   return <DashboardNavbarRoot position="sticky">
       <Container maxWidth="xl">
         <StyledToolBar disableGutters>
@@ -81,11 +137,52 @@ const DashboardNavbar = ({
               <Toggle />
             </ToggleWrapper>}
 
-          <CustomButton onClick={() => router.push("/")} startIcon={<Globe sx={{
-          color: "grey.900"
-        }} />}>
-            Browse Website
-          </CustomButton>
+
+            <Link passHref href={asPath} locale={router.locale === 'en' ? 'es' : 'en'} scroll={false}>
+        <button
+          aria-label='LangSwitcher'
+          className='p-2  cursor-pointer rounded-lg '
+        >
+          <TranslateTwoTone className=' w-12  text-black h-12'/>
+          {/* <TranslateTwoTone className='h-5 w-5' /> */}
+        </button>
+      </Link>
+
+
+
+
+
+{/* <BazaarMenu handler={<TouchRipple className="handler marginRight">
+                <Span className="menuTitle">
+                  {language === "en" ? "EN" : "ES"}
+                </Span>
+                <ExpandMore fontSize="inherit" />
+              </TouchRipple>}>
+            {languageList.map(item => <MenuItem key={item.title} className="menuItem" onClick={handleLanguageClick(item.value)}>
+             
+
+            <Link passHref href={asPath} locale={router.locale === 'en' ? 'es' : 'en'} scroll={false}>
+
+
+                <Span className="menuTitle">{item.title}
+                
+                {language}
+                
+                </Span>
+
+</Link>
+
+
+
+
+              </MenuItem>)}
+          </BazaarMenu> */}
+
+
+
+
+
+
 
           <Box flexGrow={1} />
 
