@@ -13,6 +13,11 @@ module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@mui/x-charts'],
 
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production"
+  },
+
+
 
   webpack: (config, { isServer }) => {
     if (!isServer) {
