@@ -112,7 +112,9 @@ export default function CustomerList({ brands }) {
   const [status, setStatus] = useState(customerdata?.status || "");
   const [note, setNote] = useState("");
 
-  const [searchstatus, setSearchStatus] = useState("");
+
+
+  const [searchstatus, setSearchStatus] = useState("all");
 
   const [sortText, setSortText] = useState("sorTBy");
   const [sortBy, setSortBy] = useState("");
