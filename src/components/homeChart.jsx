@@ -26,6 +26,9 @@ export default function HomeChart() {
 
   const totalAgents = useSelector((state) => state.agent.agent.totalAgents);
 
+const isfetching = useSelector((state) => state.agent.agent.isFetching);
+
+
   const user = useSelector((state) => state.auth.login.currentUser.payload);
 
   console.log("selector", agents);
@@ -38,17 +41,19 @@ export default function HomeChart() {
     colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)"],
 
     labels: agents?.map((agent, index) => {
-      return agent.data.fullName;
+      return agent?.data?.fullName;
     }),
   };
 
   console.log("LABELS", pieOptions.labels);
 
   const pieSeries = agents?.map((agent, index) => {
-    return agent.count;
+    return agent?.count;
   });
 
   console.log("SEARIES", pieSeries);
+
+
 
   return (
     <Box
@@ -60,7 +65,7 @@ export default function HomeChart() {
         // marginY:"15px",
       }}
     >
-      {agents &&
+      {agents && !isfetching &&
       <Card
         sx={{
           p: 4,
