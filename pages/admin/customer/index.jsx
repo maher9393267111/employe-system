@@ -204,7 +204,12 @@ const handleChangeStatus=(customerdata , status ,note)=>{
   
 dispatch(ChangeCustomerStatus(customerdata, status, note))
 
+
+
 dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,router.query?.agent ))
+
+setNote("")
+setNote("")
 
 
 }
@@ -281,7 +286,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers </H3>
+      <H3 mb={2}>All Customers  </H3>
 
   
 
@@ -496,6 +501,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
 
             <Stack spacing={3} mb={3}>
               <div>
+                
                 <FormControlLabel
                   name="accepted"
                   sx={{
@@ -506,7 +512,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
                   label={<Paragraph fontWeight={600}>Accept</Paragraph>}
                   control={
                     <Radio
-                      checked={status === "accepted"}
+                      checked={customerdata?.status === "accepted"}
                       color="info"
                       size="small"
                     />
@@ -523,7 +529,7 @@ dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,rou
                   label={<Paragraph fontWeight={600}>Reject</Paragraph>}
                   control={
                     <Radio
-                      checked={status === "rejected"}
+                      checked={customerdata?.status === "rejected"}
                       color="info"
                       size="small"
                     />
