@@ -20,10 +20,10 @@ const baseUrl = REACT_APP_BASE_URL1
 //   () =>
 //   async (dispatch) => {}
 
-export const FetchAgents = () => async (dispatch) => {
+export const FetchAgents = (search) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
-    const response = await axiosJWT.get(`${baseUrl}/employees`);
+    const response = await axiosJWT.get(`${baseUrl}/employees?search=${search}`);
     console.log("all Agents api fetch REFETCH", response.data);
     return dispatch(fetchSuccess(response.data));
   } catch (err) {

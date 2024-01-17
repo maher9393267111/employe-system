@@ -19,6 +19,11 @@ import { FetchAgents } from "../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import HomeChart from 'components/homeChart'
+import { Search } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
+import { Button, useMediaQuery } from "@mui/material";
+import { FlexBox } from "components/flex-box";
+import SearchInput from "components/SearchInput";
 
 
 
@@ -69,6 +74,9 @@ AgentList.getLayout = function getLayout(page) {
 export default function AgentList({  }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
+  const downSM = useMediaQuery(theme => theme.breakpoints.down("sm"));
+  const [searchValue , setSearchValue] = useState('')
+
   const router = useRouter();
 
   const employeesData = useSelector((state) => state.agent?.agent?.allagents);
@@ -85,8 +93,8 @@ export default function AgentList({  }) {
   useEffect(() => {
  
 
-    dispatch(FetchAgents());
-  }, [refetch]);
+    dispatch(FetchAgents(searchValue));
+  }, []);
 
 
 
@@ -130,7 +138,7 @@ export default function AgentList({  }) {
 
       <H3 mb={2}>All Agents</H3>
 
-      {userRole[0] === "admin" && (
+      {/* {userRole[0] === "admin" && (
         <SearchArea
           handleSearch={() => {}}
           buttonText="Add Agent"
@@ -138,7 +146,50 @@ export default function AgentList({  }) {
           handleBtnClick={() => Router.push("/admin/agent/create")}
           userRole={userRole}
         />
-      )}
+      )} */}
+
+<Card  
+
+backgroundColor='grey.900'
+
+
+sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
+  
+
+  <Box sx={{ display: 'flex' }}>
+
+<SearchInput
+         sx={{ flexGrow: 1}}
+
+         onChange={(e)=>setSearchValue(e.target.value)}
+
+         />
+
+
+<Button
+
+              color="info"
+              fullWidth={downSM}
+              variant="contained"
+              // startIcon={<Add />}
+              onClick={() => dispatch(FetchAgents(searchValue))}
+              sx={
+                {
+                  // minHeight: 44,
+                }
+              }
+            >
+              Search
+            </Button>
+
+
+</Box>
+
+</Card>
+
+
+
+
 
       <Card>
         <Scrollbar>

@@ -18,6 +18,11 @@ import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
 import { FetchAgents } from "../../../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Search } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
+import { Button, useMediaQuery } from "@mui/material";
+import { FlexBox } from "components/flex-box";
+import SearchInput from "components/SearchInput";
 
 
 const tableHeading = [
@@ -68,6 +73,10 @@ export default function AgentList({ brands }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
   const router = useRouter();
+  const downSM = useMediaQuery(theme => theme.breakpoints.down("sm"));
+  const [searchValue , setSearchValue] = useState('')
+ 
+
 
   const employeesData = useSelector((state) => state.agent?.agent?.allagents);
   const name = useSelector((state) => state.auth?.login.nane);
@@ -81,28 +90,18 @@ export default function AgentList({ brands }) {
   const [employees, setEmployees] = useState(employeesData ?? []);
   const [refresh, setRefesh] = useState(false);
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const res = await axiosJWT.get(`${REACT_APP_BASE_URL}/employees`);
-    //     setEmployees(res.data);
-    //     console.log(res?.data ,"RESSSSPNSE FETCH")
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
+   
 
-    // fetchData();
+    dispatch(FetchAgents(searchValue));
+  }, []);
 
-    dispatch(FetchAgents());
-  }, [refetch]);
-
-  const filteredBrands = brands.map((item) => ({
-    id: item.id,
-    slug: item.slug,
-    name: item.name,
-    logo: item.image,
-    featured: item.featured,
-  }));
+  // const filteredBrands = brands.map((item) => ({
+  //   id: item.id,
+  //   slug: item.slug,
+  //   name: item.name,
+  //   logo: item.image,
+  //   featured: item.featured,
+  // }));
 
 
 
@@ -141,15 +140,61 @@ export default function AgentList({ brands }) {
     <Box py={4}>
       <H3 mb={2}>All Agents</H3>
 
-      {userRole[0] === "admin" && (
+      {/* {userRole[0] === "admin" && (
         <SearchArea
-          handleSearch={() => {}}
+          handleSearch= {}
           buttonText="Add Agent"
           searchPlaceholder="Search Agent..."
           handleBtnClick={() => Router.push("/admin/agent/create")}
           userRole={userRole}
         />
-      )}
+      )} */}
+
+
+
+<Card  
+
+backgroundColor='grey.900'
+
+
+sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
+  
+
+  <Box sx={{ display: 'flex' }}>
+
+<SearchInput
+         sx={{ flexGrow: 1}}
+
+         onChange={(e)=>setSearchValue(e.target.value)}
+
+         />
+
+
+<Button
+
+              color="info"
+              fullWidth={downSM}
+              variant="contained"
+              // startIcon={<Add />}
+              onClick={() => dispatch(FetchAgents(searchValue))}
+              sx={
+                {
+                  // minHeight: 44,
+                }
+              }
+            >
+              Search
+            </Button>
+
+
+</Box>
+
+</Card>
+
+
+
+
+
 
       <Card>
         <Scrollbar>
