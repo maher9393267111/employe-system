@@ -15,9 +15,9 @@ export const navigations = [{
   icon: duotone.Accounts,
   children: [
     
-  //  { name: "Agent List",
-  //   path: "/admin/agent"
-  // }, 
+   { name: "Agent List",
+    path: "/admin/agent"
+  }, 
   
   {
     name: "Create Agent",

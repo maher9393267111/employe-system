@@ -160,7 +160,7 @@ backgroundColor='grey.900'
 sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
   
 
-  <Box sx={{ display: 'flex' }}>
+  <Box sx={{ display: 'flex' ,gap:'22px' }}>
 
 <SearchInput
          sx={{ flexGrow: 1}}
@@ -185,6 +185,25 @@ sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
             >
               Search
             </Button>
+
+
+            <Button
+
+color="info"
+fullWidth={downSM}
+variant="contained"
+// startIcon={<Add />}
+onClick={() => router.push('/admin/agent/create')}
+sx={
+  {
+    // minHeight: 44,
+  }
+}
+>
+Add agent
+</Button>
+
+
 
 
 </Box>
