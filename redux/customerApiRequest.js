@@ -52,7 +52,7 @@ export const FetchAgentCustomers =
       console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!", sortBy, sortDirection);
 
       const response = await axiosJWT.get(
-        `${REACT_APP_BASE_URL}/customers/agentCustomers?page=${
+        `${baseUrl}/customers/agentCustomers?page=${
           page === 0 ? 1 : page
         }&&size=${size}&&sortBy=${sortBy}&&sortDirection=${sortDirection}`
       );
