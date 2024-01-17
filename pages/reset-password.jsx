@@ -77,11 +77,16 @@ dispatch(ForgetPassword(email))
           </form>
 
           <FlexRowCenter mt="1.25rem" justifyContent="center" width="100%">
-            <Box>Don&apos;t have account?</Box>
-            <Link href="/signup" passHref legacyBehavior>
+            <Box>
+              
+              {/* Don&apos;t have account? */}
+
+
+            </Box>
+            <Link href="/login" passHref legacyBehavior>
               <a>
                 <H6 ml={1} borderBottom="1px solid" borderColor="grey.900">
-                  Sign Up
+                  Sign in
                 </H6>
               </a>
             </Link>
