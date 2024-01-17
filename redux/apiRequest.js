@@ -58,7 +58,7 @@ export const ForgetPassword = (email) => async (dispatch) => {
     console.log("all customers api fetch REFETCH", response.data);
     toast.success("Check yoru email we send your new password");
   } catch (err) {
-    toast.error(err.message);
+    toast.error("Email not exist");
     return dispatch(loginFailed(err));
   }
 };
