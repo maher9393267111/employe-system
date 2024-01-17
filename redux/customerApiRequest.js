@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
-
 const baseUrl = REACT_APP_BASE_URL1
   // process.env.NODE_ENV === "development"
   //   ? REACT_APP_BASE_URL
@@ -88,7 +87,7 @@ export const getSingleCustomerRedux = (customerId) => async (dispatch) => {
     console.log("page in request api", page);
 
     const response = await axiosJWT.get(
-      `${REACT_APP_BASE_URL}/customers/${id}`
+      `${baseUrl}/customers/${id}`
     );
     console.log("all customers api fetch REFETCH", response.data);
     return response.data;
