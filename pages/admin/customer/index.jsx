@@ -512,7 +512,7 @@ setNote("")
                   label={<Paragraph fontWeight={600}>Accept</Paragraph>}
                   control={
                     <Radio
-                      checked={customerdata?.status === "accepted"}
+                      checked={status === "accepted"}
                       color="info"
                       size="small"
                     />
@@ -529,7 +529,7 @@ setNote("")
                   label={<Paragraph fontWeight={600}>Reject</Paragraph>}
                   control={
                     <Radio
-                      checked={customerdata?.status === "rejected"}
+                      checked={status === "rejected"}
                       color="info"
                       size="small"
                     />
