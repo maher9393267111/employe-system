@@ -45,7 +45,7 @@ export const AddNewAgents = async (data) => {
     toast.success("New Agent added successfully")
     // navigate.push('/');
   } catch (error) {
-    toast.error(error.message);
+ //   toast.error(error.message);
     // setError('password', {
     //     type: 'server',
     //     message: 'Something went wrong with your password',
@@ -66,7 +66,7 @@ export const getSingleAgent = async (id, dispatch) => {
     // navigate.push('/');
   } catch (error) {
     console.log(error);
-    toast.error(err.message);
+  //  toast.error(err.message);
     // dispatch(loginFailed());
   }
 };
@@ -85,7 +85,7 @@ export const UpdateAgent = async (values, id, dispatch) => {
     // navigate.push('/');
   } catch (error) {
     console.log(error?.message);
-    toast.error(err.message);
+  //  toast.error(err.message);
     // dispatch(loginFailed());
   }
 };
@@ -109,7 +109,7 @@ export const AddAgent = (data, agentId, router) => async (dispatch) => {
 
     return dispatch(FetchAgents());
   } catch (err) {
-    toast.error(err?.message)
+  //  toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
@@ -131,7 +131,7 @@ export const DeleteAgent = (id ) => async (dispatch) => {
 
     return dispatch(FetchAgents());
   } catch (err) {
-    toast.error(err?.message)
+ //   toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
@@ -157,7 +157,7 @@ return response.data
 
 
   } catch (err) {
-    toast.error(err?.message)
+  //  toast.error(err?.message)
     return dispatch(fetchFailed(err));
   }
 };
