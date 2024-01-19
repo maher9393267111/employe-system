@@ -305,9 +305,13 @@ setNote("")
 
       // search notification only show form admin
       socket.on("search_customer", (data) => {
+
+        
         toast.info("some agent search for customer");
         dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
        dispatch(FetchNotifications())
+
+
         
       });
 
