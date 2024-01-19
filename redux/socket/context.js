@@ -12,7 +12,7 @@ const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
 const baseUrl =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === "developments"
     ? REACT_APP_BASE_URL
     : REACT_APP_BASE_URL1;
 
