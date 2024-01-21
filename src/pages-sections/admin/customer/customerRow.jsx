@@ -99,19 +99,19 @@ const CustomersRow = ({ customer, selected, userRole }) => {
       {(userRole[0] === "admin"  ? 
 
 
-      <StyledTableCell align="center">{SearchedBy}</StyledTableCell>
+      <StyledTableCell align="center">{SearchedBy}   </StyledTableCell>
 
 :
 
 
-   <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
+   <StyledTableCell align="center">{phoneNumber} </StyledTableCell>
 
 
 
       )}
 
 
-<StyledTableCell align="center">{process}</StyledTableCell>
+<StyledTableCell align="center">{process === true ? 'true' : 'false'}</StyledTableCell>
 
 
 
@@ -125,6 +125,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
         {(userRole[0] === "admin" || status === "rejected") && (
           <StyledIconButton onClick={() => handleDelete(id)}>
             <Delete />
+            
           </StyledIconButton>
         )}
       </StyledTableCell>
