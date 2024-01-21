@@ -7,7 +7,10 @@ import {
   Grid,
   TextField,
   MenuItem,
+  Stack,
+  Radio,
 } from "@mui/material";
+import { Paragraph } from "components/Typography";
 import { Formik, Field, ErrorMessage, useFormik } from "formik";
 import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
@@ -17,8 +20,8 @@ import { UploadImageBox, StyledClear } from "../StyledComponents";
 import SignatureCanvas from "react-signature-canvas";
 import ReactPlayer from "react-player";
 import { init } from "i18next";
-import {useSelector} from 'react-redux'
-import {fetchWord} from '../../../../redux/lang/fetchword'
+import { useSelector } from "react-redux";
+import { fetchWord } from "../../../../redux/lang/fetchword";
 import { useRouter } from "next/router";
 
 import {
@@ -38,6 +41,16 @@ import {
   UploadAudio,
 } from "../../../../redux/customerApiRequest";
 import { toast } from "react-toastify";
+import { AudioRecorder } from "react-audio-voice-recorder";
+
+// import { styled} from "@mui/material";
+
+// const Mic = styled(ReactMic)`
+//   opacity: 0;
+//   height: 0;
+//   width: 0;
+// `;
+
 // ================================================================
 
 // ================================================================
@@ -57,6 +70,8 @@ const CustomerForm = (props) => {
     setAudioFile,
     signature,
     setSignature,
+    agreement,
+    setAgreement,
   } = props;
   const [files, setFiles] = useState([]);
 
@@ -154,6 +169,23 @@ const CustomerForm = (props) => {
     }
   };
 
+  const [audioWeb3, setAudioWeb3] = useState(null);
+  const [respuesta, setRespuesta] = useState(null);
+
+  const sendAudioToApi = async (blob) => {
+    const url = URL.createObjectURL(blob);
+    setAudioWeb3(url);
+
+    const formData = new FormData();
+
+    formData.append("audiofile", blob);
+
+    const res = await UploadAudio(formData);
+    setAudioFile(res?.link);
+
+    toast.success("Record Uploaded Successfully");
+  };
+
   // upload Signature
 
   const sigCanvas = useRef();
@@ -166,16 +198,18 @@ const CustomerForm = (props) => {
     setSignature(signature);
   };
 
-
   const userRole = useSelector(
     (state) => state.auth.login.currentUser.payload.roles
   );
 
-const buttonCondition = (isedit && userRole[0] === 'admin') || (!isedit)
+  const handleAgreementChange = ({ target: { name } }) => {
+    if (name === "false") setAgreement(false);
+    else if (name === "true") setAgreement(true);
+  };
 
-const {locale} = useRouter()
+  const buttonCondition = (isedit && userRole[0] === "admin") || !isedit;
 
-
+  const { locale } = useRouter();
 
   return (
     <Card
@@ -183,45 +217,131 @@ const {locale} = useRouter()
         p: 6,
       }}
     >
-      <Grid item xs={12}>
-
-      { buttonCondition &&
-
+      <Stack spacing={3} mb={3}>
         <div>
+          <h1>
+            <Paragraph fontWeight={600}>
+              {fetchWord("agreeTitle", locale)}
+            </Paragraph>
+          </h1>
+          <h3>
+            <Paragraph sx={{ my: "10px" }} fontWeight={600}>
+              {fetchWord("agreeSub", locale)}
+            </Paragraph>
+          </h3>
 
-        {fetchWord("signatureAdd", locale)}
-
-   
- 
-          <SignatureCanvas
-            ref={sigCanvas}
-            // penColor="black"
-            // canvasProps={{ className: "sigCanvas" }}
-
-            // name={name}
-            penColor="black"
-            canvasProps={{ className: "sigPad" }}
-            // ref={sigPad}
-            onEnd={create}
-          />
-
-
-    
-
-
+          <ol type="1">
+            <li>
+              <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeOne", locale)}
+              </Paragraph>
+            </li>
+            <li>
+              <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeTwo", locale)}
+              </Paragraph>
+            </li>
+            <li>
+            <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeThree", locale)}
+              </Paragraph>
+             
+            </li>
+            <li>    <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeFour", locale)}
+              </Paragraph></li>
+          </ol>
         </div>
 
-    }
+        <div>
+          <h1>
+            <Paragraph fontWeight={600}>
+              {fetchWord("agreeTitle2", locale)}
+            </Paragraph>
+          </h1>
+      
+
+          <ol type="1">
+            <li>
+              <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeOne2", locale)}
+              </Paragraph>
+            </li>
+            <li>
+              <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeTwo2", locale)}
+              </Paragraph>
+            </li>
+            <li>
+            <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeThree2", locale)}
+              </Paragraph>
+             
+            </li>
+            <li>    <Paragraph sx={{ my: "1px" }} fontWeight={500}>
+                {fetchWord("agreeFour2", locale)}
+              </Paragraph></li>
+          </ol>
+        </div>
 
 
 
+        {/* ---process--- */}
+        <div>
+          {/* <h3>Agreament </h3> */}
+
+          <FormControlLabel
+            name="false"
+            sx={{
+              mb: 3,
+            }}
+            value={agreement}
+            onChange={handleAgreementChange}
+            label={<Paragraph fontWeight={600}>False</Paragraph>}
+            control={
+              <Radio checked={agreement === false} color="info" size="small" />
+            }
+          />
+
+          <FormControlLabel
+            name="true"
+            sx={{
+              mb: 3,
+            }}
+            value={agreement}
+            onChange={handleAgreementChange}
+            label={<Paragraph fontWeight={600}>True</Paragraph>}
+            control={
+              <Radio checked={agreement === true} color="info" size="small" />
+            }
+          />
+        </div>
+      </Stack>
+
+      <Grid item xs={12}>
+        {buttonCondition && (
+          <div>
+            {fetchWord("signatureAdd", locale)}
+
+            <SignatureCanvas
+              ref={sigCanvas}
+              // penColor="black"
+              // canvasProps={{ className: "sigCanvas" }}
+
+              // name={name}
+              penColor="black"
+              canvasProps={{ className: "sigPad" }}
+              // ref={sigPad}
+              onEnd={create}
+            />
+          </div>
+        )}
       </Grid>
 
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues ?? {}}
         validationSchema={validationSchema}
-       
       >
         {({
           values,
@@ -412,9 +532,22 @@ const {locale} = useRouter()
                 />
               </Grid>
 
-
-
-
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  name="time"
+                  label={fetchWord("time", locale)}
+                  color="info"
+                  size="medium"
+                  placeholder={fetchWord("time", locale)}
+                  // value={values.address}
+                  value={values.time}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.time && !!errors.time}
+                  helperText={touched.time && errors.time}
+                />
+              </Grid>
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -434,81 +567,82 @@ const {locale} = useRouter()
 
               <Grid item sm={6} xs={12}>
                 <TextField
-                select fullWidth color="info" size="medium" name="gender" onBlur={handleBlur} placeholder="Category" label={fetchWord("gender", locale)}
-                
-                onChange={handleChange} value={values.gender} error={Boolean(errors.gender && touched.gendery)} helperText={touched.gender && errors.category}
+                  select
+                  fullWidth
+                  color="info"
+                  size="medium"
+                  name="gender"
+                  onBlur={handleBlur}
+                  placeholder="Category"
+                  label={fetchWord("gender", locale)}
+                  onChange={handleChange}
+                  value={values.gender}
+                  error={Boolean(errors.gender && touched.gendery)}
+                  helperText={touched.gender && errors.category}
                 >
-                  <MenuItem color="info" value={"male"}>{fetchWord("male", locale)}</MenuItem>
-                  <MenuItem color="info" value={"female"}>{fetchWord("female", locale)}</MenuItem>
+                  <MenuItem color="info" value={"male"}>
+                    {fetchWord("male", locale)}
+                  </MenuItem>
+                  <MenuItem color="info" value={"female"}>
+                    {fetchWord("female", locale)}
+                  </MenuItem>
                 </TextField>
-
-
-
-          
-
-
               </Grid>
 
-
-
-
               {signature && (
-            <Grid sx={{my:'15px'}} item xs={12} md={12}>
+                <Grid sx={{ my: "15px" }} item xs={12} md={12}>
+                  <div
+                    style={{ display: "flex", justifyContent: "", gap: "30px" }}
+                  >
+                    <div>
+                      <p>2024</p>
+                      <img
+                        src={signature}
+                        alt="signature"
+                        className="signature"
+                      />
+                    </div>
 
+                    <div>
+                      <p>2025</p>
+                      <img
+                        src={signature}
+                        alt="signature"
+                        className="signature"
+                      />
+                    </div>
 
-<div style={{display:"flex" , justifyContent:'' ,gap:'30px'}}>
+                    <div>
+                      <p>2026</p>
+                      <img
+                        src={signature}
+                        alt="signature"
+                        className="signature"
+                      />
+                    </div>
 
-
-
-            <div>
-
-           
-            <p>2024</p>
-              <img src={signature} alt="signature" className="signature" />
-
-              </div>
-
-<div>
-
-
-              <p>2025</p>
-              <img src={signature} alt="signature" className="signature" />
-
-
-              </div>
-
-              <div>
-
-              <p>2026</p>
-              <img src={signature} alt="signature" className="signature" />
-              </div>
-
-
-              </div>
-
-
-
-            </Grid>
-          )}
-
-
-
-
-
-
+                    <div>
+                      <p>2027</p>
+                      <img
+                        src={signature}
+                        alt="signature"
+                        className="signature"
+                      />
+                    </div>
+                  </div>
+                </Grid>
+              )}
 
               <Grid item xs={12}>
                 <div
-                
+
                 // flexDirection="row" mt={2} flexWrap="wrap" gap={1}
-                
-                
                 >
                   {!isedit && (
                     <Box mb="5">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
-                        {fetchWord("images", locale)}
+                          {fetchWord("images", locale)}
                           <Box as="span" color="red.500">
                             *
                           </Box>
@@ -522,7 +656,7 @@ const {locale} = useRouter()
                           htmlFor="imageUpload"
                         >
                           <Text mt="8" color="gray">
-                          {fetchWord("uploadDocs", locale)}
+                            {fetchWord("uploadDocs", locale)}
                           </Text>
 
                           <Field
@@ -550,16 +684,12 @@ const {locale} = useRouter()
                         )}
                       />
                     </Box>
-
-
-                    
-        
-
-
                   )}
                 </div>
 
-                <div>
+                {/* Normal Audio File Record--- */}
+
+                {/* <div>
                   {!isedit && (
                     <Box mb="5">
                       <FormControl>
@@ -577,12 +707,11 @@ const {locale} = useRouter()
                           htmlFor="imageUpload"
                         >
                           <Text mt="8" color="gray">
-                          {fetchWord("uploadAudio", locale)}
+                            {fetchWord("uploadAudio", locale)}
                           </Text>
 
                           <Field
                             as={Input}
-                          
                             // display="none"
                             type="file"
                             name="music"
@@ -607,11 +736,30 @@ const {locale} = useRouter()
                     </Box>
                   )}
                 </div>
-              </Grid>
+ */}
 
-              {/* <Grid item sm={6} xs={12}>
-                <FormControlLabel label="Featured Category" control={<Checkbox color="info" name="featured" onBlur={handleBlur} onChange={handleChange} value={values.featured} />} />
-              </Grid> */}
+                {/* -----Microphon Audio---- */}
+
+                {!isedit && (
+                  <div style={{ marginTop: "30px" }}>
+                    <h2 style={{ marginTop: "12px" }}>Voice Record</h2>
+                    <AudioRecorder
+                      onRecordingComplete={sendAudioToApi}
+                      audioTrackConstraints={{
+                        noiseSuppression: true,
+                        echoCancellation: true,
+                      }}
+                      downloadFileExtension="web3"
+                      onClick={() => {
+                        setAudioWeb3(null);
+                        setRespuesta(null);
+                      }}
+                    />
+
+                    {/* {audiofile && <audio controls src={audiofile} />} */}
+                  </div>
+                )}
+              </Grid>
 
               {/* show images in edit page only--- */}
 
@@ -650,22 +798,14 @@ const {locale} = useRouter()
                 />
               </div>
 
-              {buttonCondition  &&
-
-
-              <Grid item xs={12}>
-                <Button variant="contained" color="info" type="submit">
-                  {/* Save Agent */}
-                  {buttontext}
-                </Button>
-              </Grid>
-
-
-
-
-         } 
-
-
+              {buttonCondition && (
+                <Grid item xs={12}>
+                  <Button variant="contained" color="info" type="submit">
+                    {/* Save Agent */}
+                    {buttontext}
+                  </Button>
+                </Grid>
+              )}
             </Grid>
           </form>
         )}

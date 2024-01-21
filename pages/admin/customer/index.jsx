@@ -52,51 +52,56 @@ import {
   CustomerSerch,
 } from "../../../redux/customerApiRequest";
 
-import {FetchNotifications} from '../../../redux/notificationsApiRequest'
-
+import { FetchNotifications } from "../../../redux/notificationsApiRequest";
 
 import { closeCustomerModel } from "../../../redux/customerSlice";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useContextApp } from "../../../redux/socket/context";
 import { stat } from "fs";
 
 //import { connectSocket } from '../../../redux/socket/socketConnect';
 
-const tableHeading = [
-  {
-    id: "_id",
-    label: "ID",
-    align: "center",
-  },
-  {
-    id: "firstName",
-    label: "FirstName",
-    align: "center",
-  },
-  {
-    id: "email",
-    label: "Email",
-    align: "center",
-  },
+// const tableHeading = [
+//   {
+//     id: "_id",
+//     label: "ID",
+//     align: "center",
+//   },
+//   {
+//     id: "firstName",
+//     label: "FirstName",
+//     align: "center",
+//   },
+//   {
+//     id: "email",
+//     label: "Email",
+//     align: "center",
+//   },
 
-  {
-    id: "status",
-    label: "Status",
-    align: "center",
-  },
+//   {
+//     id: "status",
+//     label: "Status",
+//     align: "center",
+//   },
 
-  {
-    id: "phoneNumber",
-    label: "PhoneNumber",
-    align: "center",
-  },
+//   // {
+//   //   id: "phoneNumber",
+//   //   label: "PhoneNumber",
+//   //   align: "center",
+//   // },
 
-  {
-    id: "action",
-    label: "Action",
-    align: "center",
-  },
-];
+//   {
+//     id: "searchedBy",
+//     label: "SearchedBy",
+//     align: "center",
+//   },
+
+//   {
+//     id: "action",
+//     label: "Action",
+//     align: "center",
+//   },
+// ];
 
 // =============================================================================
 CustomerList.getLayout = function getLayout(page) {
@@ -112,9 +117,9 @@ export default function CustomerList({ brands }) {
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const [status, setStatus] = useState(customerdata?.status || "");
-  const [note, setNote] = useState("");
+  const [process, setProcess] = useState(customerdata?.process || null);
 
-
+  const [note, setNote] = useState(customerdata?.note || "");
 
   const [searchstatus, setSearchStatus] = useState("all");
 
@@ -130,16 +135,19 @@ export default function CustomerList({ brands }) {
   const [searchValue, setSearchValue] = useState("");
   const [searchType, setSearchType] = useState("name");
 
-
-
-
-
   const handleSearchTypeChange = ({ target: { name } }) => {
     setSearchType(name);
   };
 
   const handlePaymentMethodChange = ({ target: { name } }) => {
     setStatus(name);
+  };
+
+  const handleProcessChange = ({ target: { name } }) => {
+    console.log("name");
+
+    if (name === "false") setProcess(false);
+    else setProcess(true);
   };
 
   const handleSort = (event) => {
@@ -182,6 +190,7 @@ export default function CustomerList({ brands }) {
   const handleClose = () => {
     dispatch(closeCustomerModel());
     setStatus("");
+    setProcess("");
     setNote("");
   };
 
@@ -199,26 +208,25 @@ export default function CustomerList({ brands }) {
   const [soctext, setSocText] = useState("");
   const { socket } = useContextApp();
 
-const router =useRouter()
-console.log(router.query.agent,'qu💍🕶👓💍🕶👓ery')
-const handleChangeStatus=(customerdata , status ,note)=>{
+  const router = useRouter();
+  console.log(router.query.agent, "qu💍🕶👓💍🕶👓ery");
+  const handleChangeStatus = (customerdata, status, note) => {
+    dispatch(ChangeCustomerStatus(customerdata, status, note, process));
 
-  
-dispatch(ChangeCustomerStatus(customerdata, status, note))
+    dispatch(
+      FetchCustomers(
+        custpage,
+        size,
+        searchstatus,
+        sortBy,
+        sortDirection,
+        router.query?.agent
+      )
+    );
 
-
-
-dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,router.query?.agent ))
-
-setNote("")
-setNote("")
-
-
-}
-
-
-
-
+    setNote("");
+    setNote("");
+  };
 
   const [custpage, setcustPage] = useState(0);
 
@@ -235,13 +243,74 @@ setNote("")
 
     if (userRole[0] === "admin") {
       dispatch(
-        FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection ,router.query?.agent)
+        FetchCustomers(
+          custpage,
+          size,
+          searchstatus,
+          sortBy,
+          sortDirection,
+          router.query?.agent
+        )
       );
     } else if (userRole[0] === "staff") {
       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
       //toast.success("staff fetch customers");
     }
   }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
+
+
+
+  const tableHeading = [
+    {
+      id: "_id",
+      label: "ID",
+      align: "center",
+    },
+    // {
+    //   id: "firstName",
+    //   label: "FirstName",
+    //   align: "center",
+    // },
+    {
+      id: "email",
+      label: "Email",
+      align: "center",
+    },
+    {
+id:"note",
+label:"Note",
+align:'center'
+
+    },
+  
+    {
+      id: "status",
+      label: "Status",
+      align: "center",
+    },
+  
+   userRole[0] !== 'admin' ? {
+      id: "phoneNumber",
+      label: "PhoneNumber",
+      align: "center",
+    }
+  
+   : {
+      id: "searchedBy",
+      label: "SearchedBy",
+      align: "center",
+    },
+  
+    {
+      id: "action",
+      label: "Action",
+      align: "center",
+    },
+  ];
+
+
+
+
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -250,11 +319,13 @@ setNote("")
     email: item?.email,
     address: item?.address,
     phoneNumber: item?.phoneNumber,
+    SearchedBy: item?.SearchedBy,
     status: item?.status,
     file: item?.file,
     files: item?.files,
     audio: item?.audio,
     employe_id: item?.employe_id,
+    note: item?.note,
   }));
 
   console.log("filterdcystomers", filteredCustomers);
@@ -284,39 +355,29 @@ setNote("")
     setcustPage(value);
   };
 
-
-
-
   useEffect(() => {
-    console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET")
+    console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET");
     socket.on("fetch", (data) => {
       console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
-    
     });
 
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
         toast.info("new POST CREATED");
-        dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
-        dispatch(FetchNotifications())
+        dispatch(
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+        );
+        dispatch(FetchNotifications());
       });
-
-
 
       // search notification only show form admin
       socket.on("search_customer", (data) => {
-
-        
         toast.info("some agent search for customer");
-        dispatch( FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection) );
-       dispatch(FetchNotifications())
-
-
-        
+        dispatch(
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+        );
+        dispatch(FetchNotifications());
       });
-
-      
-
     }
 
     socket.on("status", (data) => {
@@ -327,19 +388,18 @@ setNote("")
         userData?.id
       );
 
-      console.log(`status !!!!!!!!!@@@@is ch12222222222anged ${data?.receiver} ,,,,, ${userData?.id}`)
-
+      console.log(
+        `status !!!!!!!!!@@@@is ch12222222222anged ${data?.receiver} ,,,,, ${userData?.id}`
+      );
 
       if (data?.receiver === userData?.id) {
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
         toast.info("customer status changed");
-       
-
 
         if (data?.notificationData?.myRole[0] === "staff") {
           dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-          dispatch(FetchNotifications())
+          dispatch(FetchNotifications());
         } else {
           FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
         }
@@ -347,21 +407,11 @@ setNote("")
         // then refetch notifications refetch agent customers
       }
     });
-
-  },[])
-
-
-
-
-
-
-
-
-  
+  }, []);
 
   return (
     <Box py={4}>
-      <H3 mb={2}>All Customers  </H3>
+      <H3 mb={2}>All Customers </H3>
 
       <Card
         backgroundColor="grey.900"
@@ -427,14 +477,6 @@ setNote("")
           </div>
         </Stack>
       </Card>
-
-
-
-
-
-
-
-
 
       <div>
         {/* <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap"> */}
@@ -527,17 +569,12 @@ setNote("")
                   </MenuItem>
 
                   <MenuItem color="info" value="admincustomers">
-                    admin  customer
+                    admin customer
                   </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
           )}
-
-
-
-
-
 
           <Grid item sx={12} lg={4}>
             <Button
@@ -595,23 +632,18 @@ setNote("")
                   onRequestSort={handleRequestSort}
                 />
 
-{filteredCustomers &&
-
-                <TableBody>
-                  {filteredCustomers?.map((customer) => (
-                    <CustomersRow
-                      userRole={userRole}
-                      customer={customer}
-                      key={customer.id}
-                      selected={selected}
-                    />
-                  ))}
-                </TableBody>
-
-                  }
-
-
-
+                {filteredCustomers && (
+                  <TableBody>
+                    {filteredCustomers?.map((customer) => (
+                      <CustomersRow
+                        userRole={userRole}
+                        customer={customer}
+                        key={customer.id}
+                        selected={selected}
+                      />
+                    ))}
+                  </TableBody>
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>
@@ -637,7 +669,7 @@ setNote("")
 
       {/* -----status update modal--- */}
 
-      {userRole[0] === "admin" && (
+      {userRole[0] === "admin" && customerdata?.email && (
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Edit customer status</DialogTitle>
           <DialogContent>
@@ -647,7 +679,7 @@ setNote("")
 
             <Stack spacing={3} mb={3}>
               <div>
-                
+                <h3>Status:</h3>
                 <FormControlLabel
                   name="accepted"
                   sx={{
@@ -683,6 +715,45 @@ setNote("")
                 />
               </div>
 
+              {/* ---process--- */}
+              <div>
+                <h3>Long Process Form: </h3>
+
+                <FormControlLabel
+                  name="false"
+                  sx={{
+                    mb: 3,
+                  }}
+                  value={process}
+                  onChange={handleProcessChange}
+                  label={<Paragraph fontWeight={600}>False</Paragraph>}
+                  control={
+                    <Radio
+                      checked={process === false}
+                      color="info"
+                      size="small"
+                    />
+                  }
+                />
+
+                <FormControlLabel
+                  name="true"
+                  sx={{
+                    mb: 3,
+                  }}
+                  value={process}
+                  onChange={handleProcessChange}
+                  label={<Paragraph fontWeight={600}>True</Paragraph>}
+                  control={
+                    <Radio
+                      checked={process === true}
+                      color="info"
+                      size="small"
+                    />
+                  }
+                />
+              </div>
+
               <TextField
                 label="Note"
                 name="note"
@@ -705,10 +776,11 @@ setNote("")
 
             {/* {customerdata?.status === "pending" && ( */}
             <Button
+              disabled={!note || !status}
               sx={{ backgroundColor: "primary.info" }}
               className=" "
-              onClick={() =>
-                handleChangeStatus(customerdata ,status ,note)
+              onClick={
+                () => handleChangeStatus(customerdata, status, note)
                 // dispatch(ChangeCustomerStatus(customerdata, status, note))
               }
             >
@@ -729,6 +801,3 @@ export const getStaticProps = async () => {
     },
   };
 };
-
-
-

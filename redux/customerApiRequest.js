@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
-const baseUrl = REACT_APP_BASE_URL1
+const baseUrl = REACT_APP_BASE_URL
   // process.env.NODE_ENV === "development"
   //   ? REACT_APP_BASE_URL
   //   : REACT_APP_BASE_URL1;
@@ -152,7 +152,7 @@ export const DeleteCustomer = (customerId, files) => async (dispatch) => {
 //http://localhost:8000/customers/status/659d1a5bd115075f79ac1022
 
 export const ChangeCustomerStatus =
-  (customerdata, status, note) => async (dispatch) => {
+  (customerdata, status, note ,process) => async (dispatch) => {
     try {
       //console.log("image filename" ,filename)
 
@@ -167,6 +167,7 @@ export const ChangeCustomerStatus =
         status: status,
         note: note,
         agentId: customerdata?.employe_id,
+        process:process
       };
 
       //await DeleteImage(filename)
@@ -176,7 +177,7 @@ export const ChangeCustomerStatus =
         data
       );
 
-      toast.success("Customer deleted successfully");
+      toast.success("Customer updated successfully");
       console.log("RESPONSE DATA", response.data);
 
       dispatch(closeCustomerModel());

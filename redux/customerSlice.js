@@ -40,7 +40,7 @@ export const customertSlice = createSlice({
     },
 
     closeCustomerModel: (state, action) => {
-      state.customerdata = {};
+     state.customerdata = {};
 
       state.open = false;
     },

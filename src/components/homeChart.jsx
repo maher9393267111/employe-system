@@ -37,7 +37,7 @@ export default function HomeChart() {
   }, [dispatch]);
 
   const pieOptions = {
-    colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)"],
+    colors: ["rgb(46, 150, 255)", "rgb(184, 0, 216)", "rgb(2, 178, 175)" ,"rgba(0, 140, 160, 0.26", "rgba(26, 88, 255, 0.26)" ,"rgba(26, 232, 94, 0.26)"],
 
     labels: agents?.map((agent, index) => {
       return agent.data?.fullName || "someagent";

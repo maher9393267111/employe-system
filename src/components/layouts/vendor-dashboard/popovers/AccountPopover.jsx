@@ -80,14 +80,14 @@ router.push('/login')
       }
     }}>
         <Box px={2} pt={1}>
-          <H6>{userData?.fullName}</H6>
-          <Small   sx={{color:'info.600'}}>{userData?.roles}</Small>
+          <H6>Name: {userData?.fullName}</H6>
+          <Small   sx={{color:'info.600'}}>Role: {userData?.roles}</Small>
         </Box>
 
         <Divider />
-        <MenuItem>Profile</MenuItem>
+        {/* <MenuItem>Profile</MenuItem>
         <MenuItem>My Orders</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem>Settings</MenuItem> */}
 
         <Divider />
         <MenuItem  onClick={handleLogout}>Logout</MenuItem>

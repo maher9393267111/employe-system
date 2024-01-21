@@ -10,6 +10,8 @@ import { UploadImage } from "../../../redux/customerApiRequest";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { fetchWord } from "../../../redux/lang/fetchword";
+import {toast} from 'react-toastify'
+
 // import api from "utils/__api__/products";
 
 // =============================================================================
@@ -28,7 +30,10 @@ const INITIAL_VALUES = {
   gender: "",
   city: "",
   zip: "",
-  birthday:""
+  birthday: "",
+  date:'',
+  time:'',
+ 
 };
 
 // form field validation schema
@@ -46,7 +51,8 @@ const validationSchema = yup.object().shape({
   work: yup.string().required("required"),
   state: yup.string().required("required"),
   date: yup.string().required("required"),
-  
+  time: yup.string().required("required"),
+
 });
 
 export default function CreateCustomer() {
@@ -58,6 +64,7 @@ export default function CreateCustomer() {
   const [images, setImages] = useState(null);
   const [audiofile, setAudioFile] = useState(null);
   const [signature, setSignature] = useState("");
+  const [agreement  ,setAgreement] = useState(false)
 
   console.log("id", agentId);
   const handleFormSubmit = async (values) => {
@@ -67,37 +74,40 @@ export default function CreateCustomer() {
 
     values.audio = audiofile;
     values.signature = signature;
+    values.agreement = agreement
 
-    console.log("Customer Create", signature);
+
+    if (agreement === false){
+      toast.error('You must Agree to the terms to create new customer')
+      return
+    }
+
+
+    console.log("Customer Create", values.agreement);
     dispatch(AddCustomer(values, agentId));
   };
 
-
-  const {locale} = useRouter();
+  const { locale } = useRouter();
   // const [locale, setLocale] = useState(i18n.language)
-
-
-
-
 
   return (
     <Box py={4}>
-      <H3 mb={2}>{fetchWord("addCustomer",locale)}</H3>
-
-
-
+      <H3 mb={2}>{fetchWord("addCustomer", locale)}</H3>
 
       <CustomerForm
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
-        buttontext={fetchWord("addCustomer",locale)}
+        buttontext={fetchWord("addCustomer", locale)}
         images={images}
         setImages={setImages}
         audiofile={audiofile}
         setAudioFile={setAudioFile}
         signature={signature}
         setSignature={setSignature}
+
+        agreement={agreement}
+        setAgreement={setAgreement}
       />
     </Box>
   );

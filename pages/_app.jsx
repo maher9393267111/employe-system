@@ -59,13 +59,13 @@ const App = ({
   return <Fragment>
       <Head>
         <meta charSet="utf-8" />
-        <meta name="description" content="React Next.js ecommerce template. Build SEO friendly Online store, delivery app and Multivendor store" />
+        <meta name="description" content="Dashboard" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <OpenGraphTags />
-        <title>Bazaar - Next.js Ecommerce Template</title>
+        <title>Dashboard</title>
       </Head>
-      {/* {!isSSR &&  */}
+      {!isSSR && 
       <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
 
@@ -95,7 +95,7 @@ const App = ({
 </ChakraProvider>
       </PersistGate>
         </Provider>
-{/* } */}
+}
 
     </Fragment>;
 };
@@ -103,4 +103,3 @@ const App = ({
 
 export default appWithTranslation(App);
 
-// export default appWithTranslation(App, nextI18NextConfig);

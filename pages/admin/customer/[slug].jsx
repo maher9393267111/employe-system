@@ -42,6 +42,7 @@ export default function EditAgent({}) {
     work: yup.string().required("required"),
     state: yup.string().required("required"),
     date: yup.string().required("required"),
+    time: yup.string().required("required"),
 
   
   });
@@ -60,7 +61,8 @@ export default function EditAgent({}) {
     birthday:'',
     work:'',
     state:'',
-    date:''
+    date:'',
+    time:''
   });
 
   const [loading, setLoading] = useState(false);
@@ -68,6 +70,8 @@ export default function EditAgent({}) {
   const [images ,setImages] = useState(null)
   const [audiofile ,setAudioFile] = useState(null)
   const [signature ,setSignature] = useState('')
+  const [agreement  ,setAgreement] = useState(false)
+
 
 
   useEffect(() => {
@@ -75,6 +79,7 @@ export default function EditAgent({}) {
     if (query.slug) {
       getSingleCustomer(query.slug)
         .then((data) => {
+          console.log("DATA????" ,data)
           console.log("DATA", data);
           setCustomer((state) => ({
             ...state,
@@ -91,13 +96,16 @@ export default function EditAgent({}) {
             birthday:data?.birthday,
             work:data?.work,
             state:data?.state,
-            date:data?.date
+            date:data?.date,
+            time:data?.time
             
           }));
 
           setImages(data?.files)
           setSignature(data?.signature)
           setAudioFile(data?.audio)
+          setAgreement(data?.agreement)
+
 
         })
         .then(() => {
@@ -111,6 +119,8 @@ export default function EditAgent({}) {
   const handleFormSubmit = (values) => {
     console.log(values);
     values.signature = signature
+    values.agreement = agreement
+    console.log(values)
     UpdateCustomer(values, query.slug);
   };
 
@@ -184,6 +194,8 @@ export default function EditAgent({}) {
             //  setAudioFile ={setAudioFile}
              signature ={signature}
               setSignature = {setSignature}
+              agreement={agreement}
+              setAgreement={setAgreement}
           />
         )}
         

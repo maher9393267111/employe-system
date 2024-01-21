@@ -26,6 +26,8 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     file,
     files,
     audio,
+    SearchedBy,
+    note,
 
     id,
   } = customer;
@@ -61,9 +63,12 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     <StyledTableRow tabIndex={-1} role="checkbox" selected={isItemSelected}>
       <StyledTableCell align="center">#{id.split("-")[0]}</StyledTableCell>
 
-      <StyledTableCell align="center">{firstName}</StyledTableCell>
+      {/* <StyledTableCell align="center">{firstName}</StyledTableCell> */}
 
       <StyledTableCell align="center">{email}</StyledTableCell>
+      <StyledTableCell align="center">{note?.slice(0,40)}</StyledTableCell>
+
+
       {/* <StyledTableCell align="center">{address}</StyledTableCell> */}
 
       <StyledTableCell align="center">
@@ -87,20 +92,26 @@ const CustomersRow = ({ customer, selected, userRole }) => {
         </Box>
       </StyledTableCell>
 
-      <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
+      {/* <StyledTableCell align="center">{phoneNumber}</StyledTableCell> */}
 
-      {/* <StyledTableCell align="center">
-        <Avatar src={logo} sx={{
-        width: 55,
-        height: "auto",
-        margin: "auto",
-        borderRadius: 0
-      }} />
-      </StyledTableCell> */}
+     
+      {(userRole[0] === "admin"  ? 
 
-      {/* <StyledTableCell align="center">
-        <BazaarSwitch color="info" checked={featuredCategory} onChange={() => setFeaturedCategory(state => !state)} />
-      </StyledTableCell> */}
+
+      <StyledTableCell align="center">{SearchedBy}</StyledTableCell>
+
+:
+
+
+   <StyledTableCell align="center">{phoneNumber}</StyledTableCell>
+
+
+
+      )}
+
+
+
+
 
       <StyledTableCell align="center">
         <StyledIconButton onClick={handleNavigate}>
