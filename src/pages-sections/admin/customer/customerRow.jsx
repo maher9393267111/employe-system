@@ -28,6 +28,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     audio,
     SearchedBy,
     note,
+    process,
 
     id,
   } = customer;
@@ -108,6 +109,9 @@ const CustomersRow = ({ customer, selected, userRole }) => {
 
 
       )}
+
+
+<StyledTableCell align="center">{process}</StyledTableCell>
 
 
 

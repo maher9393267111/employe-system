@@ -300,6 +300,14 @@ align:'center'
       label: "SearchedBy",
       align: "center",
     },
+
+    {
+
+id:"process",
+label:"Process",
+align:'center'
+
+    },
   
     {
       id: "action",
@@ -326,6 +334,7 @@ align:'center'
     audio: item?.audio,
     employe_id: item?.employe_id,
     note: item?.note,
+    process:item?.process
   }));
 
   console.log("filterdcystomers", filteredCustomers);
