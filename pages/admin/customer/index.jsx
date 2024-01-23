@@ -26,7 +26,7 @@ import { H3 } from "components/Typography";
 import { CustomersRow } from "pages-sections/admin";
 import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
-import api from "utils/__api__/dashboard";
+
 import { useState, useEffect } from "react";
 import CustomerPagination from "./pagination";
 import { toast } from "react-toastify";
@@ -111,7 +111,7 @@ CustomerList.getLayout = function getLayout(page) {
 
 // =============================================================================
 
-export default function CustomerList({ brands }) {
+export default function CustomerList({ }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -804,11 +804,11 @@ align:'center'
     </Box>
   );
 }
-export const getStaticProps = async () => {
-  const brands = await api.brands();
-  return {
-    props: {
-      brands,
-    },
-  };
-};
+// export const getStaticProps = async () => {
+//   const brands = await api.brands();
+//   return {
+//     props: {
+//       brands,
+//     },
+//   };
+// };

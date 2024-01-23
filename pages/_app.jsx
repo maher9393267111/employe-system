@@ -23,7 +23,7 @@ import { StateContextProvider } from '../redux/socket/context'
 
 import "nprogress/nprogress.css";
 import "simplebar/dist/simplebar.min.css";
-import "../src/__server__";
+
 
 
 import { store, persistor } from '../redux/store';

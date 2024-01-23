@@ -10,7 +10,7 @@ import { H3 } from "components/Typography";
 import { BrandRow } from "pages-sections/admin";
 import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
-import api from "utils/__api__/dashboard";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axiosJWT from "../redux/axiosJWT";

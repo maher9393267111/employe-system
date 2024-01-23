@@ -260,7 +260,7 @@ function ListItem(props) {
         <H6>{type}</H6>
 
         <Paragraph fontSize={11}>
-          {note}
+          {note.slice(0,40)}
         </Paragraph>
         <Paragraph fontSize={11}>
 

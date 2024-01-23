@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { fetchWord } from "../../../redux/lang/fetchword";
 import {toast} from 'react-toastify'
 
-// import api from "utils/__api__/products";
+
 
 // =============================================================================
 CreateCustomer.getLayout = function getLayout(page) {

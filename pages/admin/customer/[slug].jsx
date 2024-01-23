@@ -14,7 +14,7 @@ import {
 // import Skeleton from 'react-loading-skeleton';
 import Skeleton from "@mui/material/Skeleton";
 import { fetchWord } from "../../../redux/lang/fetchword";
-// import api from "utils/__api__/products";
+
 
 // =============================================================================
 EditAgent.getLayout = function getLayout(page) {

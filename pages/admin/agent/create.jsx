@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AddNewAgents } from "../../../redux/agentApiRequest";
-// import api from "utils/__api__/products";
+
 
 // =============================================================================
 CreateAgent.getLayout = function getLayout(page) {

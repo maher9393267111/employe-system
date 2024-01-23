@@ -8,7 +8,7 @@ import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import { useDispatch } from "react-redux";
 import { getSingleAgent, UpdateAgent } from "../../../redux/agentApiRequest";
 import Skeleton from "@mui/material/Skeleton";
-// import api from "utils/__api__/products";
+
 
 // =============================================================================
 EditAgent.getLayout = function getLayout(page) {

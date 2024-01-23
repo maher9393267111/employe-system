@@ -7,14 +7,14 @@ import TablePagination from "components/data-table/TablePagination";
 import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import Scrollbar from "components/Scrollbar";
 import { H3 } from "components/Typography";
-import { BrandRow } from "pages-sections/admin";
+
 import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
-import api from "utils/__api__/dashboard";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axiosJWT from "../../../redux/axiosJWT";
-import { REACT_APP_BASE_URL } from "../../../redux/baseURL";
+
 import { FetchAgents } from "../../../redux/agentApiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -23,7 +23,6 @@ import { Add } from "@mui/icons-material";
 import { Button, useMediaQuery } from "@mui/material";
 import { FlexBox } from "components/flex-box";
 import SearchInput from "components/SearchInput";
-
 
 const tableHeading = [
   {
@@ -69,14 +68,12 @@ AgentList.getLayout = function getLayout(page) {
 
 // =============================================================================
 
-export default function AgentList({ brands }) {
+export default function AgentList({ }) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
   const router = useRouter();
-  const downSM = useMediaQuery(theme => theme.breakpoints.down("sm"));
-  const [searchValue , setSearchValue] = useState('')
- 
-
+  const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const [searchValue, setSearchValue] = useState("");
 
   const employeesData = useSelector((state) => state.agent?.agent?.allagents);
   const name = useSelector((state) => state.auth?.login.nane);
@@ -90,22 +87,10 @@ export default function AgentList({ brands }) {
   const [employees, setEmployees] = useState(employeesData ?? []);
   const [refresh, setRefesh] = useState(false);
   useEffect(() => {
-   
-
     dispatch(FetchAgents(searchValue));
   }, []);
 
-  // const filteredBrands = brands.map((item) => ({
-  //   id: item.id,
-  //   slug: item.slug,
-  //   name: item.name,
-  //   logo: item.image,
-  //   featured: item.featured,
-  // }));
 
-
-
-  
 
   const filteredAgents = employeesData?.map((item) => ({
     id: item._id,
@@ -150,70 +135,47 @@ export default function AgentList({ brands }) {
         />
       )} */}
 
+      <Card
+        backgroundColor="grey.900"
+        sx={{ height: "160px", marginBottom: "20px", padding: "14px" }}
+      >
+        <Box sx={{ display: "flex", gap: "22px" }}>
+          <SearchInput
+            sx={{ flexGrow: 1 }}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
 
-
-<Card  
-
-backgroundColor='grey.900'
-
-
-sx={{height:'160px' ,marginBottom:'20px', padding:'14px'}}>
-  
-
-  <Box sx={{ display: 'flex' ,gap:'22px' }}>
-
-<SearchInput
-         sx={{ flexGrow: 1}}
-
-         onChange={(e)=>setSearchValue(e.target.value)}
-
-         />
-
-
-<Button
-
-              color="info"
-              fullWidth={downSM}
-              variant="contained"
-              // startIcon={<Add />}
-              onClick={() => dispatch(FetchAgents(searchValue))}
-              sx={
-                {
-                  // minHeight: 44,
-                }
+          <Button
+            color="info"
+            fullWidth={downSM}
+            variant="contained"
+            // startIcon={<Add />}
+            onClick={() => dispatch(FetchAgents(searchValue))}
+            sx={
+              {
+                // minHeight: 44,
               }
-            >
-              Search
-            </Button>
+            }
+          >
+            Search
+          </Button>
 
-
-            <Button
-
-color="info"
-fullWidth={downSM}
-variant="contained"
-// startIcon={<Add />}
-onClick={() => router.push('/admin/agent/create')}
-sx={
-  {
-    // minHeight: 44,
-  }
-}
->
-Add agent
-</Button>
-
-
-
-
-</Box>
-
-</Card>
-
-
-
-
-
+          <Button
+            color="info"
+            fullWidth={downSM}
+            variant="contained"
+            // startIcon={<Add />}
+            onClick={() => router.push("/admin/agent/create")}
+            sx={
+              {
+                // minHeight: 44,
+              }
+            }
+          >
+            Add agent
+          </Button>
+        </Box>
+      </Card>
 
       <Card>
         <Scrollbar>
@@ -259,11 +221,3 @@ Add agent
     </Box>
   );
 }
-export const getStaticProps = async () => {
-  const brands = await api.brands();
-  return {
-    props: {
-      brands,
-    },
-  };
-};
