@@ -1,4 +1,4 @@
-//http://localhost:8000/notifications?receiver=6597543542c34a8881644532
+
 
 
 import axios from "axios";
@@ -11,10 +11,10 @@ import {toast} from 'react-toastify'
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
-const baseUrl =
-  process.env.NODE_ENV === "development"
-    ? REACT_APP_BASE_URL
-    : REACT_APP_BASE_URL1;
+const baseUrl = REACT_APP_BASE_URL1 
+  // process.env.NODE_ENV === "development"
+  //   ? REACT_APP_BASE_URL
+  //   : REACT_APP_BASE_URL1;
 
 
 

@@ -29,11 +29,12 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     SearchedBy,
     note,
     process,
+    employe_id,
 
     id,
   } = customer;
 
-  console.log(customer, "DATA CUSTOMER");
+  console.log(customer, "DAA@@@@@@@@@@@@@@@@@@@@@544545ATA CUSTOMER");
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -113,6 +114,8 @@ const CustomersRow = ({ customer, selected, userRole }) => {
 
 <StyledTableCell align="center">{process === true ? 'true' : 'false'}</StyledTableCell>
 
+{/* employe_id */}
+<StyledTableCell align="center">{employe_id?.username}</StyledTableCell>
 
 
 
