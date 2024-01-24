@@ -310,11 +310,19 @@ align:'center'
     },
 
      
-   userRole[0] === 'admin' && {
+    userRole[0] === 'admin' ?
+   {
     id: "employe_id",
     label: "AgentName",
     align: "center",
-  }
+  } 
+  :
+   {
+      id: "firstName",
+      label: "FirstName",
+      align: "center",
+    }
+
   ,
     {
       id: "action",

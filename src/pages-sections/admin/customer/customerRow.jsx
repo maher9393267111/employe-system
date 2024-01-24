@@ -34,7 +34,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     id,
   } = customer;
 
-  console.log(customer, "DAA@@@@@@@@@@@@@@@@@@@@@544545ATA CUSTOMER");
+  console.log(customer, "CUSTOMER");
   const getColor = (status) => {
     switch (status) {
       case "Pending":
@@ -68,8 +68,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
       {/* <StyledTableCell align="center">{firstName}</StyledTableCell> */}
 
       <StyledTableCell align="center">{email}</StyledTableCell>
-      <StyledTableCell align="center">{note?.slice(0,40)}</StyledTableCell>
-
+      <StyledTableCell align="center">{note?.slice(0, 40)}</StyledTableCell>
 
       {/* <StyledTableCell align="center">{address}</StyledTableCell> */}
 
@@ -96,26 +95,26 @@ const CustomersRow = ({ customer, selected, userRole }) => {
 
       {/* <StyledTableCell align="center">{phoneNumber}</StyledTableCell> */}
 
-     
-      {(userRole[0] === "admin"  ? 
-
-
-      <StyledTableCell align="center">{SearchedBy}   </StyledTableCell>
-
-:
-
-
-   <StyledTableCell align="center">{phoneNumber} </StyledTableCell>
-
-
-
+      {userRole[0] === "admin" ? (
+        <StyledTableCell align="center">{SearchedBy} </StyledTableCell>
+      ) : (
+        <StyledTableCell align="center">{phoneNumber} </StyledTableCell>
       )}
 
+      <StyledTableCell align="center">
+        {process === true ? "true" : "false"}
+      </StyledTableCell>
 
-<StyledTableCell align="center">{process === true ? 'true' : 'false'}</StyledTableCell>
+      {/* employe_id */}
 
-{/* employe_id */}
-<StyledTableCell align="center">{employe_id?.username}</StyledTableCell>
+  
+
+
+{userRole[0] === "admin" ? (
+        <StyledTableCell align="center">{employe_id?.username} </StyledTableCell>
+      ) : (
+        <StyledTableCell align="center">{firstName} </StyledTableCell>
+      )}
 
 
 
@@ -128,7 +127,6 @@ const CustomersRow = ({ customer, selected, userRole }) => {
         {(userRole[0] === "admin" || status === "rejected") && (
           <StyledIconButton onClick={() => handleDelete(id)}>
             <Delete />
-            
           </StyledIconButton>
         )}
       </StyledTableCell>
