@@ -8,6 +8,7 @@ import {
   closeCustomerModel,
 } from "./customerSlice";
 import { toast } from "react-toastify";
+import { changeLanguage } from "i18next";
 
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
@@ -123,7 +124,7 @@ export const UpdateCustomer = async (values, id, router) => {
   }
 };
 
-export const DeleteCustomer = (customerId, files) => async (dispatch) => {
+export const DeleteCustomer = (customerId, files ,audio) => async (dispatch) => {
   try {
     //console.log("image filename" ,filename)
 
@@ -132,14 +133,33 @@ export const DeleteCustomer = (customerId, files) => async (dispatch) => {
       await DeleteImage(file?.filename);
     });
 
-    //await DeleteImage(filename)
+
+    // delete audio file 
+
+    if (audio) {
+    const audioName = audio.split('audio/')[1]
+
+    console.log(audioName ,"AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+
+    
+
+
+    await DeleteImage(audioName ,'audio')
+  //  toast.success("Audio deleted success")
+    }
+
+
+
+
+
 
     const response = await axiosJWT.delete(
       `${baseUrl}/customers/${customerId}`
     );
 
     toast.success("Customer deleted successfully");
-    console.log("RESPONSE DATA", response.data);
+   // console.log("RESPONSE DATA", response.data);
 
     return dispatch(FetchCustomers());
   } catch (err) {
@@ -235,11 +255,12 @@ export const UploadAudio = async (files, oldfile = null) => {
   }
 };
 
-export const DeleteImage = async (filename) => {
+export const DeleteImage = async (filename ,folder) => {
   try {
     console.log("in DELETEEE", filename);
     const res = await axiosJWT.post(`${baseUrl}/upload/deleteimage`, {
       filename: filename,
+      folder:folder
     });
 
     console.log("single", res?.data);

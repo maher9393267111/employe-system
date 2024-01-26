@@ -54,7 +54,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
 
   const handleDelete = async (id) => {
     console.log("IDDDDDDDD", customer);
-    dispatch(DeleteCustomer(id, customer?.files));
+    dispatch(DeleteCustomer(id, customer?.files , audio));
   };
 
   const router = useRouter();
