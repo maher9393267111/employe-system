@@ -120,6 +120,8 @@ export default function EditAgent({}) {
     console.log(values);
     values.signature = signature
     values.agreement = agreement
+    values.files = images
+    values.audio =audiofile
     console.log(values)
     UpdateCustomer(values, query.slug);
   };
@@ -189,9 +191,9 @@ export default function EditAgent({}) {
             buttontext={fetchWord("editCustomer",locale)}
             isedit={true}
             images={images}
-            // setImages={setImages}
+             setImages={setImages}
             audiofile ={audiofile}
-            //  setAudioFile ={setAudioFile}
+              setAudioFile ={setAudioFile}
              signature ={signature}
               setSignature = {setSignature}
               agreement={agreement}

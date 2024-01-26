@@ -208,7 +208,10 @@ const CustomerForm = (props) => {
   };
 
   const buttonCondition = (isedit && userRole[0] === "admin") || !isedit;
+  const showImagesUpload = !isedit  ||( isedit && images?.length === 0);
+  const showAudioUpload = !isedit  ||( isedit && !audiofile);
 
+  console.log(showImagesUpload ,showAudioUpload)
   const { locale } = useRouter();
 
   return (
@@ -638,7 +641,7 @@ const CustomerForm = (props) => {
 
                 // flexDirection="row" mt={2} flexWrap="wrap" gap={1}
                 >
-                  {!isedit && (
+                  {showImagesUpload && (
                     <Box mb="5">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
@@ -740,7 +743,7 @@ const CustomerForm = (props) => {
 
                 {/* -----Microphon Audio---- */}
 
-                {!isedit && (
+                {showAudioUpload && (
                   <div style={{ marginTop: "30px" }}>
                     <h2 style={{ marginTop: "12px" }}>Voice Record</h2>
                     <AudioRecorder
