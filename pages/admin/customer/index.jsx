@@ -387,7 +387,7 @@ align:'center'
 
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
-        toast.info("new POST CREATED");
+        toast.info("new Customer CREATED");
         dispatch(
           FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
         );

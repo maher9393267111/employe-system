@@ -13,9 +13,9 @@ module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@mui/x-charts'],
 
-  // compiler: {
-  //   removeConsole: process.env.NODE_ENV === "production"
-  // },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production"
+  },
 
 
 
