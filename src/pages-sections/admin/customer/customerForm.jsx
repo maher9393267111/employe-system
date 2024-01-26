@@ -211,7 +211,7 @@ const CustomerForm = (props) => {
   const showImagesUpload = !isedit  ||( isedit && images?.length === 0);
   const showAudioUpload = !isedit  ||( isedit && !audiofile);
 
-  console.log(showImagesUpload ,showAudioUpload)
+  console.log(showImagesUpload ,showAudioUpload ,images ,audiofile)
   const { locale } = useRouter();
 
   return (
