@@ -139,7 +139,7 @@ export const DeleteCustomer = (customerId, files ,audio) => async (dispatch) => 
     if (audio) {
     const audioName = audio.split('audio/')[1]
 
-    console.log(audioName ,"AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    console.log(audioName ,"")
 
 
     
