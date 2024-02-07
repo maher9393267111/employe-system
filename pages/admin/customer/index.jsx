@@ -419,22 +419,25 @@ align:'center'
       );
 
       console.log(
-        `status !!!!!!!!!@@@@is ch12222222222anged ${data?.receiver} ,,,,, ${userData?.id}`
+        `status ${data?.receiver} ,,,,, ${userData?.id}`
       );
 
       if (data?.receiver === userData?.id) {
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
         toast.info("customer status changed");
+        window.location.reload();
 
-    if (userRole[0] === "staff") {
-          console.log("refetch agent📌📌📌 customers")
-          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-          dispatch(FetchNotifications());
-        } else if (userRole[0] === "admin") {
-          console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
-          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
-        }
+
+    // if (userRole[0] === "staff") {
+    //       console.log("refetch agent📌📌📌 customers")
+    //       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+    //       dispatch(FetchNotifications());
+    //     } else if (userRole[0] === "admin") {
+    //       console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
+    //       FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
+    //     }
+
 
 
       
@@ -444,12 +447,13 @@ align:'center'
         //   console.log("refetch agent📌📌📌 customers")
         //   dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
         //   dispatch(FetchNotifications());
-        // } else {
+        // } else if (data?.notificationData?.myRole[0] === "admin") {
         //   console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
         //   FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
         // }
 
 
+      
 
 
         // then refetch notifications refetch agent customers

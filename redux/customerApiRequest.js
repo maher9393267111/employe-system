@@ -24,7 +24,7 @@ export const FetchCustomers =
     try {
       console.log("page in request api 📱 📱 📱", employeid);
       console.log(
-        "QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!",
+        "QUERIES ADMIN",
         status,
         sortBy,
         sortDirection
@@ -49,7 +49,7 @@ export const FetchAgentCustomers =
     await dispatch(fetchStart());
     try {
       console.log("page in@@@@@@@@@@@@@@@@@ request api", page);
-      console.log("QUERIES!!!!!!!!!!!!!!!!!!!!!!!!!", sortBy, sortDirection);
+      console.log("QUERIES AGENT APIIIIII", sortBy, sortDirection);
 
       const response = await axiosJWT.get(
         `${baseUrl}/customers/agentCustomers?page=${
