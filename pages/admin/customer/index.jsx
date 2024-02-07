@@ -397,9 +397,18 @@ align:'center'
       // search notification only show form admin
       socket.on("search_customer", (data) => {
         toast.info("some agent search for customer");
-        dispatch(
-          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
-        );
+        
+    if (userRole[0] === "admin") {
+        dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection));
+         }
+
+         else if  (userRole[0] === "staff") {
+          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+
+         }
+
+
+
         dispatch(FetchNotifications());
       });
     }
@@ -422,9 +431,11 @@ align:'center'
         toast.info("customer status changed");
 
         if (data?.notificationData?.myRole[0] === "staff") {
+          console.log("refetch agent📌📌📌 customers")
           dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
           dispatch(FetchNotifications());
         } else {
+          console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
           FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
         }
 
