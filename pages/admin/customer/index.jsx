@@ -426,7 +426,9 @@ align:'center'
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
         toast.info("customer status changed");
+        dispatch(FetchNotifications());
         window.location.reload();
+     
 
 
     // if (userRole[0] === "staff") {
@@ -460,6 +462,7 @@ align:'center'
       }
     });
   }, []);
+
 
   return (
     <Box py={4}>
