@@ -426,33 +426,14 @@ align:'center'
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
         toast.info("customer status changed");
-        dispatch(FetchNotifications());
-        window.location.reload();
+        dispatch(FetchNotifications()).then(()=>{
+          window.location.reload();
+        })
+        
      
 
 
-    // if (userRole[0] === "staff") {
-    //       console.log("refetch agent📌📌📌 customers")
-    //       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-    //       dispatch(FetchNotifications());
-    //     } else if (userRole[0] === "admin") {
-    //       console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
-    //       FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
-    //     }
-
-
-
-      
-
-
-        // if (data?.notificationData?.myRole[0] === "staff") {
-        //   console.log("refetch agent📌📌📌 customers")
-        //   dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-        //   dispatch(FetchNotifications());
-        // } else if (data?.notificationData?.myRole[0] === "admin") {
-        //   console.log("refetch ADDDDDMMMINNNN📌📌📌 customers")
-        //   FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection);
-        // }
+  
 
 
       
