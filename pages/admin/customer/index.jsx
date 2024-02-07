@@ -415,10 +415,7 @@ align:'center'
 
     socket.on("status", (data) => {
       console.log(
-        "reciever",
-        data?.receiver,
-        "curre📌📌📌📌📌ntUser",
-        userData?.id
+        "DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱",data
       );
 
       console.log(
