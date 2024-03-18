@@ -21,10 +21,15 @@ const REACT_APP_BASE_URL = "http://localhost:3300";
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(baseUrl , {
-    // WARNING: in that case, there is no fallback to long-polling
-    transports: [ "websocket" ] // or [ "websocket", "polling" ] (the order matters)
-  });
+  const socket = socketIO.connect(baseUrl , 
+    {
+    
+    transports:
+    // [ "websocket" ] 
+     [ "websocket", "polling" ] 
+  }
+  
+  );
 
 
 
