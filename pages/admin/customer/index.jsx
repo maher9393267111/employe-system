@@ -369,8 +369,8 @@ export default function CustomerList({}) {
 
   useEffect(() => {
     console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET");
-    socket.on("fetch", (data) => {
-      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+    socket.on("start", (data) => {
+      toast.info(data);
     });
 
     if (userRole[0] === "admin") {
