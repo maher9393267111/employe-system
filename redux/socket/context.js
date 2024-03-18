@@ -21,7 +21,7 @@ const REACT_APP_BASE_URL = "http://localhost:3300";
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(baseUrl , 
+  const socket = socketIO.connect("wss://https://dolphin-app-lu45l.ondigitalocean.app" , 
     {
     
     transports:
