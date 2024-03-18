@@ -10,8 +10,8 @@ const StateContext = createContext();
 
 
 
-const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
-const REACT_APP_BASE_URL = "http://localhost:3300";
+const pro= "https://dolphin-app-lu45l.ondigitalocean.app";
+const dev = "http://localhost:3300";
 
 
   // process.env.NODE_ENV === "development"
@@ -21,13 +21,14 @@ const REACT_APP_BASE_URL = "http://localhost:3300";
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(baseUrl , 
-    {
+  const socket = socketIO.connect(pro
+    //, 
+  //   {
     
-    transports:
-    // [ "websocket" ] 
-     [ "websocket", "polling" ] 
-  }
+  //   transports:
+  //    [ "websocket" ] 
+  //    [ "websocket", "polling" ] 
+  // }
   
   );
 

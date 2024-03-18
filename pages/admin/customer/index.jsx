@@ -370,6 +370,7 @@ export default function CustomerList({}) {
   useEffect(() => {
     console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET");
     socket.on("start", (data) => {
+      console.log("socket start in server--->" ,data)
       toast.info(data);
     });
 
