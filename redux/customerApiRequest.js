@@ -10,9 +10,11 @@ import {
 import { toast } from "react-toastify";
 import { changeLanguage } from "i18next";
 
+import {APIURL } from './baseURL'
+const baseUrl = APIURL
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
-const baseUrl = REACT_APP_BASE_URL1
+//const baseUrl = REACT_APP_BASE_URL1
   // process.env.NODE_ENV === "development"
   //   ? REACT_APP_BASE_URL
   //   : REACT_APP_BASE_URL1;

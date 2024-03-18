@@ -1,2 +1,7 @@
-export const REACT_APP_BASE_URL = "https://clownfish-app-tzjmm.ondigitalocean.app"
 
+
+
+export const APIURL =  process.env.NODE_ENV !== "development"?
+"http://localhost:3300"
+:
+"https://dolphin-app-lu45l.ondigitalocean.app"

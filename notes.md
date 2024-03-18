@@ -1,7 +1,7 @@
   useEffect(() => {
     console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET");
     socket.on("fetch", (data) => {
-      console.log("data Socket 📌✏✒🖋🖊🖌🖍", data);
+     
     });
 
     if (userRole[0] === "admin") {
@@ -33,17 +33,12 @@
     }
 
     socket.on("status", (data) => {
-      console.log(
-        "DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱",data
-      );
+   
 
-      console.log(
-        `status ${data?.receiver} ,,,,, ${userData?.id}`
-      );
+  
 
       if (data?.receiver === userData?.id) {
-        console.log("reciever", data.receiver, "currentUser", userData?.id);
-        console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
+     
         toast.info("customer status changed");
          dispatch(FetchNotifications()).then(()=>{
           window.location.reload();

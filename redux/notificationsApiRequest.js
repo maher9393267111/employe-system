@@ -7,11 +7,12 @@ import axiosJWT from "./axiosJWT";
 import { FETCH_NOTIFICATIONS_SUCCESS , CLEAR_NOTIFICATIONS ,   FETCH_NOTIFICATIONS_FAILURE , ADD_NOTIFICATION ,FETCH_NOTIFICATIONS_START } from "./notificationsSlice";
 import {toast} from 'react-toastify'
 
-
+import {APIURL } from './baseURL'
+const baseUrl = APIURL
 const REACT_APP_BASE_URL1 = "https://clownfish-app-tzjmm.ondigitalocean.app";
 const REACT_APP_BASE_URL = "http://localhost:8000";
 
-const baseUrl = REACT_APP_BASE_URL1 
+//const baseUrl = REACT_APP_BASE_URL1 
   // process.env.NODE_ENV === "development"
   //   ? REACT_APP_BASE_URL
   //   : REACT_APP_BASE_URL1;

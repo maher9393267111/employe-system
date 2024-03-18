@@ -111,7 +111,7 @@ CustomerList.getLayout = function getLayout(page) {
 
 // =============================================================================
 
-export default function CustomerList({ }) {
+export default function CustomerList({}) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
 
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -258,8 +258,6 @@ export default function CustomerList({ }) {
     }
   }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
 
-
-
   const tableHeading = [
     {
       id: "_id",
@@ -277,63 +275,53 @@ export default function CustomerList({ }) {
       align: "center",
     },
     {
-id:"note",
-label:"Note",
-align:'center'
-
+      id: "note",
+      label: "Note",
+      align: "center",
     },
-  
+
     {
       id: "status",
       label: "Status",
       align: "center",
     },
-  
-   userRole[0] !== 'admin' ? {
-      id: "phoneNumber",
-      label: "PhoneNumber",
-      align: "center",
-    }
-  
-   : {
-      id: "searchedBy",
-      label: "SearchedBy",
-      align: "center",
-    },
+
+    userRole[0] !== "admin"
+      ? {
+          id: "phoneNumber",
+          label: "PhoneNumber",
+          align: "center",
+        }
+      : {
+          id: "searchedBy",
+          label: "SearchedBy",
+          align: "center",
+        },
 
     {
-
-id:"process",
-label:"Process",
-align:'center'
-
+      id: "process",
+      label: "Process",
+      align: "center",
     },
 
-     
-    userRole[0] === 'admin' ?
-   {
-    id: "employe_id",
-    label: "AgentName",
-    align: "center",
-  } 
-  :
-   {
-      id: "firstName",
-      label: "FirstName",
-      align: "center",
-    }
+    userRole[0] === "admin"
+      ? {
+          id: "employe_id",
+          label: "AgentName",
+          align: "center",
+        }
+      : {
+          id: "firstName",
+          label: "FirstName",
+          align: "center",
+        },
 
-  ,
     {
       id: "action",
       label: "Action",
       align: "center",
     },
   ];
-
-
-
-
 
   const filteredCustomers = allcustomers?.map((item) => ({
     id: item._id,
@@ -349,7 +337,7 @@ align:'center'
     audio: item?.audio,
     employe_id: item?.employe_id,
     note: item?.note,
-    process:item?.process
+    process: item?.process,
   }));
 
   console.log("filterdcystomers", filteredCustomers);
@@ -397,53 +385,36 @@ align:'center'
       // search notification only show form admin
       socket.on("search_customer", (data) => {
         toast.info("some agent search for customer");
-        
-    if (userRole[0] === "admin") {
-        dispatch(FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection));
-         }
 
-         else if  (userRole[0] === "staff") {
+        if (userRole[0] === "admin") {
+          dispatch(
+            FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+          );
+        } else if (userRole[0] === "staff") {
           dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-
-         }
-
-
+        }
 
         dispatch(FetchNotifications());
       });
     }
 
     socket.on("status", (data) => {
-      console.log(
-        "DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱",data
-      );
+      console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
-      console.log(
-        `status ${data?.receiver} ,,,,, ${userData?.id}`
-      );
+      console.log(`status ${data?.receiver} ,,,,, ${userData?.id}`);
 
       if (data?.receiver === userData?.id) {
         console.log("reciever", data.receiver, "currentUser", userData?.id);
         console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
         toast.info("customer status changed");
-        dispatch(FetchNotifications()).then(()=>{
+        dispatch(FetchNotifications()).then(() => {
           window.location.reload();
-        })
-        
-     
-
-
-  
-
-
-      
-
+        });
 
         // then refetch notifications refetch agent customers
       }
     });
   }, []);
-
 
   return (
     <Box py={4}>
@@ -667,8 +638,6 @@ align:'center'
                   rowCount={filteredList.length}
                   onRequestSort={handleRequestSort}
                 />
-
-              
 
                 {filteredCustomers && (
                   <TableBody>
