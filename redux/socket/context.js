@@ -3,6 +3,7 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
 import socketIO from "socket.io-client";
+
 import {APIURL } from '../baseURL'
 const baseUrl = APIURL
 
@@ -21,16 +22,15 @@ const dev = "http://localhost:3300";
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(pro
-    //, 
-  //   {
-    
-  //   transports:
-  //    [ "websocket" ] 
-  //    [ "websocket", "polling" ] 
+  const socket = socketIO.connect(pro)
+  // const socket = socketIO.connect(dev, {
+  //   path: '/socket.io',
+  //   withCredentials: true,
+  //   transports: ['websocket'],
+  //   secure: true,
   // }
   
-  );
+  // );
 
 
 
