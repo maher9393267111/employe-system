@@ -65,6 +65,10 @@ export default function CreateCustomer() {
   const { socket } = useContextApp();
 
   const [images, setImages] = useState(null);
+  
+  const [userimage, setUserImage] = useState(null);
+  
+  const [file, setFile] = useState(null);
   const [audiofile, setAudioFile] = useState(null);
   const [signature, setSignature] = useState("");
   const [agreement  ,setAgreement] = useState(false)
@@ -87,6 +91,8 @@ export default function CreateCustomer() {
     values.audio = audiofile;
     values.signature = signature;
     values.agreement = agreement
+    values.file = file
+    values.userimage = userimage
 
 
     if (agreement === false){
@@ -121,6 +127,11 @@ export default function CreateCustomer() {
 
         agreement={agreement}
         setAgreement={setAgreement}
+
+        file={file}
+        setFile={setFile}
+        userimage={userimage}
+        setUserImage={setUserImage}
       />
     </Box>
   );

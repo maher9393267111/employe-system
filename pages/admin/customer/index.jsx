@@ -346,6 +346,7 @@ export default function CustomerList({}) {
     employe_id: item?.employe_id,
     note: item?.note,
     process: item?.process,
+    userimage:item?.userimage
   }));
 
   console.log("filterdcystomers", filteredCustomers);

@@ -71,6 +71,9 @@ export default function EditAgent({}) {
   const [audiofile ,setAudioFile] = useState(null)
   const [signature ,setSignature] = useState('')
   const [agreement  ,setAgreement] = useState(false)
+  const [userimage, setUserImage] = useState(null);
+  
+  const [file, setFile] = useState(null);
 
 
 
@@ -97,7 +100,8 @@ export default function EditAgent({}) {
             work:data?.work,
             state:data?.state,
             date:data?.date,
-            time:data?.time
+            time:data?.time,
+            
             
           }));
 
@@ -105,6 +109,8 @@ export default function EditAgent({}) {
           setSignature(data?.signature)
           setAudioFile(data?.audio)
           setAgreement(data?.agreement)
+          setUserImage(data?.userimage)
+          setFile(data?.file)
 
 
         })
@@ -198,6 +204,12 @@ export default function EditAgent({}) {
               setSignature = {setSignature}
               agreement={agreement}
               setAgreement={setAgreement}
+
+              
+        file={file}
+        setFile={setFile}
+        userimage={userimage}
+        setUserImage={setUserImage}
           />
         )}
         

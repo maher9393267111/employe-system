@@ -72,34 +72,53 @@ const CustomerForm = (props) => {
     setSignature,
     agreement,
     setAgreement,
+    file,
+    setFile,
+    userimage,
+    setUserImage
   } = props;
   const [files, setFiles] = useState([]);
 
   const [imagepreview, setImagepreview] = useState({});
 
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
-  const handleChangeDropZone = async (files) => {
-    // files.forEach((file) =>
-    //   Object.assign(file, {
-    //     preview: URL.createObjectURL(file),
-    //   })
-    // );
-    // setFiles(files);
+  const handleChangeDropZone = async (e ,type) => {
 
-    console.log(files[0]);
+    let file = e.target.files[0]
+    const formData = new FormData();
+    formData.append("image", file);
 
-    Object.assign(files[0], {
-      preview: URL.createObjectURL(files[0]),
-    });
+   const res = await UploadImage(formData)
+console.log("res image-->" , res)
+   
 
-    setImagepreview(files[0]);
+if(type === 'userimage'){
 
-    // const formData = new FormData();
-    // formData.append("image", files[0]);
+    setUserImage(res)
+    toast.success('User image uploaded successfully')
+}
 
-    //await UploadImage(formData)
+
+else {
+  setFile(res)
+  toast.success('Document uploaded successfully')
+
+}
+
+
+
+
+
+
+   // setFile(res)
+   
+
+
   };
 
+
+
+console.log("****************",userimage)
   console.log("inFORMIK", initialValues);
   //single image Upload
   const imageUpload = async (e) => {
@@ -644,6 +663,116 @@ const CustomerForm = (props) => {
                 // flexDirection="row" mt={2} flexWrap="wrap" gap={1}
                 >
                   {showImagesUpload && (
+
+<Box>
+
+{/* ---------UserImage Upload------ */}
+<Box mb="5">
+                      <FormControl>
+                        <FormLabel htmlFor="userUpload" fontWeight={"bold"}>
+                          {fetchWord("images", locale)}
+                          <Box as="span" color="red.500">
+                            *
+                          </Box>
+                        </FormLabel>
+                        <FormLabel
+                          border="2px dashed lightgrey"
+                          h="110px"
+                          w="100%"
+                          textAlign={"center"}
+                          onChange={(e) => handleChangeDropZone(e,'userimage')
+                           // setUserImage(e.target.files[0])
+                          
+                          }
+                          htmlFor="userUpload"
+                        >
+                          <Text mt="8" color="gray">
+                            {fetchWord("uploadDocs", locale)}
+                          </Text>
+
+                          <Field
+                            as={Input}
+                            type="file"
+                            name="url"
+                            accept={["application/*, image/*"]}
+                            display="none"
+                            id="userUpload"
+                          
+                          />
+                        </FormLabel>
+                      </FormControl>
+                      <ErrorMessage
+                        name={"url"}
+                        render={(msg) => (
+                          <Box
+                            fontSize={"sm"}
+                            color={"red.500"}
+                            mt={1}
+                            textAlign={"left"}
+                          >
+                            {msg}
+                          </Box>
+                        )}
+                      />
+                    </Box>
+
+
+
+
+{/* ---------Document------- */}
+<Box mb="5">
+                      <FormControl>
+                        <FormLabel htmlFor="docUpload" fontWeight={"bold"}>
+                          {fetchWord("images", locale)}
+                          <Box as="span" color="red.500">
+                            *
+                          </Box>
+                        </FormLabel>
+                        <FormLabel
+                          border="2px dashed lightgrey"
+                          h="110px"
+                          w="100%"
+                          textAlign={"center"}
+                          onChange={(e) => handleChangeDropZone(e,'doc')
+                           // setUserImage(e.target.files[0])
+                          
+                          }
+                          htmlFor="docUpload"
+                        >
+                          <Text mt="8" color="gray">
+                            {fetchWord("uploadDocs", locale)}
+                          </Text>
+
+                          <Field
+                            as={Input}
+                            type="file"
+                            name="doc"
+                            accept={["application/*, image/*"]}
+                            display="none"
+                            id="docUpload"
+                          
+                          />
+                        </FormLabel>
+                      </FormControl>
+                      <ErrorMessage
+                        name={"doc"}
+                        render={(msg) => (
+                          <Box
+                            fontSize={"sm"}
+                            color={"red.500"}
+                            mt={1}
+                            textAlign={"left"}
+                          >
+                            {msg}
+                          </Box>
+                        )}
+                      />
+                    </Box>
+
+
+
+
+{/* ------MultiImages------ */}
                     <Box mb="5">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
@@ -689,6 +818,11 @@ const CustomerForm = (props) => {
                         )}
                       />
                     </Box>
+
+
+                    </Box>
+
+
                   )}
                 </div>
 
@@ -791,6 +925,10 @@ const CustomerForm = (props) => {
                 </div>
               </Grid>
 
+
+{/* ------user and document images show in edit--- */}
+
+
               {/* show audio file--- */}
 
               <div style={{ marginTop: "13px" }}>
@@ -802,6 +940,45 @@ const CustomerForm = (props) => {
                   controls={true}
                 />
               </div>
+
+
+              <Grid item xs={12}>
+              {isedit && <div style={{ display: "flex", gap: "12px" ,marginTop:'10px' }}>
+
+{userimage?.link &&
+<div>
+
+
+<p>UserImage</p>
+
+<img 
+  style={{
+    objectFit: "cover",
+    height: "50px",
+    width: "50px",
+  }}
+src={userimage?.link} alt="" />
+</div>
+}
+
+{file?.link &&
+<div>
+  <p>Document</p>
+
+  <img 
+  style={{
+    objectFit: "cover",
+    height: "50px",
+    width: "50px",
+  }}
+src={file?.link} alt="" />
+</div>
+}
+</div>
+}
+</Grid>
+
+
 
               {buttonCondition && (
                 <Grid item xs={12}>

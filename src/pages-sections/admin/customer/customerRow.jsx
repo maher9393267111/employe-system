@@ -32,6 +32,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
     employe_id,
 
     id,
+    userimage,
   } = customer;
 
   console.log(customer, "CUSTOMER");
@@ -54,7 +55,7 @@ const CustomersRow = ({ customer, selected, userRole }) => {
 
   const handleDelete = async (id) => {
     console.log("IDDDDDDDD", customer);
-    dispatch(DeleteCustomer(id, customer?.files , audio));
+    dispatch(DeleteCustomer(id, customer?.files , audio ,file ,userimage ));
   };
 
   const router = useRouter();
