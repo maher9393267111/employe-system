@@ -395,6 +395,16 @@ export default function CustomerList({}) {
       toast.info(data);
     });
 
+    
+    socket.on("order", (data) => {
+   
+      toast.info(data);
+    });
+
+    socket.on("search", (data) => {
+      console.log("socket start in server--->" ,data)
+      toast.info(data);
+    });
 
     
     
