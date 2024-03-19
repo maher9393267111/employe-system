@@ -424,14 +424,16 @@ export default function CustomerList({}) {
       });
 
       // search notification only show form admin
-      socket.on("search_customer", (data) => {
+      socket.on("search_cust", (data) => {
         toast.info("some agent search for customer");
 
         if (userRole[0] === "admin") {
+          toast.info("HI ADMIN some agent search for customer");
           dispatch(
             FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
           );
         } else if (userRole[0] === "staff") {
+          toast.info("HI AGENT some agent search for customer");
           dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
         }
 
@@ -440,10 +442,6 @@ export default function CustomerList({}) {
     }
 
 
-    socket.on("search_server",(data)=>{
-toast.success(data)
-
-    })
 
 
 
@@ -466,6 +464,31 @@ toast.success(data)
     });
 
 
+
+    
+    socket.on("search_server",(data)=>{
+      toast.success(data.message)
+
+      
+        //toast.info("some agent search for customer");
+
+        if (userRole[0] === "admin") {
+          toast.info("HI ADMIN some agent search for customer");
+          dispatch(
+            FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+          );
+        } else if (userRole[0] === "staff") {
+          toast.info("HI AGENT some agent search for customer");
+          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+        }
+
+        dispatch(FetchNotifications());
+   
+
+
+
+    
+          })
 
 
 
