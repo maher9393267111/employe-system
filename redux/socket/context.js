@@ -45,7 +45,7 @@ export const StateContextProvider = ({ children }) => {
     transports: ["websocket"] ,
   },
     {
-      reconnection: true,
+      reconnection: false,
     }
   );
 
