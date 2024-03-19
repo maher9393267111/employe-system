@@ -27,7 +27,7 @@ import { CustomersRow } from "pages-sections/admin";
 import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useRef} from "react";
 import CustomerPagination from "./pagination";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
@@ -111,8 +111,18 @@ CustomerList.getLayout = function getLayout(page) {
 
 // =============================================================================
 
+
+// ---------------------------------------------------
+
 export default function CustomerList({}) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
+
+
+
+ 
+
+
+
 
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -369,11 +379,23 @@ export default function CustomerList({}) {
 
   useEffect(() => {
     console.log("UNDER SOCKEEEEEEEEEEEEEEEEEEEEEEEET");
+
+    socket.on("connect_error", (err) => {
+      // the reason of the error, for example "xhr poll error"
+      console.log(err.message);
+      toast.info(`message ${err.message}`);
+    
+   
+    })
+
+
+
     socket.on("start", (data) => {
       console.log("socket start in server--->" ,data)
       toast.info(data);
     });
 
+ 
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
         toast.info("new Customer CREATED");
@@ -412,9 +434,11 @@ export default function CustomerList({}) {
           window.location.reload();
         });
 
-        // then refetch notifications refetch agent customers
+        
       }
     });
+
+
   }, []);
 
   return (

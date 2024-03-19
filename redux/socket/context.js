@@ -1,8 +1,9 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useEffect, useState, useContext ,useRef } from "react";
 
 import { toast } from "react-toastify";
 
-import socketIO from "socket.io-client";
+//import socketIO from "socket.io-client";
+import { io } from "socket.io-client";
 
 import {APIURL } from '../baseURL'
 const baseUrl = APIURL
@@ -11,26 +12,42 @@ const StateContext = createContext();
 
 
 
-const pro= "https://dolphin-app-lu45l.ondigitalocean.app";
+const pro= "https://jellyfish-app-as8az.ondigitalocean.app/"
+//"https://dolphin-app-lu45l.ondigitalocean.app";
 const dev = "http://localhost:3300";
 
 
-  // process.env.NODE_ENV === "development"
-  //   ? REACT_APP_BASE_URL
-  //   : REACT_APP_BASE_URL1;
 
 
 
 export const StateContextProvider = ({ children }) => {
-  const socket = socketIO.connect(pro)
-  // const socket = socketIO.connect(dev, {
-  //   path: '/socket.io',
-  //   withCredentials: true,
-  //   transports: ['websocket'],
-  //   secure: true,
+  
+  // const socket = io(pro, {
+  //   path: '/socket.io/',
+  // //  transports: ["websocket"] ,
+    
+  //    transports: ["websocket", "polling"],
+  //    rejectUnauthorized: false,
+  //    allowRequest: (req, callback) => {
+  //     callback(null, false);
+  //   }
+  //    //secure: true,
+  //    //handshake: false,
+  //   //   allowEIO3: true
+ 
   // }
   
   // );
+
+  const socket = io(
+    pro,
+    { path: "/socket.io" ,
+    transports: ["websocket"] ,
+  },
+    {
+      reconnection: true,
+    }
+  );
 
 
 
