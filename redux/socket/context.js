@@ -12,7 +12,7 @@ const StateContext = createContext();
 
 
 
-const pro= "https://jellyfish-app-as8az.ondigitalocean.app/"
+const pro= "https://jellyfish-app-as8az.ondigitalocean.app"
 //"https://dolphin-app-lu45l.ondigitalocean.app";
 const dev = "http://localhost:3300";
 
