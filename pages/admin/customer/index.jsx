@@ -477,9 +477,15 @@ export default function CustomerList({}) {
     socket.on("status", (data) => {
       console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
-      console.log(`status${data.status}`);
+      console.log(`status 📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌${data.status}`);
       toast.info(`customer status changed to ${data.status}`);
-      window.location.reload();
+
+
+      setTimeout(function(){
+        window.location.reload();
+     }, 5000);
+
+
 
 
 
