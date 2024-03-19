@@ -439,6 +439,15 @@ export default function CustomerList({}) {
       });
     }
 
+
+    socket.on("search_server",(data)=>{
+toast.success(data)
+
+    })
+
+
+
+
     socket.on("status", (data) => {
       console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
@@ -460,7 +469,13 @@ export default function CustomerList({}) {
 
 
 
-  }, []);
+  }, [socket]);
+
+const ExecuteSocket=(data)=>{
+console.log("HHIUHHIAHSH" ,data)
+socket.emit("search",data)
+
+}
 
   return (
     <Box py={4}>
@@ -481,7 +496,7 @@ export default function CustomerList({}) {
             fullWidth={downSM}
             variant="contained"
             // startIcon={<Add />}
-            onClick={() => dispatch(CustomerSerch(searchValue, searchType))}
+            onClick={() => dispatch(CustomerSerch(searchValue, searchType ,ExecuteSocket))}
             sx={
               {
                 // minHeight: 44,

@@ -280,7 +280,7 @@ export const DeleteImage = async (filename ,folder) => {
 //Search Customer --> http://localhost:8000/customers/find/anemous?searchtype=name
 
 
-export const CustomerSerch = (value, type) => async (dispatch) => {
+export const CustomerSerch = (value, type ,ExecuteSocket) => async (dispatch) => {
   try {
     //await DeleteImage(filename)
 
@@ -288,10 +288,12 @@ export const CustomerSerch = (value, type) => async (dispatch) => {
       `${baseUrl}/customers/find/${value}?searchtype=${type}`
     );
 
+
     console.log("RESPONSE DATA", response.data?.message);
 
     if (response?.data?.message === false) {
       toast.success("Customer not founded ");
+      ExecuteSocket(response.data.notification)
       return dispatch(FetchCustomers());
     } else if (response?.data?.message === true) {
       toast.success("Customer already exist");
