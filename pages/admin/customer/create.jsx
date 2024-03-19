@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { fetchWord } from "../../../redux/lang/fetchword";
 import {toast} from 'react-toastify'
+import { useContextApp } from "../../../redux/socket/context";
 
 
 
@@ -61,12 +62,23 @@ export default function CreateCustomer() {
     (state) => state.auth?.login?.currentUser?.payload?.id
   );
 
+  const { socket } = useContextApp();
+
   const [images, setImages] = useState(null);
   const [audiofile, setAudioFile] = useState(null);
   const [signature, setSignature] = useState("");
   const [agreement  ,setAgreement] = useState(false)
 
   console.log("id", agentId);
+
+
+  const ExecuteSocket = (data) => {
+    console.log("HHIUHHIAHSH", data);
+    socket.emit("create_cust", data);
+  };
+
+
+
   const handleFormSubmit = async (values) => {
     console.log("IMAGEEEEE", values);
 
@@ -84,7 +96,8 @@ export default function CreateCustomer() {
 
 
     console.log("Customer Create", values.agreement);
-    dispatch(AddCustomer(values, agentId));
+    dispatch(AddCustomer(values, agentId ));
+    await ExecuteSocket("New customer added")
   };
 
   const { locale } = useRouter();

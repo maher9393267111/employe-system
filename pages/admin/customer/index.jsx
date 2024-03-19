@@ -27,7 +27,7 @@ import { CustomersRow } from "pages-sections/admin";
 import { AgentRow } from "pages-sections/admin";
 import useMuiTable from "hooks/useMuiTable";
 
-import { useState, useEffect ,useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import CustomerPagination from "./pagination";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
@@ -111,18 +111,10 @@ CustomerList.getLayout = function getLayout(page) {
 
 // =============================================================================
 
-
 // ---------------------------------------------------
 
 export default function CustomerList({}) {
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-
-
-
- 
-
-
-
 
   const downSM = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -384,36 +376,27 @@ export default function CustomerList({}) {
       // the reason of the error, for example "xhr poll error"
       console.log(err.message);
       toast.info(`message ${err.message}`);
-    
-   
-    })
-
-
+    });
 
     socket.on("start", (data) => {
-      console.log("socket start in server--->" ,data)
+      console.log("socket start in server--->", data);
       toast.info(data);
     });
 
-    
     socket.on("order", (data) => {
-   
       toast.info(data);
     });
 
     socket.on("search", (data) => {
-      console.log("socket start in server--->" ,data)
+      console.log("socket start in server--->", data);
       toast.info(data);
     });
 
-    
-    
     // socket.on("order", (data) => {
     //   console.log("order--->" ,data)
     //   toast.info(data);
     // });
 
- 
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
         toast.info("new Customer CREATED");
@@ -441,11 +424,6 @@ export default function CustomerList({}) {
       });
     }
 
-
-
-
-
-
     socket.on("status", (data) => {
       console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
@@ -458,47 +436,58 @@ export default function CustomerList({}) {
         dispatch(FetchNotifications()).then(() => {
           window.location.reload();
         });
-
-        
       }
+    });
+
+    socket.on("search_server", (data) => {
+      toast.success(data.message);
+
+      //toast.info("some agent search for customer");
+
+      if (userRole[0] === "admin") {
+        toast.info("HI ADMIN some agent search for customer");
+        dispatch(
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+        );
+      } else if (userRole[0] === "staff") {
+        toast.info("HI AGENT some agent search for customer");
+        dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
+      }
+
+      dispatch(FetchNotifications());
     });
 
 
 
-    
-    socket.on("search_server",(data)=>{
-      toast.success(data.message)
 
-      
-        //toast.info("some agent search for customer");
-
-        if (userRole[0] === "admin") {
-          toast.info("HI ADMIN some agent search for customer");
-          dispatch(
-            FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
-          );
-        } else if (userRole[0] === "staff") {
-          toast.info("HI AGENT some agent search for customer");
-          dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
-        }
-
-        dispatch(FetchNotifications());
-   
+    //create_cust-execute
 
 
+    socket.on("create_cust-execute", (data) => {
+      toast.success(data.message);
 
-    
-          })
+      //toast.info("some agent search for customer");
+
+      if (userRole[0] === "admin") {
+        toast.info("HI ADMIN some agent added for customer");
+        dispatch(
+          FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
+        );
+      } 
+
+      dispatch(FetchNotifications());
+    });
+
+
 
 
 
   }, [socket]);
 
-const ExecuteSocket=(data)=>{
-console.log("HHIUHHIAHSH" ,data)
-socket.emit("search",data)
-
-}
+  const ExecuteSocket = (data) => {
+    console.log("HHIUHHIAHSH", data);
+    socket.emit("search", data);
+  };
 
   return (
     <Box py={4}>
@@ -519,7 +508,9 @@ socket.emit("search",data)
             fullWidth={downSM}
             variant="contained"
             // startIcon={<Add />}
-            onClick={() => dispatch(CustomerSerch(searchValue, searchType ,ExecuteSocket))}
+            onClick={() =>
+              dispatch(CustomerSerch(searchValue, searchType, ExecuteSocket))
+            }
             sx={
               {
                 // minHeight: 44,

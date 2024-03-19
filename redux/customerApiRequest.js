@@ -66,7 +66,7 @@ export const FetchAgentCustomers =
     }
   };
 
-export const AddCustomer = (data, agentId, router) => async (dispatch) => {
+export const AddCustomer = (data, agentId, router ) => async (dispatch) => {
   await dispatch(fetchStart());
   try {
     data = { ...data, employe_id: agentId };
@@ -76,7 +76,7 @@ export const AddCustomer = (data, agentId, router) => async (dispatch) => {
 
     toast.success("new customer created");
     console.log("RESPONSE DATA", response.data);
-
+    //ExecuteSocket(response.data.notification)
     return dispatch(FetchCustomers());
   } catch (err) {
     toast.error(err?.message);
