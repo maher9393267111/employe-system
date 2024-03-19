@@ -430,24 +430,7 @@ export default function CustomerList({}) {
       });
     }
 
-    socket.on("status", (data) => {
-      console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
-
-      console.log(`status${data.status}`);
-      toast.info(`customer status changed to ${data.status}`);
-      window.location.reload();
-
-
-
-      // if (data?.receiver === userData?.id) {
-      //   console.log("reciever", data.receiver, "currentUser", userData?.id);
-      //   console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
-      //   toast.info("customer status changed");
-      //   dispatch(FetchNotifications()).then(() => {
-      //     window.location.reload();
-      //   });
-      // }
-    });
+ 
 
     socket.on("search_server", (data) => {
       toast.success(data.message);
@@ -486,6 +469,28 @@ export default function CustomerList({}) {
       } 
 
       dispatch(FetchNotifications());
+    });
+
+
+
+
+    socket.on("status", (data) => {
+      console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
+
+      console.log(`status${data.status}`);
+      toast.info(`customer status changed to ${data.status}`);
+      window.location.reload();
+
+
+
+      // if (data?.receiver === userData?.id) {
+      //   console.log("reciever", data.receiver, "currentUser", userData?.id);
+      //   console.log("Customer Status changed📌📌📌📌📌📌📌📌📌📌", data);
+      //   toast.info("customer status changed");
+      //   dispatch(FetchNotifications()).then(() => {
+      //     window.location.reload();
+      //   });
+      // }
     });
 
 
