@@ -1,46 +1,32 @@
-import { createContext, useEffect, useState, useContext ,useRef } from "react";
+import { createContext, useEffect, useState, useContext, useRef } from "react";
 
 import { toast } from "react-toastify";
 
 //import socketIO from "socket.io-client";
 import { io } from "socket.io-client";
 
-import {APIURL } from '../baseURL'
-const baseUrl = APIURL
+import { APIURL } from "../baseURL";
+const baseUrl = APIURL;
 
 const StateContext = createContext();
 
-
-
-const pro= "https://jellyfish-app-as8az.ondigitalocean.app"
+const pro = "https://jellyfish-app-as8az.ondigitalocean.app";
 //"https://dolphin-app-lu45l.ondigitalocean.app";
 const dev = "http://localhost:3300";
 
-
-
-
-
 export const StateContextProvider = ({ children }) => {
-
-
   const socket = io(
     pro,
-    { path: "/socket.io" ,
-    transports: ["websocket"] ,
-  },
+    { path: "/socket.io", transports: ["websocket"] },
     {
       reconnection: false,
     }
   );
 
-
-
-
-  
   // const socket = io(pro, {
   //   path: '/socket.io/',
   // //  transports: ["websocket"] ,
-    
+
   //    transports: ["websocket", "polling"],
   //    rejectUnauthorized: false,
   //    allowRequest: (req, callback) => {
@@ -49,15 +35,10 @@ export const StateContextProvider = ({ children }) => {
   //    //secure: true,
   //    //handshake: false,
   //   //   allowEIO3: true
- 
+
   // }
-  
+
   // );
-
-  
-
-
-
 
   return (
     <StateContext.Provider value={{ socket }}>{children}</StateContext.Provider>

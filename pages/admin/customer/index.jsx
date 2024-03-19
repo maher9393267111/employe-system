@@ -230,7 +230,7 @@ export default function CustomerList({}) {
     setNote("");
 
   
-    socket.emit("status-cust", "Status changed")
+    socket.emit("status-customer", status)
 
 
 
@@ -433,8 +433,8 @@ export default function CustomerList({}) {
     socket.on("status", (data) => {
       console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
-      console.log(`status`);
-      toast.info("customer status changed");
+      console.log(`status${data.status}`);
+      toast.info(`customer status changed to ${data.status}`);
       window.location.reload();
 
 
