@@ -395,6 +395,13 @@ export default function CustomerList({}) {
       toast.info(data);
     });
 
+
+    
+    socket.on("order", (data) => {
+      console.log("order--->" ,data)
+      toast.info(data);
+    });
+
  
     if (userRole[0] === "admin") {
       socket.on("createcustomer", (data) => {
