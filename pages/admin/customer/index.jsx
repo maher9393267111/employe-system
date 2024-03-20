@@ -169,6 +169,18 @@ export default function CustomerList({}) {
     }
   };
 
+
+
+  const [searchExiststatus, setSearchExistStatus] = useState("");
+  const [searcDate, setSearchDate] = useState("");
+
+  const handleSearchExistStatusChange = (event) => {
+    setSearchExistStatus(event.target.value);
+    console.log("name", event.target.value);
+  };
+
+
+
   const handleSearchStatusChange = (event) => {
     setSearchStatus(event.target.value);
     console.log("name", event.target.value);
@@ -260,7 +272,7 @@ export default function CustomerList({}) {
       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
       //toast.success("staff fetch customers");
     }
-  }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
+  }, [custpage, refresh, searchstatus, sortBy, sortDirection, size ]);
 
   const tableHeading = [
     {
@@ -509,13 +521,75 @@ export default function CustomerList({}) {
 
       <Card
         backgroundColor="grey.900"
-        sx={{ height: "160px", marginBottom: "20px", padding: "14px" }}
+        sx={{ height: "auto", marginBottom: "20px", padding: "14px" }}
       >
-        <Box sx={{ display: "flex" }}>
+        <Box 
+      
+        sx={{flexDirection: {sx: 'column', md: 'row'} , gap:'8px' ,display:'flex'}}
+        
+        >
           <SearchInput
             sx={{ flexGrow: 1 }}
             onChange={(e) => setSearchValue(e.target.value)}
           />
+
+
+
+
+<Box >
+
+
+            <SearchInput
+            label={'search by birth date'}
+           // sx={{ flexGrow: 1 }}
+            onChange={(e) => setSearchDate(e.target.value)}
+
+/>
+
+</Box>
+        
+
+        {/* --------Status customer exist search---- */}
+<Box width={'100px'} mr={'12px'} ml={'12px'} p={'0px'} item xs={12} lg={4}>
+              <FormControl fullWidth size="small">
+                <InputLabel color="info" id="demo-simple-select-label">
+                  Status
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  color="info"
+                  value={searchExiststatus}
+                  label="FilterBy"
+                  onChange={handleSearchExistStatusChange}
+                >
+                  <MenuItem color="info" value="all">
+                    All
+                  </MenuItem>
+
+                  <MenuItem
+                    color="info"
+                    value="accepted"
+                    sx={{ alignItems: "center" }}
+                  >
+                    Accepted
+                  </MenuItem>
+                  <MenuItem color="info" value="pending">
+                    Pending
+                  </MenuItem>
+
+                  <MenuItem color="info" value="rejected">
+                    Rejected
+                  </MenuItem>
+
+                  {/* <MenuItem color="info" value="admincustomers">
+                    admin customer
+                  </MenuItem> */}
+                </Select>
+              </FormControl>
+            </Box>
+
+
 
           <Button
             color="info"
@@ -523,7 +597,7 @@ export default function CustomerList({}) {
             variant="contained"
             // startIcon={<Add />}
             onClick={() =>
-              dispatch(CustomerSerch(searchValue, searchType, ExecuteSocket))
+              dispatch(CustomerSerch(searchValue, searchType, ExecuteSocket , searchExiststatus ,searcDate))
             }
             sx={
               {

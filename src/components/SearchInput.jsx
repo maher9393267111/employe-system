@@ -23,7 +23,14 @@ const StyledInputBase = styled(InputBase)(({
   }
 }));
 const SearchInput = props => {
-  return <StyledInputBase startAdornment={<Search sx={{
+  return <StyledInputBase
+  
+  placeholder={props.label}
+  startAdornment={<Search 
+    
+  
+    
+    sx={{
     fontSize: 19,
     mr: 1
   }} />} {...props} />;

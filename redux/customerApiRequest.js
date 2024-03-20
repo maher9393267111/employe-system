@@ -270,12 +270,12 @@ export const DeleteImage = async (filename, folder) => {
 //Search Customer --> http://localhost:8000/customers/find/anemous?searchtype=name
 
 export const CustomerSerch =
-  (value, type, ExecuteSocket) => async (dispatch) => {
+  (value, type, ExecuteSocket ,status ,date) => async (dispatch) => {
     try {
       //await DeleteImage(filename)
 
       const response = await axiosJWT.get(
-        `${baseUrl}/customers/find/${value}?searchtype=${type}`
+        `${baseUrl}/customers/find/${value}?searchtype=${type}&&status=${status}&&date=${date}`
       );
 
       console.log("RESPONSE DATA", response.data?.message);
