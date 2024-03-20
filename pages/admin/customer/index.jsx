@@ -169,8 +169,6 @@ export default function CustomerList({}) {
     }
   };
 
-
-
   const [searchExiststatus, setSearchExistStatus] = useState("");
   const [searcDate, setSearchDate] = useState("");
 
@@ -178,8 +176,6 @@ export default function CustomerList({}) {
     setSearchExistStatus(event.target.value);
     console.log("name", event.target.value);
   };
-
-
 
   const handleSearchStatusChange = (event) => {
     setSearchStatus(event.target.value);
@@ -272,7 +268,7 @@ export default function CustomerList({}) {
       dispatch(FetchAgentCustomers(custpage, size, sortBy, sortDirection));
       //toast.success("staff fetch customers");
     }
-  }, [custpage, refresh, searchstatus, sortBy, sortDirection, size ]);
+  }, [custpage, refresh, searchstatus, sortBy, sortDirection, size]);
 
   const tableHeading = [
     {
@@ -332,18 +328,17 @@ export default function CustomerList({}) {
           align: "center",
         },
 
-        {
-          id: "userimage",
-          label: "picture",
-          align: "center",
-        },
+    {
+      id: "userimage",
+      label: "picture",
+      align: "center",
+    },
 
-        {
-          id: "file",
-          label: "Document",
-          align: "center",
-        },
-
+    {
+      id: "file",
+      label: "Document",
+      align: "center",
+    },
 
     {
       id: "action",
@@ -523,73 +518,74 @@ export default function CustomerList({}) {
         backgroundColor="grey.900"
         sx={{ height: "auto", marginBottom: "20px", padding: "14px" }}
       >
-        <Box 
-      
-        sx={{flexDirection: {sx: 'column', md: 'row'} , gap:'8px' ,display:'flex'}}
-        
+        <Box
+          sx={{
+            flexDirection: { xs: "column", md: "row" },
+            gap: "8px",
+            display: "flex",
+          }}
         >
           <SearchInput
-            sx={{ flexGrow: 1 }}
+            label={"search by name or ssn"}
+            // sx={{ flexGrow: 1 }}
             onChange={(e) => setSearchValue(e.target.value)}
           />
 
-
-
-
-<Box >
-
-
+          <Box>
             <SearchInput
-            label={'search by birth date'}
-           // sx={{ flexGrow: 1 }}
-            onChange={(e) => setSearchDate(e.target.value)}
+              label={"search by birth date"}
+              // sx={{ flexGrow: 1 }}
+              onChange={(e) => setSearchDate(e.target.value)}
+            />
+          </Box>
 
-/>
-
-</Box>
-        
-
-        {/* --------Status customer exist search---- */}
-<Box width={'100px'} mr={'12px'} ml={'12px'} p={'0px'} item xs={12} lg={4}>
-              <FormControl fullWidth size="small">
-                <InputLabel color="info" id="demo-simple-select-label">
-                  Status
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  color="info"
-                  value={searchExiststatus}
-                  label="FilterBy"
-                  onChange={handleSearchExistStatusChange}
-                >
-                  {/* <MenuItem color="info" value="all">
+          {/* --------Status customer exist search---- */}
+          <Box
+            width={"100px"}
+            mr={"12px"}
+            ml={"12px"}
+            p={"0px"}
+            item
+            xs={12}
+            lg={4}
+          >
+            <FormControl fullWidth size="small">
+              <InputLabel color="info" id="demo-simple-select-label">
+                Status
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                color="info"
+                value={searchExiststatus}
+                label="FilterBy"
+                onChange={handleSearchExistStatusChange}
+              >
+                {/* <MenuItem color="info" value="all">
                     All
                   </MenuItem> */}
 
-                  <MenuItem
-                    color="info"
-                    value="accepted"
-                    sx={{ alignItems: "center" }}
-                  >
-                    Accepted
-                  </MenuItem>
-                  <MenuItem color="info" value="pending">
-                    Pending
-                  </MenuItem>
+                <MenuItem
+                  color="info"
+                  value="accepted"
+                  sx={{ alignItems: "center" }}
+                >
+                  Accepted
+                </MenuItem>
+                <MenuItem color="info" value="pending">
+                  Pending
+                </MenuItem>
 
-                  <MenuItem color="info" value="rejected">
-                    Rejected
-                  </MenuItem>
+                <MenuItem color="info" value="rejected">
+                  Rejected
+                </MenuItem>
 
-                  {/* <MenuItem color="info" value="admincustomers">
+                {/* <MenuItem color="info" value="admincustomers">
                     admin customer
                   </MenuItem> */}
-                </Select>
-              </FormControl>
-            </Box>
-
-
+              </Select>
+            </FormControl>
+          </Box>
 
           <Button
             color="info"
@@ -597,7 +593,15 @@ export default function CustomerList({}) {
             variant="contained"
             // startIcon={<Add />}
             onClick={() =>
-              dispatch(CustomerSerch(searchValue, searchType, ExecuteSocket , searchExiststatus ,searcDate))
+              dispatch(
+                CustomerSerch(
+                  searchValue,
+                  searchType,
+                  ExecuteSocket,
+                  searchExiststatus,
+                  searcDate
+                )
+              )
             }
             sx={
               {
