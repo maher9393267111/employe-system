@@ -274,9 +274,20 @@ export const CustomerSerch =
     try {
       //await DeleteImage(filename)
 
+      if(!value){
+
+        toast.error("You should type something to search")
+
+return
+      }
+
       const response = await axiosJWT.get(
         `${baseUrl}/customers/find/${value}?searchtype=${type}&&status=${status}&&date=${date}`
       );
+      
+
+
+
 
       console.log("RESPONSE DATA", response.data?.message);
 
