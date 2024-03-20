@@ -563,9 +563,9 @@ export default function CustomerList({}) {
                   label="FilterBy"
                   onChange={handleSearchExistStatusChange}
                 >
-                  <MenuItem color="info" value="all">
+                  {/* <MenuItem color="info" value="all">
                     All
-                  </MenuItem>
+                  </MenuItem> */}
 
                   <MenuItem
                     color="info"
