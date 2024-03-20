@@ -27,6 +27,8 @@ export const es = {
     agreeSub:'Al responder SÍ, usted da fe de lo siguiente',
     userImage:"imagen de usuario",
     documentImage:"imagen de documento legal",
+    uploaduser:"Subir imagen de usuario",
+    uploaddoc:"Subir documento",
     
     agreeOne:'Esta es una solicitud para INSCRIBIRLO en el mejor plan GRATUITO disponible en su área según nuestra experiencia en el mercado.',
     agreeTwo:'Si es soltero y gana menos del 150% de la línea de pobreza, tendrá suficiente información para INSCRIBIRSE con solo llenar el formulario',

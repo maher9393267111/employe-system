@@ -711,7 +711,7 @@ console.log("****************",userimage)
                           htmlFor="userUpload"
                         >
                           <Text mt="8" color="gray">
-                            {fetchWord("uploadDocs", locale)}
+                            {fetchWord("uploaduser" ,locale)}
                           </Text>
 
                           <Field
@@ -764,7 +764,7 @@ console.log("****************",userimage)
                           htmlFor="docUpload"
                         >
                           <Text mt="8" color="gray">
-                            {fetchWord("uploadDocs", locale)}
+                            {fetchWord("uploaddoc", locale)}
                           </Text>
 
                           <Field
