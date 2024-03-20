@@ -31,6 +31,8 @@ export const en = {
     agreeFour:'I agree that if I am making less than $1100 per month that I am looking for work making at least minimum wage.',
 
     agreeTitle2:'I consent to:',
+    userImage:"customer image",
+    documentImage:"document image",
     agreeOne2:'Searching for an existing Marketplace application',
     agreeTwo2:'Completing an application for eligibility and enrollment in a Marketplace Qualified Health Plan or other government insurance affordability programs, such as Medicaid and CHIP or advance tax credits to help pay for Marketplace premiums.',
     agreeFour2:'Responding to inquiries from the Marketplace regarding my Marketplace application. I understand that the Agent will not use or share my personally identifiable information (PII) for any purposes other than those listed above. The Agent will ensure that my PII is kept private and safe when collecting, storing, and using my PII for the stated purposes above.',

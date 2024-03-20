@@ -118,6 +118,14 @@ const CustomersRow = ({ customer, selected, userRole }) => {
       )}
 
 
+<StyledTableCell align="center">
+        <img style={{width:"50px" ,height:'50px'}}  src={userimage?.link ? userimage?.link :'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='} alt="" />
+      </StyledTableCell>
+
+      <StyledTableCell align="center">
+        <img style={{width:"50px" ,height:'50px'}}  src={file?.link ? file?.link : 'https://media.istockphoto.com/id/1209500169/vector/document-papers-line-icon-pages-vector-illustration-isolated-on-white-office-notes-outline.jpg?s=612x612&w=0&k=20&c=Dt2k6dEbHlogHilWPTkQXAUxAL9sKZnoO2e055ihMO0='} alt="" />
+      </StyledTableCell>
+
 
 
       <StyledTableCell align="center">

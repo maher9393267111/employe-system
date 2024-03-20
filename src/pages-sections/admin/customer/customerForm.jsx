@@ -9,8 +9,10 @@ import {
   MenuItem,
   Stack,
   Radio,
+  RadioGroup,
+  FormHelperText,
 } from "@mui/material";
-import { Paragraph } from "components/Typography";
+import { Paragraph ,H2 ,H3 ,H1 } from "components/Typography";
 import { Formik, Field, ErrorMessage, useFormik } from "formik";
 import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
@@ -243,15 +245,15 @@ console.log("****************",userimage)
       
       <Stack spacing={3} mb={3}>
         <div>
-          <h1>
-            <Paragraph fontWeight={600}>
+          
+            <H1 fontWeight={600}>
               {fetchWord("agreeTitle", locale)}
-            </Paragraph>
-          </h1>
+            </H1>
+         
           <h3>
-            <Paragraph sx={{ my: "10px" }} fontWeight={600}>
+            <H3 sx={{ my: "10px" }} fontWeight={600}>
               {fetchWord("agreeSub", locale)}
-            </Paragraph>
+            </H3>
           </h3>
 
           <ol type="1">
@@ -321,7 +323,7 @@ console.log("****************",userimage)
             }}
             value={agreement}
             onChange={handleAgreementChange}
-            label={<Paragraph fontWeight={600}>False</Paragraph>}
+            label={<H3 fontWeight={600}>False</H3>}
             control={
               <Radio checked={agreement === false} color="info" size="small" />
             }
@@ -334,7 +336,7 @@ console.log("****************",userimage)
             }}
             value={agreement}
             onChange={handleAgreementChange}
-            label={<Paragraph fontWeight={600}>True</Paragraph>}
+            label={<H3 fontWeight={600}>True</H3>}
             control={
               <Radio checked={agreement === true} color="info" size="small" />
             }
@@ -408,6 +410,7 @@ console.log("****************",userimage)
                   helperText={touched.lastName && errors.lastName}
                 />
               </Grid>
+              
 
               <Grid item xs={12} md={6}>
                 <TextField
@@ -589,8 +592,8 @@ console.log("****************",userimage)
                 />
               </Grid>
 
-              <Grid item sm={6} xs={12}>
-                <TextField
+              <Grid item xs={12}>
+                {/* <TextField
                   select
                   fullWidth
                   color="info"
@@ -610,7 +613,28 @@ console.log("****************",userimage)
                   <MenuItem color="info" value={"female"}>
                     {fetchWord("female", locale)}
                   </MenuItem>
-                </TextField>
+                </TextField> */}
+
+<div>
+          {/* <h3>Agreament </h3> */}
+          <Grid item xs={12} >
+                <FormControl  color="info" fullWidth>
+                  <FormLabel>{fetchWord("gender", locale)}</FormLabel>
+                  <RadioGroup  color="info" row name="gender" onChange={handleChange} value={values.gender}>
+                    <FormControlLabel  color="info" value="Male" control={<Radio />} label=  {fetchWord("male", locale)} />
+                    <FormControlLabel  color="info" value="Female" control={<Radio />}  label = {fetchWord("female", locale)} />
+                    {/* <FormControlLabel  color="info" value="Other" control={<Radio />} label="Other" /> */}
+                  </RadioGroup>
+                  <FormHelperText style={{  }}>{touched.gender && errors.gender}</FormHelperText>
+                </FormControl>
+                
+              </Grid>
+        </div>
+
+
+
+
+
               </Grid>
 
               {signature && (
@@ -667,10 +691,10 @@ console.log("****************",userimage)
 <Box>
 
 {/* ---------UserImage Upload------ */}
-<Box mb="5">
+<Box mb="17" mt="17">
                       <FormControl>
                         <FormLabel htmlFor="userUpload" fontWeight={"bold"}>
-                          {fetchWord("images", locale)}
+                          {fetchWord("userImage", locale)}
                           <Box as="span" color="red.500">
                             *
                           </Box>
@@ -720,10 +744,10 @@ console.log("****************",userimage)
 
 
 {/* ---------Document------- */}
-<Box mb="5">
+<Box mb="17" mt="17">
                       <FormControl>
                         <FormLabel htmlFor="docUpload" fontWeight={"bold"}>
-                          {fetchWord("images", locale)}
+                          {fetchWord("documentImage", locale)}
                           <Box as="span" color="red.500">
                             *
                           </Box>
@@ -773,7 +797,7 @@ console.log("****************",userimage)
 
 
 {/* ------MultiImages------ */}
-                    <Box mb="5">
+                    <Box mb="17" mt="17">
                       <FormControl>
                         <FormLabel htmlFor="imageUpload" fontWeight={"bold"}>
                           {fetchWord("images", locale)}
@@ -898,6 +922,13 @@ console.log("****************",userimage)
                     {/* {audiofile && <audio controls src={audiofile} />} */}
                   </div>
                 )}
+
+
+                <div style={{marginTop:'12px'}}>
+                  <Paragraph fontWeight={"600"} color="red"  mt='17' mb='17'>
+                  I {values?.firstName} authorize Rodney Sydnor to be my broker of record for years 2024 to 2028 with the healthcare marketplace.
+                  </Paragraph>
+                </div>
               </Grid>
 
               {/* show images in edit page only--- */}
@@ -949,7 +980,7 @@ console.log("****************",userimage)
 <div>
 
 
-<p>UserImage</p>
+<Paragraph>{fetchWord("userImage" ,locale)}</Paragraph>
 
 <img 
   style={{
@@ -963,7 +994,8 @@ src={userimage?.link} alt="" />
 
 {file?.link &&
 <div>
-  <p>Document</p>
+<Paragraph>{fetchWord("documentImage" ,locale)}</Paragraph>
+
 
   <img 
   style={{

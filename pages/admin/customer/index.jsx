@@ -229,11 +229,7 @@ export default function CustomerList({}) {
     setNote("");
     setNote("");
 
-  
-    socket.emit("status-customer", status)
-
-
-
+    socket.emit("status-customer", status);
   };
 
   const [custpage, setcustPage] = useState(0);
@@ -324,6 +320,19 @@ export default function CustomerList({}) {
           align: "center",
         },
 
+        {
+          id: "userimage",
+          label: "picture",
+          align: "center",
+        },
+
+        {
+          id: "file",
+          label: "Document",
+          align: "center",
+        },
+
+
     {
       id: "action",
       label: "Action",
@@ -346,7 +355,7 @@ export default function CustomerList({}) {
     employe_id: item?.employe_id,
     note: item?.note,
     process: item?.process,
-    userimage:item?.userimage
+    userimage: item?.userimage,
   }));
 
   console.log("filterdcystomers", filteredCustomers);
@@ -431,8 +440,6 @@ export default function CustomerList({}) {
       });
     }
 
- 
-
     socket.on("search_server", (data) => {
       toast.success(data.message);
 
@@ -451,11 +458,7 @@ export default function CustomerList({}) {
       dispatch(FetchNotifications());
     });
 
-
-
-
     //create_cust-execute
-
 
     socket.on("create_cust-execute", (data) => {
       toast.success(data.message);
@@ -467,28 +470,22 @@ export default function CustomerList({}) {
         dispatch(
           FetchCustomers(custpage, size, searchstatus, sortBy, sortDirection)
         );
-      } 
+      }
 
       dispatch(FetchNotifications());
     });
 
-
-
-
     socket.on("status", (data) => {
       console.log("DATAAAAAAA SOCKETIO STATUS CHANGED 🖥️ 📱🖥️ 📱", data);
 
-      console.log(`status 📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌${data.status}`);
+      console.log(
+        `status 📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌📌${data.status}`
+      );
       toast.info(`customer status changed to ${data.status}`);
 
-
-      setTimeout(function(){
+      setTimeout(function () {
         window.location.reload();
-     }, 5000);
-
-
-
-
+      }, 5000);
 
       // if (data?.receiver === userData?.id) {
       //   console.log("reciever", data.receiver, "currentUser", userData?.id);
@@ -499,11 +496,6 @@ export default function CustomerList({}) {
       //   });
       // }
     });
-
-
-
-
-
   }, [socket]);
 
   const ExecuteSocket = (data) => {
